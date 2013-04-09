@@ -1,0 +1,81 @@
+
+<!-- Start About -->
+<div class="row-fluid section" id="about">
+  <div class="container"> 
+
+    <div class="explain">
+
+      <h2>Team Member</h2>
+      <p class="intro">This is where you'd put a brief explanation of your team member.</p>
+
+      <!-- Start Team Members -->
+
+      <div class="profiles">
+        <div class="row-fluid">
+          <% @profiles.each do |profile| %>          
+            <div class="profile span4">            
+                <div class="avatar">              
+                  <%= image_tag profile.avatar.url %>
+                </div>
+                <div class="bio">
+                  <h3><%= sanitize profile.name %></h3>
+                  <p><%= truncate_html sanitize profile.bio, :length => 400 %>
+                </div>         
+          	</div>
+          <% end %>                 
+        </div> 
+
+      </div> 
+
+      <div class="pagination">
+        <ul>
+          <% if @current_page < @page && @current_page >= 1 %>
+          	<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+		  <% end %>
+          <% @page.times do |p| %>          
+          	<li><%= link_to "#{p+1}", :action => "index", :page => "#{p+1}" %></li>
+          <% end %>
+
+          <% if @current_page < @page && @current_page >= 1 %>
+          	<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+		  <% end %>
+
+        </ul>
+      </div>     
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="row-fluid">
+
+  <div class="container footer">
+
+    <!-- Copyright and contact -->
+
+    <div class="span4 address">
+
+      ©2012 Metro Business Template by <a href="http://www.littlesparkvt.com">LittleSparkVT</a>
+      <br>555 Silverado Trail
+      <br>Burlington Vermont 05477
+
+    </div>
+
+    <!-- newsletter form -->
+
+    <div class="span5 pull-right footer-newsletter">
+      <h2>Newsletter</h2>
+      <p>Subscribe to our newsletter and get the latest news!</p>
+      <form action="mail.php" id="subscribe-form" method="post">
+        <input type="text" name="email" id="email" placeholder="Your Email Address" class="input-text m-wrap m-ctrl">
+        <button type="submit" class="m-btn blue">Sign Up</button>
+      </form>
+    </div>
+
+  </div>
+  
+</div>
+
+

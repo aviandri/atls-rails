@@ -1,0 +1,132 @@
+<div class="row-fluid callout">
+  <div class="container">
+
+  	<div id="registration-data" class="span8 border-box">
+  		<div class="span6"> 
+  			<fieldset>
+	  			<legend>Biodata</legend>
+  				<ul class="inline">
+				  <li><span>Nama Lengkap</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].name %></label></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Tanggal Lahir</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].date_of_birth %></label></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Jenis Kelamin</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].gender %></label></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Agama</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].religion %></label></li>
+				</ul>		
+	  		</fieldset>
+
+	  		<fieldset>
+	  			<legend>Kontak</legend>
+	  			<ul class="inline">
+				  <li><span>Alamat</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].address %></label></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Telepon</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].phone %></span></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Email</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].email %></span></li>
+				</ul>
+	  		</fieldset>
+
+	  		<fieldset>  				
+	  			<legend>Lokasi Training</legend>
+	  			<ul class="inline">
+				  <li><span>Kota</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].training_location %></span></li>
+				</ul>	  				  	
+	  		</fieldset>
+
+	  	</div>
+
+	  	<div class="span6"> 
+  			<fieldset>  				
+	  			<legend>Data Kantor</legend>
+	  			<ul class="inline">
+				  <li><span>Nama Kantor</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].office_name %></span></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Alamat Kantor</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].office_address %></span></li>
+				</ul>
+				<ul class="inline">
+				  <li><span>Telepon Kantor</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].office_phone %></span></li>
+				</ul>
+	  			<ul class="inline">
+				  <li><span>Jabatan</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].job_title %></span></li>
+				</ul>
+	  		</fieldset>
+
+	  		<fieldset>  				
+	  			<legend>Data Kampus</legend>
+	  			<ul class="inline">
+				  <li><span>Nama Kampus</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].campus_name %></span></li>
+				</ul>
+
+				<ul class="inline">
+				  <li><span>Telepon Kampus</label></li>
+				  <li>:</li>
+				  <li><span><%= @order.attendees[0].campus_phone %></span></li>
+				</ul>  		
+	  		</fieldset>
+	  	</div>
+  	</div>
+
+  	<div id="billing-information" class="span4 border-box">
+		<fieldset>
+  			<legend>Informasi Pembayaran</legend>
+  			<ul class="inline">
+				  <li><span>Kursus ATLS</label></li>
+				  <li>:</li>
+				  <li><span>Rp. <%= @cost %>,-</span></li>
+			</ul>
+			<ul class="inline">
+				  <li><span>ID Pembayaran</label></li>
+				  <li>:</li>
+				  <li><span>Rp. <%= @cost_id %>,-</span></li>
+			</ul>
+			<ul class="inline">
+				  <li  class="text-align:left;"><span>Total</label></li>
+				  <li>:</li>
+				  <li><span style="font-weight:bold;color:red;">Rp. <%= @cost + @cost_id %>,-</span></li>
+			</ul>  	 		
+  		</fieldset>	  
+  	</div>
+
+  	<div id="thanks-box" class="span8 border-box">
+	  	<h3> Terima kasih telah mendaftar training ATLS</h3>
+	  	<h4> Untuk menyelesaikan pembayaran harap : </h4>
+	  	<h4  style="color:red;"> Transfer ke Rekening BCA 211111111111111 </h4>
+	  	<h4> Atas Nama ATLS Indonesia </h4>
+	  	<%= link_to "Home", page_path("index") %>
+  	</div>
+         
+  </div>
+ </div>

@@ -1,0 +1,186 @@
+
+  <div class="row-fluid callout">
+  <!-- Start Carousel -->
+  <div class="container">
+
+          <div class="companycallout hidden-phone">
+
+          <div id="slider" class="sl-slider-wrapper homesection">
+
+          <div class="sl-slider">
+        
+          <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+            <div class="sl-slide-inner">
+              <div class="bg-img bg-img-1"></div>
+              <h2>ATLS Indonesia</h2>
+              <blockquote><p>Advance Trauma Life Support Indonesia</p></blockquote>
+            </div>
+          </div>
+          
+          <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
+            <div class="sl-slide-inner">
+              <div class="bg-img bg-img-4"></div>
+              <h2>What we do?</h2>
+              <blockquote><p>Threat the greatest threat to life first</p></blockquote>
+            </div>
+          </div>
+          <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
+            <div class="sl-slide-inner">
+              <div class="bg-img bg-img-cpr"></div>
+              <h2>Initial Assestment</h2>            
+            </div>
+          </div>
+          
+        
+        </div><!-- /sl-slider -->
+
+        <nav id="nav-dots" class="nav-dots">
+          <span class="nav-dot-current"></span>
+          <span></span>
+        </nav>
+
+      </div><!-- /slider-wrapper -->
+  </div>
+
+
+        
+
+    
+      
+
+
+
+
+              <!-- Tablet View Social Icons - they will line up across the screen instead of in a box -->
+
+              
+
+
+             <!-- TEXT AREAS -->
+
+              <!-- Blogs -->
+              <div class="row-fluid homesection">
+              <div class="span6">
+              <h2>Tentang ATLS</h2>
+              <p>Advanced Trauma Life Support (ATLS) adalah sebuah program pelatihan bagi dokter medis dalam pengelolaan akut trauma kasus, yang dikembangkan oleh American College of Surgeons . Program serupa ada untuk perawat (ATCN) dan paramedis (PTLS). </p>
+              <p><a href="#" class="m-btn blue">Baca Selengkapnya</a></p>              
+              </div>
+
+              <div class="span6">
+              <h2>Pelatihan</h2>
+              <p>Advanced Trauma Life Support (ATLS) adalah sebuah program pelatihan bagi dokter medis dalam pengelolaan akut trauma kasus, yang dikembangkan oleh American College of Surgeons . Program serupa ada untuk perawat (ATCN) dan paramedis (PTLS). </p>
+              <p><a href="#" class="m-btn blue">Baca Selengkapnya</a></p>              
+              </div>
+
+
+
+            </div>
+          
+</div>
+
+  
+</div>
+
+      <!-- FOOTER -->
+           <div class="row-fluid">
+
+            <div class="container footer">
+
+              <!-- Copyright and contact -->
+
+              <div class="span4 address">
+
+              ©2012 Metro Business Template by <a href="http://www.littlesparkvt.com">LittleSparkVT</a>
+              <br>555 Silverado Trail
+              <br>Burlington Vermont 05477
+
+              </div>
+
+              <!-- newsletter form -->
+
+            <div class="span5 pull-right footer-newsletter">
+              <h2>Newsletter</h2>
+                <p>Subscribe to our newsletter and get the latest news!</p>
+                  <form action="mail.php" id="subscribe-form" method="post">
+                    <input type="text" name="email" id="email" placeholder="Your Email Address" class="input-text m-wrap m-ctrl">
+                    <button type="submit" class="m-btn blue">Sign Up</button>
+                  </form>
+            </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+<!-- Javascripts -->
+
+
+  <script type="text/javascript"> 
+    $(function() {
+    
+      var Page = (function() {
+
+        var $nav = $( '#nav-dots > span' ),
+          slitslider = $( '#slider' ).slitslider( {
+            onBeforeChange : function( slide, pos ) {
+
+              $nav.removeClass( 'nav-dot-current' );
+              $nav.eq( pos ).addClass( 'nav-dot-current' );
+
+            }
+          } ),
+
+          init = function() {
+
+            initEvents();
+            
+          },
+          initEvents = function() {
+
+            $nav.each( function( i ) {
+            
+              $( this ).on( 'click', function( event ) {
+                
+                var $dot = $( this );
+                
+                if( !slitslider.isActive() ) {
+
+                  $nav.removeClass( 'nav-dot-current' );
+                  $dot.addClass( 'nav-dot-current' );
+                
+                }
+                
+                slitslider.jump( i + 1 );
+                return false;
+              
+              } );
+              
+            } );
+
+          };
+
+          return { init : init };
+
+      })();
+
+      Page.init();
+
+      /**
+       * Notes: 
+       * 
+       * example how to add items:
+       */
+
+      /*
+      
+      var $items  = $('<div class="sl-slide sl-slide-color-2" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1"><div class="sl-slide-inner bg-1"><div class="sl-deco" data-icon="t"></div><h2>some text</h2><blockquote><p>bla bla</p><cite>Margi Clarke</cite></blockquote></div></div>');
+      
+      // call the plugin's add method
+      ss.add($items);
+
+      */
+    
+    });
+  </script>
+
+

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  status: MyString
+  payment_type: MyString
+
+two:
+  status: MyString
+  payment_type: MyString
