@@ -59,7 +59,7 @@ body{
 .overlay{
 	 opacity : 0.4;
      background-color: 'black';
-     z-index': 5000;
+     z-index: 5000;
 }
 
 .btn{
