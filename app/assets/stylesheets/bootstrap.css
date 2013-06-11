@@ -2469,7 +2469,6 @@ button.close {
   font-size: 14px;
   line-height: 20px;
   *line-height: 20px;
-  color:;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
@@ -2520,8 +2519,6 @@ button.close {
 .btn:hover {
   color: #333333;
   text-decoration: none;
-  background-color:;
-  *background-color: ;
   /* Buttons in IE7 don't get borders, so darken on hover */
 
   background-position: 0 33px;
