@@ -8,14 +8,7 @@ class AttendeesController < Devise::RegistrationsController
 	end
 
 	def create
-		@attendee = Attendee.new(params[:attendee])
-		respond_to do |format|
-			if @attendee.save
-				format.html  { redirect_to :action => "home" }
-				else
-					format.html  { render :action => "new" }					
-			end
-		end
+		super
 	end
 
 	def home
@@ -27,6 +20,8 @@ class AttendeesController < Devise::RegistrationsController
 	def after_sign_up_path_for(resource)
 		if resource.class.name == "Attendee"
 			home_path
+		else
+			super
 		end
   	end
 
