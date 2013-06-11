@@ -16,4 +16,6 @@
 //= require bootstrap
 //= require jquery.ba-cond.min
 //= require jquery.slitslider
+//= require homes
+
 

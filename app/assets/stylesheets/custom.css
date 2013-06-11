@@ -55,7 +55,7 @@ nav.primary li {
 
 nav.primary ul li a {} 
 
-nav.primary ul li a:active, nav.primary ul li a.selected { background:; text-shadow:none; } 
+nav.primary ul li a:active, nav.primary ul li a.selected {text-shadow:none;} 
 
 
 
@@ -278,10 +278,10 @@ top: 0px;
 }
 
 #register-form{
-  margin:40px auto;
+  margin:10px auto;
   float: none;
   border: 1px solid #CCC;
-  padding: 10px 0px 50px 60px;
+  padding: 10px 0px 50px 20px;
   border-radius: 7px;
   -moz-box-shadow: 10px 10px 5px #888;
   -webkit-box-shadow: 10px 10px 5px #888;
@@ -346,8 +346,18 @@ legend{
   width: 300px;
 }
 
+label{
+  font-size: 14px;
+  color: #4d4d4d;
+  cursor: pointer;
+  display: block;
+  font-weight: 3000;
+  margin-bottom: 3px;
+}
 
-
+.control .field{
+  padding:20px 20px 20px 20px; 
+}
 
 
 

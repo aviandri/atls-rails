@@ -1,0 +1,187 @@
+<div class="container-fluid">
+	<div class="row-fluid" style="margin-top:30px;">
+		<ul class="nav nav-list span2 wrapper shadow">
+			<li class="nav-header">Menu</li>
+			<li class="active">
+				<%= link_to "Home", home_path %>
+			</li>
+			<li>
+				<%= link_to "Pretest", home_test_path %>
+			</li>
+			<li><a href="#">Edit Profile</a></li>
+		</ul>
+
+		<div class="span10" style="padding:10px 10px 10px 10px;">
+			<div class="payment-section wrapper shadow">
+				<div class="row-fluid section-title">				
+					<div class="span9">
+						<h3>Kursus ATLS</h3>					
+					</div>
+					<div class="span3" style="margin-top:1%;">
+						<button type="button" data-toggle="modal" id="register-button" class="btn btn-success">Daftar</button>					
+					</div>
+				</div>
+
+
+				<div class="row-fluid">				
+					<div class="span9">
+						<span class="label-title">Pembayaran</span>									
+					</div>
+					<div class="span3">
+						<span class="label section-status label-warning">incomplete</span>	
+					</div>
+				</div>	
+
+				<div class="row-fluid table">
+					<div class="span10">
+						<table class="table table-striped">
+							<thead>
+								<tr>								
+									<th>Order</th>
+									<th>Tanggal Daftar</th>
+									<th>Status</th>									
+								</tr>
+							</thead>
+							<tbody>
+								<% @orders.each_with_index do |order, index|%>
+								<tr>
+									<td><%= index + 1 %></td>
+									<td><%= order.created_at.strftime("%d-%m-%Y") %></td>
+									<td><span class="label <%= order_label_string(order.status) %>"><%= order.status %></span></td>	
+									<td>
+										<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn">Detail</button>
+										<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn">Batal</button>
+
+									</td>								
+								</tr>
+								<% end %>								
+							</tbody>
+						</table>
+					</div>
+				</div>	
+			</div>
+
+			<div class="pretest-section wrapper shadow">
+				<div class="row-fluid section-title">				
+					<div class="span9">
+						<h3>Pre-Test</h3>					
+					</div>
+					<div class="span3" style="margin-top:1%;">
+						<button type="button" data-toggle="modal" class="btn btn-success">Test</button>
+					</div>
+				</div>
+
+				<div class="row-fluid">				
+					<div class="span9">
+						<span class="label-title">Pre-Test</span>									
+					</div>
+					<div class="span3">
+						<span class="label section-status label-warning">incomplete</span>	
+					</div>
+				</div>		
+			</div>
+
+			<div class="schedule-location-section wrapper shadow">
+				<div class="row-fluid section-title">				
+					<div class="span9">
+						<h3>Jadwal dan Lokasi</h3>					
+					</div>
+					<div class="span3" style="margin-top:1%;">
+						<button disabled="true" type="button" data-toggle="modal" class="btn btn-success">Pilih</button>
+					</div>
+				</div>
+
+				<div class="row-fluid">				
+					<div class="span9">
+						<span class="label-title">Lokasi</span>									
+					</div>
+					<div class="span3">
+						Jakarta
+					</div>						
+				</div>	
+				<div class="row-fluid">				
+					<div class="span9">
+						<span class="label-title">Jadwal</span>									
+					</div>
+					<div class="span3">
+						11 Maret 2013
+					</div>						
+				</div>		
+			</div>
+		</div>
+
+		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Pembayaran</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+						<span>Methode Pembayaran</span>
+					</div>
+					<div class="span6">
+						<select>
+							<option>Transfer</option>
+							<option>Credit Card</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row-fluid price-section">
+					<div class="span12">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Product</th>
+									<th>Harga</th>									
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Biaya Kursus</td>
+									<td>Rp.4000.000,-</td>										
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>ID Transaksi</td>
+									<td>Rp.1,-</td>
+								</tr>		
+								<tr>
+									<td>Total</td>
+									<td></td>
+									<td><span class="strong">Rp.4000.001,-</span></td>
+								</tr>									
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row-fluid price-section">
+					<div class="span12">
+						<span>Transfer the payment to:</span>
+						<span>Bank BCA</span>
+						<span>Account Number 4111111111111111</span>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<%= form_for @order do|f| %>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn btn-primary">Make Order</button>
+				<% end %>
+			</div>
+		</div>
+
+	</div>		
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("a").popover({"placement":"top"});	
+});
+
+</script>

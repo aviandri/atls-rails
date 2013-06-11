@@ -1,0 +1,71 @@
+
+<div class="row-fluid callout">
+  <!-- Start Carousel -->
+  <div class="container-fluid">
+
+    <div id="register-form" class="span6">        	  
+      <fieldset>
+        <legend style = "margin-bottom:20px;">Login</legend>
+        <p class="text-error"><%= flash[:alert] %></p>
+        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <div class="control-group">
+          <div class="control">
+            <%= f.email_field :email, :placeholder=>"Enter your e-mail address", :class => "span8 offset2 field" %>                  
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control">    
+            <%= f.password_field :password, :placeholder => "Enter your password", :class => "span8 offset2 field" %>              
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox span4 offset7">
+              <input type="checkbox"> Remember me
+            </label>
+            <button type="submit" class="btn btn-primary span3 offset4">Sign in</button>
+          </div>
+        </div>    
+        <% end %>            
+      </fieldset>
+      <div class="row">
+        <span class="span9 offset2">Belum punya account? <%= link_to "Sign up", new_attendee_path %> terlebih dahulu</span>
+      </div>
+      
+    </div>
+
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="row-fluid">
+
+  <div class="container footer">
+
+    <!-- Copyright and contact -->
+
+    <div class="span4 address">
+
+      ©2012 Metro Business Template by <a href="http://www.littlesparkvt.com">LittleSparkVT</a>
+      <br>555 Silverado Trail
+      <br>Burlington Vermont 05477
+
+    </div>
+
+    <!-- newsletter form -->
+
+    <div class="span5 pull-right footer-newsletter">
+      <h2>Newsletter</h2>
+      <p>Subscribe to our newsletter and get the latest news!</p>
+      <form action="mail.php" id="subscribe-form" method="post">
+        <input type="text" name="email" id="email" placeholder="Your Email Address" class="input-text m-wrap m-ctrl">
+        <button type="submit" class="m-btn blue">Sign Up</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+

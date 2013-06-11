@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  attendee_id: 
+  score: 
+  number_of_question: 1
+
+two:
+  attendee_id: 
+  score: 
+  number_of_question: 1

@@ -1,91 +1,169 @@
 
 <div class="row-fluid">
   <div class="container">              
-    <div id="register-form" class="span10">  
-      <ul class="breadcrumb">
-        <li class="active">Bio Data<span class="divider">></span></li>
-        <li><a href="#">Data Kantor Kampus</a> <span class="divider">></span></li>
-        <li><a href="#">Data</a></li>
-      </ul>
-        <%= form_for @attendee do|f| %>
-        <fieldset>
-          <legend>Biodata</legend>
+    <div id="register-form" class="span8">        
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |b| %>
+      <%= devise_error_messages! %>
+      <fieldset>
+        <legend>Account</legend>
+        <div class="control-group <%= has_error('email', @attendee) %>" >
+          <label>Email:</label>
+          <div class="control">                  
+            <%= b.email_field :email, :class => "span6" , :placeholder => "johndoe@gmail.com" %>
+            <span class="help-inline"><%= get_error_message('email', @attendee) %></span>
+          </div>
+        </div>
+        <div class="control-group <%= has_error('password', @attendee) %>">
+          <label>Password:</label>
+          <div class="control">
+            <%= b.password_field :password, :class=> "span6"%>
+            <span class="help-inline"><%= get_error_message('password', @attendee) %></span>
+          </div> 
+        </div>
+        <div class="control-group">
+          <label>Confirm Password:</label>
+          <div class="control">
+            <%= b.password_field :password_confirmation, :class=> "span6"%>
+          </div> 
+        </div>
 
-            <%= f.label :name, "Nama Lengkap" %>
-            <%= f.text_field :name%>
-            <%= f.label :date_of_birth, "Tanggal Lahir" %>
-            <%= f.text_field :date_of_birth%>
-            <label>Tempat lahir</label>
-            <input type="text" placeholder="Jakarta">
-            <%= f.label :gender, "Jenis Kelamin" %>
-            <label class="radio inline">
-            <%= f.radio_button :gender, "male" %>
-                Pria
-            </label>
-            <label class="radio inline">
-              <%= f.radio_button :gender, "female" %>
-                Wanita
-            </label>
-            <%= f.label :religion, "Agama", :style => "margin-top:5px;" %>
-            <label class="radio inline">
-            <%= f.radio_button :religion, "islam" %>
-                Islam
-            </label>
-            <label class="radio inline">
-              <%= f.radio_button :religion, "kristen" %>
-                Kristen
-            </label>
-            <label class="radio inline">
-              <%= f.radio_button :religion, "hindu" %>
-                Hindu
-            </label>
-            <label class="radio inline">
-              <%= f.radio_button :religion, "budha" %>
-                Budha
-            </label>
+        <legend>Biodata</legend>
 
-          
-          <legend>Alamat</legend>
-          <%= f.label :address, "Alamat", :style => "margin-top :5px;" %>
-          <%= f.text_field :address, :class => "span8" , :placeholder => "Jl. Setra duta raya E1-18" %>
-          
-          <%= f.label :phone, "Telepon" %>
-          <%= f.text_field :address, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
-          <%= f.label :email, "Email"%>
-          <%= f.text_field :email, :class => "span4" , :placeholder => "johndoe@gmail.com" %>
+       <div class="control-group <%= has_error('name', @attendee) %>" >                
+          <label>Nama Lengkap:</label>
+          <div class="control">                  
+            <%= b.text_field :name%>
+            <span class="help-inline"><%= get_error_message('name', @attendee) %></span>
+          </div>
+        </div>                            
 
-          <legend>Data Kantor</legend>
-          <%= f.label :office_name, "Nama Kantor"%>
-          <%= f.text_field :office_name, :class => "span4" , :placeholder => "Departemen Kesehatan" %>
-          <%= f.label :office_address, "Alamat Kantor"%>
-          <%= f.text_field :office_address, :class => "span8" , :placeholder => "Jalan Kesehatan No.11" %>
-          <%= f.label :office_phone, "Telepon Kantor"%>
-          <%= f.text_field :office_phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
-          <%= f.label :job_title, "Jabatan"%>
-          <%= f.text_field :job_title, :class => "span4" , :placeholder => "Dokter Umum" %>
-
-          <legend>Data Kampus</legend>
-          <%= f.label :campus_name, "Nama Kampus"%>
-          <%= f.text_field :campus_name, :class => "span4" , :placeholder => "Departemen Kesehatan" %>
-          <%= f.label :campus_address, "Alamat Kampus"%>
-          <%= f.text_field :campus_address, :class => "span8" , :placeholder => "Jalan Kesehatan No.11" %>
-          <%= f.label :campus_phone, "Telepon Kampus"%>
-          <%= f.text_field :campus_phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
-          <legend>Lokasi Training</legend>
-          <%= f.label :position, "Pilih Lokasi Training"%>
-          <%= f.select :training_location, options_for_select([["Jakarta", "jakarta"], ["Pekan Baru", "pekan_baru"], ["Riau", "riau"]]) %>
-          <%= f.submit %>
-        </fieldset>
-        <% end %>
+        <div class="control-group <%= has_error('date_of_birth', @attendee) %>">                
+          <label>Tanggal Lahir:</label>
+          <div class="control">                  
+            <%= b.text_field :date_of_birth%>
+            <span class="help-inline"><%= get_error_message('date_of_birth', @attendee) %></span>
+          </div>                                
+        </div>
 
 
-        <div class="span10 pagination-centered">
+        <div class="control-group <%= has_error('place_of_birth', @attendee) %>">
+          <label>Tempat Lahir:</label>
+          <div class="control">                  
+            <%= b.text_field :place_of_birth%>
+            <span class="help-inline"><%= get_error_message('place_of_birth', @attendee) %></span>
+          </div>                                
+        </div>
+
+        <div class="control-group <%= has_error('gender', @attendee) %>">                
+          <label>Gender:</label>
+          <div class="control">
+            <%= b.select :gender, options_for_select([["Pria", "male"], ["Wanita", "female"]]) %>
+            <span class="help-inline"><%= get_error_message('gender', @attendee) %></span> 
+          </div>                                                
+        </div>
+
+
+        <div class="control-group <%= has_error('religion', @attendee) %>">
+          <label>Agama:</label>
+          <div class="control">
+            <%= b.select :religion, options_for_select([["Islam", "islam"], ["Kristen", "kristen"], ['Hindu', "hindu"], ['Budha', 'budha']]) %>
+            <span class="help-inline"><%= get_error_message('religion', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <div class="control-group <%= has_error('attendee.address', @attendee) %>">              
+          <label>Alamat:</label>
+          <div class="control">
+            <%= b.text_field :address, :class => "span8" , :placeholder => "Jl. Setra duta raya E1-18" %>
+            <span class="help-inline"><%= get_error_message('address', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <div class="control-group <%= has_error('phone', @attendee) %>">              
+          <label>Telepon:</label>
+          <div class="control">
+            <%= b.text_field :phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
+            <span class="help-inline"><%= get_error_message('phone', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <legend>Data Kantor</legend>
+
+        <div class="control-group <%= has_error('office_name', @attendee) %>">              
+          <label>Nama Kantor:</label>
+          <div class="control">
+            <%= b.text_field :office_name, :class => "span4" , :placeholder => "Departemen Kesehatan" %>
+            <span class="help-inline"><%= get_error_message('office_name', @attendee) %></span>
+          </div>                
+        </div>
+
+        <div class="control-group <%= has_error('office_address', @attendee) %>">              
+          <label>Alamat Kantor</label>                
+          <div class="control">                
+            <%= b.text_field :office_address, :class => "span8" , :placeholder => "Jalan Kesehatan No.11" %>
+            <span class="help-inline"><%= get_error_message('office_address', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <div class="control-group <%= has_error('office_address', @attendee) %>">
+          <label>Telepon Kantor</label>
+          <div class="control">
+            <%= b.text_field :office_phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
+            <span class="help-inline"><%= get_error_message('office_phone', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <div class="control-group <%= has_error('job_title', @attendee) %>">
+          <label>Jabatan</label>
+          <div class="control">
+            <%= b.text_field :job_title, :class => "span4" , :placeholder => "Dokter Umum" %>
+            <span class="help-inline"><%= get_error_message('job_title', @attendee) %></span>
+          </div>                
+        </div>
+
+        <legend>Data Kampus</legend>
+
+
+        <div class="control-group <%= has_error('campus_name', @attendee) %>">
+          <label>Nama Kampus</label>            
+          <div class="control">
+            <%= b.text_field :campus_name, :class => "span4" , :placeholder => "Departemen Kesehatan" %>
+            <span class="help-inline"><%= get_error_message('campus_name', @attendee) %></span>
+          </div>
+        </div>
+
+        <div class="control-group <%= has_error('campus_address', @attendee) %>">
+          <label>Alamat Kampus</label>
+          <div class="control">
+            <%= b.text_field :campus_address, :class => "span8" , :placeholder => "Jalan Kesehatan No.11" %>
+            <span class="help-inline"><%= get_error_message('campus_address', @attendee) %></span>
+          </div>
+        </div>
+
+
+        <div class="control-group <%= has_error('campus_phone', @attendee) %>">
+          <label>Telepon Kampus</label>
+          <div class="control">
+            <%= b.text_field :campus_phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
+            <span class="help-inline"><%= get_error_message('campus_phone', @attendee) %></span>
+          </div>
+        </div>         
+      </fieldset>
+      <% end %>
+
+
+       <div class="span10 pagination-centered" id="submit-button">
          <button class="btn btn-large btn-primary pull-center" type="button">Lanjut></button>                   
        </div>
-     </form>
+   </form>
 
-   </div>        
- </div>
+ </div>        
+</div>
 </div>
 
 <!-- FOOTER -->
@@ -116,5 +194,13 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#submit-button").bind("click", function(){
+    $("#new_attendee").submit();
+  });
+});
+</script>
 
 

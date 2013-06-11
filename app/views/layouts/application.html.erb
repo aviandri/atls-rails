@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>AtlsRails</title>
 	<%= stylesheet_link_tag    "application", :media => "all" %>
+	<%= stylesheet_link_tag    "application_custom", :media => "all" %>
 	<%= javascript_include_tag "application" %>
 	<%= csrf_meta_tags %>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +38,9 @@
 	                  <li><%= link_to "About", page_path("about") %></li>
 	                  <li><%= link_to "Blog", blogs_path() %></li>
 	                  <li><%= link_to "Profile", profiles_index_path() %></li>
-	                  <li><%= link_to "Register", new_order_path%></li>	                  
+	                  <li>
+	                  	<%= link_to "Register", new_attendee_session_path() %>	                  	
+	                  </li>	                  
 	                </ul>
 	            </div>
 
@@ -52,6 +55,5 @@
             </a>
 	</div>
 	<%= yield %>
-
 </body>
 </html>

@@ -5,7 +5,7 @@ gem 'rails', '3.2.9'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 
 
 # Gems used only for assets and not required
@@ -39,7 +39,13 @@ gem "htmlentities"
 
 gem 'pry-rails', :group => :development
 
+gem 'capistrano'
+
+gem 'passenger'
+
 gem 'validate_as_email'
+
+gem 'devise'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
