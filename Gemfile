@@ -45,9 +45,9 @@ gem "htmlentities"
 
 gem 'pry-rails', :group => :development
 
-gem 'capistrano'
+#gem 'capistrano'
 
-gem 'passenger'
+#gem 'passenger'
 
 gem 'validate_as_email'
 
