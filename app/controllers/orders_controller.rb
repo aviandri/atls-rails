@@ -7,7 +7,6 @@ class OrdersController < ApplicationController
 	end
 
 	def create
-		binding.pry
 		@order = Order.new(params[:order])
 		@order.status = "pending"
 		@order.attendee = current_attendee
