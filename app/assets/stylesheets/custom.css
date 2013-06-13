@@ -145,7 +145,7 @@ div.explain nav.primary ul{margin:0!important;}
 
 .header{ padding:0px;}
 
-.callout{padding:40px 0; background:#fff;}
+.callout{padding:10% 0; background:#fff;}
 .slidebox{background:#0072BB; width: 12em; padding: 1.2em 20px; -webkit-animation:slideIn; -webkit-animation-duration:1s; animation-duration:1s; animation:slideIn; height: 12em; margin-left: 50px; font-size: .8em;
 width: 23.4375em;bottom: 3em;padding: 1.4em 25px; position:absolute; left:40px; top:20px; color: #fff; text-align: left; display:inline-block; zoom:1;}
 .slidebox p{line-height: 20px; font-size: 14px;}
@@ -358,6 +358,12 @@ label{
   margin: 20px 20px 20px auto;
 }
 
+.navbar .nav>li>a {
+  font: bold 16px/40px "Open Sans",Helvetica,Arial,Sans-serif;
+  text-transform: uppercase;
+  font-weight: 300;
+  border-top: 11px solid transparent;
+}
 
 
 
