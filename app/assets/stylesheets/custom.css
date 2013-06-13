@@ -277,11 +277,11 @@ top: 0px;
   -webkit-box-shadow: 10px 10px 5px #888;
 }
 
-#register-form{
-  margin:10px auto;
-  float: none;
+#register-form{  
+  margin-top: 20px;
+  margin-bottom: 20px;
   border: 1px solid #CCC;
-  padding: 10px 0px 50px 20px;
+  padding: 0px 20px 20px 40px;
   border-radius: 7px;
   -moz-box-shadow: 10px 10px 5px #888;
   -webkit-box-shadow: 10px 10px 5px #888;
@@ -304,11 +304,6 @@ legend{
 #register-form .span2{
   width:60px;
 }
-
-#register-form{
-  margin: 20px auto;
-}
-
 
 .profiles{
   margin-bottom: 30px;
@@ -355,9 +350,18 @@ label{
   margin-bottom: 3px;
 }
 
-.control .field{
-  padding:20px 20px 20px 20px; 
+.control-group .control .field{
+  padding:30px 0px 30px 10px; 
 }
+
+#register-form-input{
+  margin: 20px 20px 20px auto;
+}
+
+
+
+
+
 
 
 

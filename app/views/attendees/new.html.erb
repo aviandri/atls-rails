@@ -1,7 +1,7 @@
 
 <div class="row-fluid">
-  <div class="container">              
-    <div id="register-form" class="span8">        
+  <div class="container-fluid">              
+    <div id="register-form" class="span8 offset2">        
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |b| %>
       <%= devise_error_messages! %>
       <fieldset>
@@ -154,16 +154,13 @@
           </div>
         </div>         
       </fieldset>
-      <% end %>
-
-
        <div class="span10 pagination-centered" id="submit-button">
          <button class="btn btn-large btn-primary pull-center" type="button">Lanjut></button>                   
-       </div>
-   </form>
-
- </div>        
-</div>
+      </div>
+      <% end %>      
+      
+    </div>        
+  </div>
 </div>
 
 <!-- FOOTER -->
