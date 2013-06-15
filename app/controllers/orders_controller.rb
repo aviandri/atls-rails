@@ -12,11 +12,16 @@ class OrdersController < ApplicationController
 		@order.attendee = current_attendee
 		respond_to do |format|
 			if @order.save						
-				format.html{redirect_to(:controller => "attendees", :action => "home")}		
+				format.html{redirect_to(:controller => "homes", :action => "index")}		
 			else
 				format.html {render :action => "new"}
 			end
 		end
+	end
+
+
+	def destroy
+		
 	end
 
 	def index

@@ -18,7 +18,7 @@
 						<h3>Kursus ATLS</h3>					
 					</div>
 					<div class="span3" style="margin-top:1%;">
-						<button type="button" data-toggle="modal" id="register-button" class="btn btn-success">Daftar</button>					
+						<button type="button" data-toggle="modal" id="register-button" class="m-btn green">Daftar</button>					
 					</div>
 				</div>
 
@@ -49,9 +49,8 @@
 									<td><%= order.created_at.strftime("%d-%m-%Y") %></td>
 									<td><span class="label <%= order_label_string(order.status) %>"><%= order.status %></span></td>	
 									<td>
-										<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn">Detail</button>
-										<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn">Batal</button>
-
+										<!-- <button type="button" data-toggle="modal" data-target="#myModal" class="m-btn blue">Detail</button> -->
+										<button type="button" data-toggle="modal" data-target="#myModal" class="m-btn red">Batal</button>
 									</td>								
 								</tr>
 								<% end %>								
@@ -67,7 +66,7 @@
 						<h3>Pre-Test</h3>					
 					</div>
 					<div class="span3" style="margin-top:1%;">
-						<button type="button" data-toggle="modal" class="btn btn-success">Test</button>
+						<button id="test-button" type="button" data-toggle="modal" class="m-btn green">Test</button>
 					</div>
 				</div>
 
@@ -87,7 +86,7 @@
 						<h3>Jadwal dan Lokasi</h3>					
 					</div>
 					<div class="span3" style="margin-top:1%;">
-						<button disabled="true" type="button" data-toggle="modal" class="btn btn-success">Pilih</button>
+						<button disabled="true" type="button" data-toggle="modal" class="m-btn green">Pilih</button>
 					</div>
 				</div>
 
@@ -96,7 +95,7 @@
 						<span class="label-title">Lokasi</span>									
 					</div>
 					<div class="span3">
-						Jakarta
+						-
 					</div>						
 				</div>	
 				<div class="row-fluid">				
@@ -104,7 +103,7 @@
 						<span class="label-title">Jadwal</span>									
 					</div>
 					<div class="span3">
-						11 Maret 2013
+						-
 					</div>						
 				</div>		
 			</div>

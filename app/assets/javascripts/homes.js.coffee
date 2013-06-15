@@ -1,9 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-exports = this
-exports.currentIndex = 0
-
 Home = 
 	showModal : (pendingOrders)->	
 		if pendingOrders.count == 0	
@@ -24,7 +21,7 @@ $ ->
 class Pretest
 	constructor : ->
 		test = ''
-		currentIndex = 0
+		@currentIndex = 0
 		testObject = ''
 		@answer = []
 
@@ -34,11 +31,13 @@ class Pretest
 	getObject : ->
 		@testObject = @tests[currentIndex]		
 	getNextObject :  ->
-		currentIndex++
-		@testObject = @tests[currentIndex]		
+		@currentIndex++
+		console.log("current index")
+		console.log(@currentIndex)
+		@testObject = @tests[@currentIndex]		
 	getPrevObject :  ->
 		currentIndex--
-		@testObject = @tests[currentIndex]		
+		@testObject = @tests[@currentIndex]		
 	getQuestion : ->
 		@testObject.pretest.question
 	getAnswer1 : ->
@@ -55,11 +54,10 @@ class Pretest
 		@testObject.pretest.id
 	setAnswer : (id, ans) ->
 		@answer[id] = ans
-		console.log(@answer)
 	isLast : ->		
-		true if currentIndex == @tests.length - 1
+		true if @currentIndex == @tests.length - 1
 	isFirst : ->		
-		true if currentIndex == 0
+		true if @currentIndex == 0
 
 
 
@@ -109,7 +107,7 @@ $ ->
 		window.location.replace("/home/start_test")
 
 $ ->
-	$('#next').click ->		
+	$('#next').click ->			
 		Test.showPrevButton()
 		answerValue = $('input[type=radio]:checked').val()
 		questionId = $('#question-section').attr('data-id')
@@ -132,8 +130,7 @@ $ ->
 
 $ ->
 	$('#submit').click ->		
-		json = Test.createAnswerJson()
-		console.log json
+		json = Test.createAnswerJson()		
 
 		callback = (response) ->
 			window.location.replace("/home/finish_test")
@@ -148,6 +145,8 @@ $ ->
 $ ->
 	$("#pretest-section").ready ->
 			callback = (response) ->
+				console.log('response')
+				console.log(response.length)
 				pretest.setObjects(response)
 				pretest.getObject()
 				Test.populateElement()
@@ -156,6 +155,10 @@ $ ->
 			$.get '/pretests.json?random=true', callback, 'json'		
 			false
 
+
+$ ->
+	$('#test-button').click ->	
+		window.location.replace("/home/test")
 
 
 
