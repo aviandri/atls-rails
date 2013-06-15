@@ -31,7 +31,7 @@
         <ul>
           <% if @current_page < @page && @current_page >= 1 %>
           	<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
-		  <% end %>
+		       <% end %>
           <% @page.times do |p| %>          
           	<li><%= link_to "#{p+1}", :action => "index", :page => "#{p+1}" %></li>
           <% end %>

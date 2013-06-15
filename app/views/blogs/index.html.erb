@@ -14,23 +14,27 @@
 				<div class="span12 blog_entry">
 
 					<% @blogs.each do |blog| %>
-						<h2><%= blog.title %></h2>
-						<div class="article-body">					
-							<%= truncate_html blog.body, :length => 1000 %>		
-						</div>
-						<%= link_to "Read More", { :action => "show" , :id => blog.id} , :class => "m-btn blue" %>
+					<h2><%= blog.title %></h2>
+					<div class="article-body">					
+						<%= truncate_html blog.body, :length => 1000 %>		
+					</div>
+					<%= link_to "Read More", { :action => "show" , :id => blog.id} , :class => "m-btn blue" %>
 					<% end %>														
 					<div class="pagination">
 						<ul>
-							<li><a href="#">Prev</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">Next</a></li>
+							<% if @current_page < @page && @current_page >= 1 %>
+							<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+							<% end %>
+							<% @page.times do |p| %>          
+							<li><%= link_to "#{p+1}", :action => "index", :page => "#{p+1}" %></li>
+							<% end %>
+
+							<% if @current_page < @page && @current_page >= 1 %>
+							<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+							<% end %>
+
 						</ul>
-					</div>
-				</div> 
+					</div>     				</div> 
 				</div>
 			</div>
 		</div>
