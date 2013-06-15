@@ -13,12 +13,12 @@ class BlogsController < ApplicationController
 			offset = 0
 		end
 
-		@blogs = Blogs.find(:all, 
+		@blogs = Blog.find(:all, 
 			:order => "created_at", 
 			:limit => LIMIT_PER_PAGE, 
 			:offset => offset)
 
-		@page = Blogs.all.count/LIMIT_PER_PAGE
+		@page = Blog.all.count/LIMIT_PER_PAGE
 		@current_page = page
 	end
 
