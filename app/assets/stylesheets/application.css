@@ -16,5 +16,6 @@
  *= require m-buttons
  *= require style-slider
  *= require custom-slider
+ *= require jquery.ui.datepicker
  *= require active_admin/editor/wysiwyg
  */

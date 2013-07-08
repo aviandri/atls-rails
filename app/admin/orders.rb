@@ -8,18 +8,19 @@ ActiveAdmin.register Order do
 		column :payment_type
 		column :created_at
 		column :updated_at
+		column :payment_amount
+		column :payment_code
 		column "peserta" do |order|
 			link_to(order.attendee.name, :controller => "attendees", :action => "show", :id => order.attendee.id)
-		end
+		end				
+		 column("Action") do |order|
+	      	link_to("Approve", approve_admin_order_path(order.id), :method => :put)	      	
+      	end    
+      	default_actions
+	end		
 
-	end
-
-	form do |f|
-		f.inputs "Orders" do			
-			f.input :status, as: :select, :collection => ["pending", "completed", "canceled"]	
-		end
-		
-
-	end
-
+	member_action :approve, :method => :put do
+	    Order.approve_order(params[:id])
+	    redirect_to admin_orders_path
+  	end
 end

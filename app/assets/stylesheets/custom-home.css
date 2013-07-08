@@ -115,3 +115,24 @@ body{
 
 .callout{padding:7% 0; background:#fff;}
 
+div#clock span { 
+	font-size: 40px; font-weight: bold;
+}
+
+.text-right{
+	text-align: right;
+}
+
+.valign-center{
+	vertical-align: middle;
+}
+
+.centered-table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.centered-table tbody tr td{
+	vertical-align: middle;	
+}
+

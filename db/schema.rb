@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130615191435) do
+ActiveRecord::Schema.define(:version => 20130706145358) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -89,12 +89,31 @@ ActiveRecord::Schema.define(:version => 20130615191435) do
 
   create_table "orders", :force => true do |t|
     t.string   "status"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.string   "training_location"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "attendee_id"
     t.string   "payment_type"
+    t.integer  "payment_amount"
+    t.integer  "payment_term_id"
+    t.integer  "payment_code"
   end
+
+  create_table "payment_code_counters", :force => true do |t|
+    t.integer  "index"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "order_id"
+  end
+
+  create_table "payment_terms", :force => true do |t|
+    t.string   "name"
+    t.integer  "amount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "label"
+  end
+
+  add_index "payment_terms", ["name"], :name => "index_payment_terms_on_name", :unique => true
 
   create_table "payment_types", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -139,6 +158,46 @@ ActiveRecord::Schema.define(:version => 20130615191435) do
     t.string   "answer_three"
     t.string   "answer_four"
     t.integer  "correct_answer"
+  end
+
+  create_table "training_locations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "price"
+  end
+
+  create_table "training_prices", :force => true do |t|
+    t.integer  "training_location_id"
+    t.integer  "price"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "training_schedules", :force => true do |t|
+    t.integer  "training_location_id"
+    t.date     "training_date"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  create_table "trainings", :force => true do |t|
+    t.integer  "attendee_id"
+    t.string   "payment_status"
+    t.string   "book_delivery_status"
+    t.string   "pretest_status"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "training_location_id"
+    t.integer  "amount_paid"
+    t.integer  "amount_unpaid"
+    t.integer  "training_schedule_id"
+  end
+
+  create_table "traning_locations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

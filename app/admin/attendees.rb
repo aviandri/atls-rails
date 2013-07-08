@@ -3,7 +3,7 @@ ActiveAdmin.register Attendee do
     column :name                     
     column :created_at        
     column :phone           
-    column :email             
+    column("Email") {|attendee|attendee.email ? attendee.email : "-"}    
     default_actions                   
   end                   
 end

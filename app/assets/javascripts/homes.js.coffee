@@ -8,16 +8,60 @@ Home =
 		else
 			alert("You have pending orders already! Please finish the payment of cancel it first")
 
+	availableDates : []
+
+	showScheduleModal : ->
+		callback = (response) ->
+			for schedules in response.training_schedules			
+				Home.availableDates.push(schedules.training_date)
+			$("#date-picker").datepicker({beforeShowDay: Home.filterScheaduleDate, dateFormat: "dd-mm-yy"})
+		$("#scheduleModal").modal('show')
+		$.get '/training_schedules.json', callback,'json'
+	
+	
+	filterScheaduleDate : (date) ->			
+		dmy =  date.getDate() + "-" + (date.getMonth() + 1)  + "-" + date.getFullYear()
+		if $.inArray(dmy, Home.availableDates) != -1
+			[true, "","Available"]
+		else 
+			[false,"","unAvailable"]
 
 $ ->
-	$('#register-button').click ->
+	$('#register-button').click ->		
 		callback = (response) -> 
 			Home.showModal(response)
 			false
-		$.get '/orders?status=pending', callback,'json'
+
+		$.get '/orders.json?status=pending', callback,'json'
 
 
+$ ->
+	$('#schedule-button').click ->
+		Home.showScheduleModal()
+$ ->
+	$("#payment-term").change ->
+		callback = (response) ->
+			$("#payment-code").text("Rp."+response.payment_code+",-")
+			amount = $("#payment-term :selected").attr("data-amount")
+			totalAmount = parseInt(amount) + parseInt(response.payment_code)
+			$("#payment-amount").text("Rp."+amount+",-")
+			$("#attendee_orders_attributes_0_payment_amount").attr("value", amount)
+			$("#attendee_orders_attributes_0_payment_code").attr("value", response.payment_code)
+			$("#payment-total").text("Rp."+totalAmount+",-")
+			$("#price-section").show()
 
+		$.get '/payment_code', callback, 'json'
+
+$ ->
+	$("#training_location").change ->
+		callback = (response) ->
+			console.log(response.payment_term)
+			for payterm in response.payment_term
+				$("#payment-term").append($("<option></option>")
+					.attr("data-amount",payterm.price)
+					.text(payterm.name))
+		
+		$.get '/payment_term.json?training_location_id='+$("#training_location").val(), callback, 'json'
 class Pretest
 	constructor : ->
 		test = ''
@@ -29,7 +73,7 @@ class Pretest
 		@tests = resource
 
 	getObject : ->
-		@testObject = @tests[currentIndex]		
+		@testObject = @tests[@currentIndex]		
 	getNextObject :  ->
 		@currentIndex++
 		console.log("current index")
@@ -39,6 +83,7 @@ class Pretest
 		currentIndex--
 		@testObject = @tests[@currentIndex]		
 	getQuestion : ->
+		console.log @testObject
 		@testObject.pretest.question
 	getAnswer1 : ->
 		@testObject.pretest.answer_one	
@@ -58,8 +103,8 @@ class Pretest
 		true if @currentIndex == @tests.length - 1
 	isFirst : ->		
 		true if @currentIndex == 0
-
-
+	getCurrentIndex : ->
+		@currentIndex
 
 Test = 
 	populateElement : () ->
@@ -98,6 +143,15 @@ Test =
 				json.answers.push(jsonAns)
 		json
 
+	updatePageIndex : () ->
+		$("#indexCount").html(pretest.getCurrentIndex() + 1)
+
+	submitAnswer : () ->
+		json = Test.createAnswerJson()		
+		callback = (response) ->
+			window.location.replace("/home/finish_test")
+		$.ajax '/test_results.json', type: 'POST', data: JSON.stringify(json), success: callback, contentType: "application/json", dataType: "json"		
+
 
   			
 pretest = new Pretest
@@ -119,22 +173,21 @@ $ ->
 		else
 			pretest.getNextObject()
 			Test.populateElement()
+		Test.updatePageIndex()
 
 $ ->
 	$('#prev').click ->		
 		pretest.getPrevObject()
 		Test.populateElement()
+		Test.updatePageIndex()
 		Test.showNextButton()
 		if pretest.isFirst()
 			Test.disablePrevButton()
 
 $ ->
-	$('#submit').click ->		
-		json = Test.createAnswerJson()		
-
-		callback = (response) ->
-			window.location.replace("/home/finish_test")
-		$.ajax '/test_results.json', type: 'POST', data: JSON.stringify(json), success: callback, contentType: "application/json", dataType: "json"		
+	$('#submit').click ->
+		Test.submitAnswer()		
+		
 
 
 $ ->
@@ -159,6 +212,7 @@ $ ->
 $ ->
 	$('#test-button').click ->	
 		window.location.replace("/home/test")
+
 
 
 

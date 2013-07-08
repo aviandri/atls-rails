@@ -23,10 +23,18 @@ AtlsRails::Application.routes.draw do
 
   resources :test_results
 
+  resources :trainings
+
+  resources :training_schedules, :only => [:index]
+
   match "/home" => "homes#index"
   match "/home/test" => "homes#test"
   match "/home/start_test" => "homes#start_test"
   match "/home/finish_test" => "homes#finish_test"
+
+  match "/payment_term" => "homes#payment_terms"
+
+  match "/payment_code" => "orders#payment_code"
 
 
 

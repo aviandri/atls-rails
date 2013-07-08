@@ -1,9 +1,25 @@
 class OrdersController < ApplicationController
+	respond_to :json, :only => [:payment_code]
 	
+	PAYMENT_MODAL_INDEX = 500
+	TRAINING_PACKAGE_PRICE = 4500000
+
 
 	def new
 		@order = Order.new
 		@order.attendees << Attendee.new
+
+		@term_payment = PaymentTerm::TERM
+		if current_attendee.training.payment_status == PaymentTerm::TERM_FIRST_INSTALLMENT
+			@term_payment.delete(TERM_FIRST_INSTALLMENT)
+		end	
+	end
+
+
+	def payment_code
+		payment_code = PaymentCodeCounter.create
+		@payment_code = payment_code.id % 500
+		render :json => {:payment_code => @payment_code}
 	end
 
 	def create
@@ -11,16 +27,24 @@ class OrdersController < ApplicationController
 		@order.status = "pending"
 		@order.attendee = current_attendee
 		respond_to do |format|
-			if @order.save						
+			if @order.save	
+				@order.payment_amount = TRAINING_PACKAGE_PRICE + (@order.id % PAYMENT_MODAL_INDEX)					
+				@order.save
 				format.html{redirect_to(:controller => "homes", :action => "index")}		
 			else
-				format.html {render :action => "new"}
+				format.html {render :controller=> "home", :action => "index"}
 			end
 		end
 	end
 
 
 	def destroy
+		@order = Order.find(params[:id])
+
+		if @order.destroy
+			redirect_to(:controller => "homes", :action => "index")
+		end
+		
 		
 	end
 

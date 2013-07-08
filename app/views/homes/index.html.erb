@@ -11,53 +11,84 @@
 			<li><a href="#">Edit Profile</a></li>
 		</ul>
 
-		<div class="span10" style="padding:10px 10px 10px 10px;">
+		<div class="span9" style="">
 			<div class="payment-section wrapper shadow">
-				<div class="row-fluid section-title">				
+				<div class="row-fluid section-title" style="height:30%;">				
 					<div class="span9">
 						<h3>Kursus ATLS</h3>					
 					</div>
-					<div class="span3" style="margin-top:1%;">
-						<button type="button" data-toggle="modal" id="register-button" class="m-btn green">Daftar</button>					
+					<div class="span3 text-right">
+						<%= payment_status(current_attendee.training) %>	
 					</div>
 				</div>
 
 
 				<div class="row-fluid">				
-					<div class="span9">
-						<span class="label-title">Pembayaran</span>									
+					<div class="span8" style="text-align:left;">
+						<span class="label-title">Lokasi Kursus</span>								
 					</div>
 					<div class="span3">
-						<span class="label section-status label-warning">incomplete</span>	
+						<% if current_attendee.training_location %>
+							<span><%= current_attendee.training_location.name %></span>								
+						<% else %>
+							<span>-</span>		
+						<% end %>
 					</div>
 				</div>	
 
-				<div class="row-fluid table">
-					<div class="span10">
-						<table class="table table-striped">
-							<thead>
-								<tr>								
-									<th>Order</th>
-									<th>Tanggal Daftar</th>
-									<th>Status</th>									
-								</tr>
-							</thead>
-							<tbody>
-								<% @orders.each_with_index do |order, index|%>
-								<tr>
-									<td><%= index + 1 %></td>
-									<td><%= order.created_at.strftime("%d-%m-%Y") %></td>
-									<td><span class="label <%= order_label_string(order.status) %>"><%= order.status %></span></td>	
-									<td>
-										<!-- <button type="button" data-toggle="modal" data-target="#myModal" class="m-btn blue">Detail</button> -->
-										<button type="button" data-toggle="modal" data-target="#myModal" class="m-btn red">Batal</button>
-									</td>								
-								</tr>
-								<% end %>								
-							</tbody>
-						</table>
+	
+
+				<div class="row-fluid">				
+					<div class="span9">
+						<span class="label-title">Pembayaran</span>								
 					</div>
+
 				</div>	
+
+				<% if current_attendee.orders.count > 0 %>
+					<div class="row-fluid table">
+						<div class="span12">
+							<table class="table table-striped centered-table">
+								<thead>
+									<tr>								
+										<th>Order</th>
+										<th>Tanggal Daftar</th>
+										<th>Amount</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% current_attendee.orders.each_with_index do |order, index|%>
+									<% unless order.id.nil? %>
+									<tr>
+										<td><%= index + 1 %></td>
+										<td><%= order.created_at.strftime("%d-%m-%Y") %></td>
+										<td>Rp.<%= order.payment_amount + order.payment_code %>,-</td>
+										<td><span class="label <%= order_label_string(order.status) %>"><%= order.status %></span></td>	
+										<%= form_for order, :html => {:method => :delete} do |f| %> 
+										<%= f.hidden_field :id, :value => order.id %>
+										<%= cancel_order_button(order)%>
+										<td>
+											<button type="button" data-toggle="modal" id="confirmation-button" data-target="#confirmModal" class="m-btn green">Detail</button>		
+										</td>
+										<% end %>
+
+									</tr>
+									<% end %>
+									<% end %>								
+								</tbody>
+							</table>
+						</div>
+					</div>	
+				<% end %>
+
+				<div class="row-fluid">
+					<div class="offset10 span2" style="text-align:right;">
+						<% unless current_attendee.training.payment_done? %>
+							<button type="button" data-toggle="modal" id="register-button" class="m-btn blue">Bayar</button>	
+						<% end %>
+					</div>
+				</div>
 			</div>
 
 			<div class="pretest-section wrapper shadow">
@@ -65,8 +96,8 @@
 					<div class="span9">
 						<h3>Pre-Test</h3>					
 					</div>
-					<div class="span3" style="margin-top:1%;">
-						<button id="test-button" type="button" data-toggle="modal" class="m-btn green">Test</button>
+					<div class="span3 text-right">
+						<%= pretest_status(current_attendee.training) %>	
 					</div>
 				</div>
 
@@ -74,38 +105,38 @@
 					<div class="span9">
 						<span class="label-title">Pre-Test</span>									
 					</div>
-					<div class="span3">
-						<span class="label section-status label-warning">incomplete</span>	
-					</div>
-				</div>		
+				</div>	
+
+				<div class="row-fluid">
+					<div class="offset10 span2" style="text-align:right;">
+						<button id="test-button" type="button" data-toggle="modal" class="m-btn blue">Test</button>
+					</div>	
+				</div>
 			</div>
 
-			<div class="schedule-location-section wrapper shadow">
+			<div class="schedule-location-section wrapper shadow" data-current-attendee="<%= current_attendee.id %>">
 				<div class="row-fluid section-title">				
 					<div class="span9">
-						<h3>Jadwal dan Lokasi</h3>					
-					</div>
-					<div class="span3" style="margin-top:1%;">
-						<button disabled="true" type="button" data-toggle="modal" class="m-btn green">Pilih</button>
+						<h3>Jadwal</h3>					
 					</div>
 				</div>
-
-				<div class="row-fluid">				
-					<div class="span9">
-						<span class="label-title">Lokasi</span>									
-					</div>
-					<div class="span3">
-						-
-					</div>						
-				</div>	
 				<div class="row-fluid">				
 					<div class="span9">
 						<span class="label-title">Jadwal</span>									
 					</div>
 					<div class="span3">
-						-
+						<% if current_attendee.training.training_schedule %>
+							<%= current_attendee.training.training_schedule.training_date %>
+						<% else %>
+							-
+						<% end %>
 					</div>						
-				</div>		
+				</div>
+				<div class="row-fluid">
+					<div class="span2 offset10" style="text-align:right;">
+						<button <%= time_location_button(current_attendee.training) %> type="button" data-toggle="modal" class="m-btn blue" id="schedule-button">Pilih</button>
+					</div>		
+				</div>
 			</div>
 		</div>
 
@@ -114,67 +145,130 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 				<h3 id="myModalLabel">Pembayaran</h3>
 			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-						<span>Methode Pembayaran</span>
-					</div>
-					<div class="span6">
-						<select>
-							<option>Transfer</option>
-							<option>Credit Card</option>
-						</select>
-					</div>
-				</div>
 
-				<div class="row-fluid price-section">
-					<div class="span12">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Product</th>
-									<th>Harga</th>									
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Biaya Kursus</td>
-									<td>Rp.4000.000,-</td>										
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>ID Transaksi</td>
-									<td>Rp.1,-</td>
-								</tr>		
-								<tr>
-									<td>Total</td>
-									<td></td>
-									<td><span class="strong">Rp.4000.001,-</span></td>
-								</tr>									
-							</tbody>
-						</table>
-					</div>
-				</div>
 
-				<div class="row-fluid price-section">
-					<div class="span12">
-						<span>Transfer the payment to:</span>
-						<span>Bank BCA</span>
-						<span>Account Number 4111111111111111</span>
-					</div>
-				</div>
+			 <%= form_for(current_attendee, :as => :attendee, :html => {:method => :put}) do |attendee_form| %>
+				<div class="modal-body">
+					<div class="row-fluid">
 
-			</div>
-			<div class="modal-footer">
-				<%= form_for @order do|f| %>
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-				<button class="btn btn-primary">Make Order</button>
+						<div class="control-group">
+							<label>Lokasi Training:</label>
+							<div class="control">								
+								<select id="training_location" name="training_location">
+									<option></option>
+									<% @training_locations.each do |training_location| %>
+									<option id="training-location" value="<%= training_location.id%>"> <%=training_location.name %></option>
+									<% end %>						
+								</select>
+							</div> 
+						</div>
+
+					<%= attendee_form.fields_for :orders, current_attendee.orders.build do|f| %>
+						<div class="control-group" id="order-group">
+							<label>Term Pembayaran:</label>
+							<div class="control">
+								<select id="payment-term">
+									<option></option>
+								</select>
+										
+								<%= f.hidden_field :payment_amount, {:value => 0}%>
+								<%= f.hidden_field :payment_code, {:value => 0}%>
+								<%= f.hidden_field :status, {:value => "pending"}%>
+							</div> 
+						</div>
+
+					</div>			
+
+					<div id="price-section" class="row-fluid price-section" style="display:none;">
+						<div class="span12">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Product</th>
+										<th>Harga</th>									
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>Biaya Kursus</td>
+										<td id="payment-amount">Rp.4000.000,-</td>										
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>Code Pembayaran</td>
+										<td id="payment-code">Rp.1,-</td>
+									</tr>		
+									<tr>
+										<td>Total</td>
+										<td></td>
+										<td><span class="strong" id="payment-total">Rp.4000.001,-</span></td>
+									</tr>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="row-fluid" id="payment-type" style="display:none;">
+						<div class="span6">
+							<span>Methode Pembayaran</span>
+						</div>
+						<div class="span6">
+							<select>
+								<option>Transfer</option>
+								<option>Credit Card</option>
+							</select>
+						</div>
+					</div>
+
+
+					<!-- <div class="row-fluid price-section" style="margin-top:20px;">
+						<div class="span12">
+							<span>Transfer the payment to:</span>
+							<span>Bank BCA</span>
+							<span>Account Number 4111111111111111</span>
+						</div>
+					</div> -->
+
+				</div>
 				<% end %>
-			</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+					<button class="btn btn-primary">Make Order</button>
+				</div>
+			<% end %>
 		</div>
 
+
+
+		<div id="scheduleModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Jadwal Training</h3>
+			</div>
+			<%= form_for current_attendee.training  :as => :training, :html => {:method => :put} do |training_form| %>
+			<div class="modal-body">
+
+				<div class="row-fluid price-section">
+					<div class="span12">						
+						<div class="control-group">
+							<label>Jadwal:</label>
+							<div class="control">
+								<input name="training_date" id="date-picker" type="text">
+								<span class="help-inline"></span>
+							</div>						
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn btn-primary">Make Order</button>
+			</div>
+			<% end %>
+		</div>
 	</div>		
 </div>
 

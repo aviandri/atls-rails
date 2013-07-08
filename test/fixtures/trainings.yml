@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  attendee_id: 
+  payment_status: 
+  book_delivery_status: 
+  pretest_status: MyString
+
+two:
+  attendee_id: 
+  payment_status: 
+  book_delivery_status: 
+  pretest_status: MyString
