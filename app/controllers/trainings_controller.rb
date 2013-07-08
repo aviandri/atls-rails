@@ -12,11 +12,9 @@ class TrainingsController < ApplicationController
 		if params["training_date"]
 			training_schedule = TrainingSchedule.find_by_training_date(Date.parse(params["training_date"]))
 			@training.training_schedule = training_schedule
-			binding.pry
 		end
 		@training.update_attributes(params["training"])
 		@training.save
-		binding.pry
 		redirect_to :controller => :homes, :action => :index
 	end
 end

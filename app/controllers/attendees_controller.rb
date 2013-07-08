@@ -18,7 +18,6 @@ class AttendeesController < Devise::RegistrationsController
 			@attendee.training.training_location = TrainingLocation.find(params["training_location"])
 			@attendee.training.save
 		end		
-		binding.pry 
 		@attendee.update_attributes(params["attendee"])		
 		@attendee.save
 		redirect_to :controller => :homes, :action => :index

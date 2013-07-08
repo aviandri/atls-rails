@@ -19,7 +19,6 @@ class Training < ActiveRecord::Base
 			if order.status == Order::STATUS_COMPLETED
 				training = order.attendee.training
 				current_paid = training.amount_paid.nil? ? 0 : training.amount_paid
-				binding.pry
 				training.amount_paid = current_paid + order.payment_amount
 				if training.amount_paid < training.training_location.price
 					training.payment_status = "First Payment"
