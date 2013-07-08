@@ -28,8 +28,8 @@
 						<span class="label-title">Lokasi Kursus</span>								
 					</div>
 					<div class="span3">
-						<% if current_attendee.training_location %>
-							<span><%= current_attendee.training_location.name %></span>								
+						<% if current_attendee.training.training_location %>
+							<span><%= current_attendee.training.training_location.name %></span>								
 						<% else %>
 							<span>-</span>		
 						<% end %>

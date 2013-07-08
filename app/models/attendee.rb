@@ -7,7 +7,6 @@ class Attendee < ActiveRecord::Base
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order
   has_many :orders
   has_one :training
-  # has_one :training_location, :through => :training
   accepts_nested_attributes_for :orders
   validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
   validates :phone, :presence => true
