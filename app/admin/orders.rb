@@ -11,7 +11,7 @@ ActiveAdmin.register Order do
 		column :payment_amount
 		column :payment_code
 		column "peserta" do |order|
-			link_to(order.attendee.name, :controller => "attendees", :action => "show", :id => order.attendee.id)
+			link_to(order.attendee.name, :controller => "attendees", :action => "show", :id => order.attendee.id) if order.attendee
 		end				
 		 column("Action") do |order|
 	      	link_to("Approve", approve_admin_order_path(order.id), :method => :put)	      	

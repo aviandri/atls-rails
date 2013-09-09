@@ -9,6 +9,8 @@ class Order < ActiveRecord::Base
   STATUS_PENDING = "pending"
   STATUS_CANCELED = "canceled"
 
+  TRAINING_PACKAGE_PRICE = 4500000
+
   scope :pending, where("status = ?", STATUS_PENDING)
   scope :completed, where("status = ?", STATUS_COMPLETED)
   scope :cancel, where("status = ?", STATUS_CANCELED)
@@ -26,6 +28,12 @@ class Order < ActiveRecord::Base
     order
   end
 
+  def self.create_completed_payment_order(attendee, training_location)
+    order = Order.new(attendee: attendee, payment_amount: training_location.price, status: Order::STATUS_COMPLETED)
+    if order.save
+      order
+    end
+  end
 
   private 
 

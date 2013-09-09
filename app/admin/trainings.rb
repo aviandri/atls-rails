@@ -11,8 +11,14 @@ ActiveAdmin.register Training do
       	training.training_location ? training.training_location.name : "-"
       end
       column("Peserta") do |training|
-      	link_to training.attendee.email, admin_attendee_path(training.attendee)
-      end
+       	link_to training.attendee.name, admin_attendee_path(training.attendee) if training.attendee
+       end
+      column("Jadwal Training") do |training|
+            training.training_schedule ? training.training_schedule.training_date : "-"
+      end            
+      column("Status Buku") do |training|
+            training.book_delivery_status ? training.book_delivery_status : "-"
+      end            
       default_actions
     end
   
