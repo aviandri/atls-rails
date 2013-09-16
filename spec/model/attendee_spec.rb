@@ -31,6 +31,18 @@ describe Attendee do
 			att.training.training_location.id.should eq(@training_location.id)						
 		end 		
  	end 
+
+	describe "update attendee with comleted payment" do
+    before do
+      @attendee = FactoryGirl.create(:attendee)
+    end	  
+    it "should update attendee with completed payment" do
+      attendee_attr = {name: "Aviandri H"}
+      attendee = Attendee.update_attendee_with_completed_payment(@attendee.id, attendee_attr)
+      attendee.name.should eq(attendee_attr[:name])
+
+    end
+	end
 	
 	
 end

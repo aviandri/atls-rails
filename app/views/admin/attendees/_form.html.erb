@@ -1,0 +1,102 @@
+<% if params[:action] == "new" %>       
+	<%= semantic_form_for([:admin, @attendee], url: new_attendee_training_registration_admin_attendees_path) do |f| %>
+	    <%= f.inputs "Attendee Detail" do %>     
+			 <%= f.input :name %>	 
+			 <%= f.input :date_of_birth, :as => :date_picker %>	 
+			 <%= f.input :place_of_birth %>
+			 <%= f.input :gender, :as => :select, :collection => ["Male", "Female"] %>
+			 <%= f.input :religion %>
+			 <%= f.input :address %>
+			 <%= f.input :phone %>
+			 <%= f.input :email %>
+			 <%= f.input :password %>
+			 <%= f.input :password_confirmation %>
+	 	<% end %>
+
+	 	<%= f.inputs "Office Details" do %>
+	 		<%= f.input :office_name %>
+	 		<%= f.input :job_title %>
+	 		<%= f.input :office_address %>
+	 		<%= f.input :office_phone %>
+	 	<% end %>
+
+	 	<%= f.inputs "Campus Details" do %> 
+	 		<%= f.input :campus_name %>
+	 		<%= f.input :campus_address %>
+	 		<%= f.input :campus_phone %>
+	 	<% end %>
+
+	 	<%= f.inputs "Training Details" do %>
+	 		<%= f.semantic_fields_for :training, Training.new do |t| %>
+	 			<%= t.inputs do %>
+	 				<%= t.input :training_location_id, :as => :select, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}] %>
+	 			<% end %>
+
+	 			<%= t.inputs do %>
+	 				<%= t.input :training_schedule_id, :as => :select, :collection => [] %>
+	 			<% end %>
+	 		<% end %>
+
+	 	<% end %>		
+
+		<%= f.actions %>
+	<% end %>
+
+<% elsif params[:action] == "edit" %>
+	<%= semantic_form_for([:admin, @attendee], url: update_attendee_training_registration_admin_attendee_path) do |f| %>
+	    <%= f.inputs "Attendee Detail" do %>     
+			 <%= f.input :name %>	 
+			 <%= f.input :date_of_birth %>	 
+			 <%= f.input :place_of_birth %>
+			 <%= f.input :gender, :as => :select, :collection => ["Male", "Female"] %>
+			 <%= f.input :religion %>
+			 <%= f.input :address %>
+			 <%= f.input :phone %>
+			 <%= f.input :email %>
+	 	<% end %>
+
+	 	<%= f.inputs "Office Details" do %>
+	 		<%= f.input :office_name %>
+	 		<%= f.input :job_title %>
+	 		<%= f.input :office_address %>
+	 		<%= f.input :office_phone %>
+	 	<% end %>
+
+	 	<%= f.inputs "Campus Details" do %> 
+	 		<%= f.input :campus_name %>
+	 		<%= f.input :campus_address %>
+	 		<%= f.input :campus_phone %>
+	 	<% end %>
+
+	 		
+		<%= f.inputs "Training Details" do %>
+	 		<%= f.semantic_fields_for :training do |t| %>
+	 			<%= t.inputs do %>
+	 				<%= t.input :training_location_id, :as => :select, :collection => [["#{@attendee.training.training_location.name}/#{@attendee.training.training_location.price}", @attendee.training.training_location.id]], :include_blank => false %>
+	 			<% end %>
+	 		<% end %>
+	 	<% end %>
+
+		<%= f.actions %>
+	<% end %>
+<% end %>
+
+
+<script type="text/javascript">
+	$("#attendee_training_attributes_training_location_id").change(function(){
+		var callback = function(response){
+			var test = $("#attendee_training_attributes_training_schedule_id").find('option');
+			var training_schedules = response.training_schedules;
+			for(var i = 0; i < training_schedules.length ; i++){
+				$("#attendee_training_attributes_training_schedule_id")
+				.append($("<option></option>")
+						.attr("value", training_schedules[i].id)
+						.text(training_schedules[i].training_date));				
+			}			
+		}
+		$.get('/training_schedules?training_location_id='+$(this).val(), callback, 'json');
+	});
+	
+</script>
+
+

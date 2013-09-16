@@ -1,27 +1,38 @@
 require 'spec_helper'
+require 'pry'
 
-describe Order do
+describe Order do	
+	describe "Update order status" do
+	  it "should call update training payment data" do	  	
+	    order = FactoryGirl.create(:order)
+	    order.should_receive(:update_training_payment_data)
+	    order.run_callbacks(:save)
+	  end
 
-	before(:each) do
-		@attendee = FactoryGirl.create(:attendee)
+	  it "should call Training.update_payment_status" do
+	  	Training.any_instance.should_receive(:update_amount_paid)
+	    order = FactoryGirl.create(:order, status: Order::STATUS_COMPLETED)
+	  end
 
-		@order = FactoryGirl.create(:order, :attendee_id => @attendee.id)
-	end
+	  it "should not call Training.update_payment_status" do
+	  	Training.any_instance.should_not_receive(:update_amount_paid)
+	  	order = FactoryGirl.create(:order)	    
+	  end
 
-	describe "create completed payment order" do
-		before do
-			@training_location = FactoryGirl.create(:training_location)
-			@training = Training.new(training_location: @training_location)
-			@attendee.training = @training
-			@attendee.save
-		end
-		it "should create order with completed payment" do
-			order = Order.create_completed_payment_order(@attendee, @training_location)
-			
-			order.status.should eq(Order::STATUS_COMPLETED)			
-			order.payment_amount.should eq(@training_location.price)
-			order.attendee_id.should eq(@attendee.id)
-			@training.payment_status.should eq("Done")
-		end
+	  it "should not call Training.update_payment_status on update" do
+	  	order = FactoryGirl.create(:order)	    
+	  	Training.any_instance.should_receive(:update_amount_paid)
+	  	order.status = Order::STATUS_COMPLETED
+	  	order.save
+	  end
+
+	  it "should not call Training.update_payment_status on update" do
+	  	order = FactoryGirl.create(:order)	    
+	  	Training.any_instance.should_not_receive(:update_amount_paid)
+	  	order.status = "not completed"
+	  	order.save
+	  end
+
+
 	end
 end

@@ -4,8 +4,13 @@ class Training < ActiveRecord::Base
 	belongs_to :attendee
 	belongs_to :training_schedule
 
+	after_initialize :init
 	accepts_nested_attributes_for :training_location
 
+
+	def init
+		self.amount_paid = 0
+	end
 	def latest_payment_status
 		if self.attendee.orders.completed.latest
 			self.attendee.orders.completed.latest.first.payment_term.name
@@ -14,24 +19,17 @@ class Training < ActiveRecord::Base
 		end
 	end
 
-	def self.update_payment_status(order)
-		if order.status_changed?
-			if order.status == Order::STATUS_COMPLETED
-				training = order.attendee.training
-				current_paid = training.amount_paid.nil? ? 0 : training.amount_paid
-				training.amount_paid = current_paid + order.payment_amount
-				if training.amount_paid < training.training_location.price
-					training.payment_status = "First Payment"
-				elsif training.amount_paid == training.training_location.price
-					training.payment_status = "Done"
-				end					
-				training.save!		
-			end
-		end
+	def update_amount_paid(order)
+		training = order.attendee.training
+		training.amount_paid = order.payment_amount
+		training.save
 	end
 
 	def payment_done?
-		if payment_status == "Done"
+		unless training_location
+			return false
+		end
+		if amount_paid >= training_location.price
 			true
 		else
 			false

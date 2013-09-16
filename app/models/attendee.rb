@@ -67,9 +67,15 @@ class Attendee < ActiveRecord::Base
 
     attendee = Attendee.new(attendee_attr)
     attendee.training = training
-    
+
     Order.create_completed_payment_order(attendee, training.training_location)
     attendee.save
+    attendee
+  end
+
+  def self.update_attendee_with_completed_payment(attendee_id, attendee_attr)
+    attendee = Attendee.find attendee_id
+    attendee.update_attributes(attendee_attr)
     attendee
   end
 

@@ -1,25 +1,41 @@
 require 'spec_helper'
 require 'pry'
 describe Training do
-	
-	before(:each) do
-		@attendee = FactoryGirl.create(:attendee)
-		@order = FactoryGirl.create(:order, :attendee_id => @attendee.id, :status => Order::STATUS_COMPLETED)
-	end
+  
+  before(:each) do
+    @training = FactoryGirl.create(:training)
+  end
 
-	it 'should update payment status to first insatallment' do
-		training = @attendee.training
-		training.latest_payment_status.should eq(PaymentTerm.find_by_name(PaymentTerm::TERM_FULL_PAYMENT).name)
-	end
+  describe "is payment done" do
+    before do
+      @training_location = FactoryGirl.create(:training_location)
+      @training_in_jakarta = FactoryGirl.create(:training, training_location: @training_location)
+    end
+    it "should raise exception because no training location selected" do
+       @training.payment_done?.should eq(false)
+    end
+    it "should return false" do
+      @training_in_jakarta.payment_done?.should eq(false)
+    end
+    it "should return true" do
+        @training_in_jakarta.amount_paid = @training_location.price
+        @training_in_jakarta.payment_done?.should eq(true)
+    end
+  end
 
-	it 'should update payment status' do
-		training = Training.update_payment_status(@order)
-		training.payment_status.should eq("Lunas")
-	end
+  describe "update amount paid" do
+    before do
+      @attendee = FactoryGirl.create(:attendee, :email => "lalala@gmail.com")
+      @order = FactoryGirl.create(:order, attendee: @attendee)
+      
+    end
+    it "should update amount paid" do
+      @attendee.training.training_location = FactoryGirl.create(:training_location)
+      @attendee.training.update_amount_paid(@order)
+      @attendee.training.amount_paid.should eq(@order.payment_amount)
+      @attendee.training.payment_done?.should eq(true)
+    end
+  end
 
-	it 'should update payment status' do
-		order = FactoryGirl.create(:first_installment_complete, :attendee_id => @attendee.id, :status => Order::STATUS_COMPLETED)
-		training = Training.update_payment_status(order)
-		training.payment_status.should eq("First Installment")
-	end
+  
 end
