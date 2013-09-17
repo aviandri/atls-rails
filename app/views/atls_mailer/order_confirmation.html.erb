@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>HTML Template</title>
+    <meta charset="utf-8"/>
+    <title>Confirm Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!-- Le styles -->
+  </head>
+  <body>
+  	Terimakasih telah mendaftar Kurus ATLS. Berikut detail pembayaran yang harus anda lakukan
+
+  	<%= @order.payment_amount %>
+  	<%= @order.payment_code %>
+
+  	<%= @order.payment_code + @order.payment_amount %>
+
+  </body>
+ </html>

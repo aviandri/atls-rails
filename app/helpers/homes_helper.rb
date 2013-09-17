@@ -1,11 +1,11 @@
 module HomesHelper
 
 	def order_label_string(status)
-		if status == 'pending'
+		if status == Order::ORDER_STATUSES[1]
 			return 'label-warning'
-		elsif status == 'canceled'
+		elsif status == Order::ORDER_STATUSES[2]
 			return 'label-important'
-		elsif status == 'completed'
+		elsif status == Order::ORDER_STATUSES[0]
 			return 'label-success'
 		end
 	end

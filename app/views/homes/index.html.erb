@@ -69,7 +69,7 @@
 										<%= f.hidden_field :id, :value => order.id %>
 										<%= cancel_order_button(order)%>
 										<td>
-											<button type="button" data-toggle="modal" id="confirmation-button" data-target="#confirmModal" class="m-btn green">Detail</button>		
+											<button type="button" data-toggle="modal" id="detail-button" data-target="#confirmModal" class="m-btn green">Detail</button>		
 										</td>
 										<% end %>
 
@@ -173,7 +173,7 @@
 										
 								<%= f.hidden_field :payment_amount, {:value => 0}%>
 								<%= f.hidden_field :payment_code, {:value => 0}%>
-								<%= f.hidden_field :status, {:value => "pending"}%>
+								<%= f.hidden_field :status, {:value => Order::ORDER_STATUSES[1]}%>
 							</div> 
 						</div>
 
@@ -269,6 +269,44 @@
 			</div>
 			<% end %>
 		</div>
+
+		<div id="bankAccountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Bank List</h3>
+			</div>
+			
+			<div class="modal-body">
+
+				<div class="row-fluid price-section">
+					<div class="span12">						
+						<div class="control-group">
+							<label>Anda bisa melakukan pembayaran melalui salah satu Rekening bank di bawah ini:</label>
+							<% BankAccount.all.each do |bank_account| %>
+								<ul>
+									<li>
+										<p>
+											<%= "#{bank_account.bank_name} Cabang : #{bank_account.bank_branch}" %>
+										</p>
+										<p>
+											<%= "No Rekening : #{bank_account.account_number} a/n #{bank_account.account_holder}"%>
+										</p>
+									</li>
+								</ul>
+							<% end %>
+							<label>Harap Melakukan Pembayaran dalam waktu 1x24 jam dari waktu melakukan 'Order'. Jika Waktu lebih dari 1x24 telah beralalu, 'Order' akan secara otomatis di 'Cancel' dan anda di harap untuk melakukan 'Order' Kembali </label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn btn-primary">Make Order</button>
+			</div>
+		</div>
+
+
 	</div>		
 </div>
 

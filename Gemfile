@@ -62,17 +62,9 @@ gem 'jbuilder'
 
 gem 'roo'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'sidekiq'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'sinatra'
 
-# Use unicorn as the app server
-# gem 'unicorn'
+gem 'slim'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'

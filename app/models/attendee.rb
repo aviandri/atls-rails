@@ -5,6 +5,7 @@ class Attendee < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order
+
   has_many :orders
   has_one :training
   accepts_nested_attributes_for :orders, :training
@@ -13,9 +14,19 @@ class Attendee < ActiveRecord::Base
   validates :email, :presence => true, :email => true
   before_save :create_training
 
+  scope :by_training_location, lambda{|location| joins(:training).where('trainings.training_location_id = ?', location.id) }
+  scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
+  scope :payment_completed, lambda{ joins(:training).where('trainings.payment_status = ?', Training::PAYMENT_STATUSES[0])}
+  scope :pretest_completed, lambda{ joins(:training).where('trainings.pretest_status = ?', Training::PRETEST_STATUSES[0])} 
+  
+
+  delegate :training_location, :payment_done?, :pretest_status, :training_schedule, to: :training
+
   DEFAULT_PASSWORD = "password01"
 
-
+  def self.eligable_attendee_by_training_schedule(training_schedule)
+    Attendee.by_training_schedule(training_schedule).payment_completed.pretest_completed
+  end
   def available_payment_term
     last_order = self.orders.completed.latest == nil ? nil : self.orders.completed.latest.first
 
@@ -65,6 +76,8 @@ class Attendee < ActiveRecord::Base
     attendee_attr = attendee_attr.merge(password: DEFAULT_PASSWORD, password_confirmation: DEFAULT_PASSWORD)
     training = Training.new(attendee_attr[:training_attributes])
 
+    binding.pry
+
     attendee = Attendee.new(attendee_attr)
     attendee.training = training
 
@@ -82,6 +95,10 @@ class Attendee < ActiveRecord::Base
   def create_completed_order(training_location_id)
     training_location = TrainingLocation.find(training_location_id)
     order = Order.new(attendee: self.id)
+  end
+
+  def training_location_name
+    self.training_location.name
   end
 
   private

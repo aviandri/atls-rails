@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706145358) do
+ActiveRecord::Schema.define(:version => 20130917143902) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(:version => 20130706145358) do
 
   add_index "attendees", ["email"], :name => "index_attendees_on_email", :unique => true
   add_index "attendees", ["reset_password_token"], :name => "index_attendees_on_reset_password_token", :unique => true
+
+  create_table "bank_accounts", :force => true do |t|
+    t.string   "bank_name"
+    t.string   "account_holder"
+    t.string   "bank_branch"
+    t.string   "account_number"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "blogs", :force => true do |t|
     t.string   "title"
@@ -179,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20130706145358) do
     t.date     "training_date"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "quota"
   end
 
   create_table "trainings", :force => true do |t|

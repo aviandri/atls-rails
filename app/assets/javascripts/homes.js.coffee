@@ -38,6 +38,11 @@ $ ->
 $ ->
 	$('#schedule-button').click ->
 		Home.showScheduleModal()
+
+$ ->
+	$('#detail-button').click ->
+		$("#bankAccountModal").modal('show')
+				
 $ ->
 	$("#payment-term").change ->
 		callback = (response) ->

@@ -25,10 +25,11 @@ class OrdersController < ApplicationController
 	def create
 		@order = Order.new(params[:order])
 		@order.status = "pending"
-		@order.attendee = current_attendee
+		@order.attendee = current_attendee		
 		respond_to do |format|
 			if @order.save	
-				@order.payment_amount = TRAINING_PACKAGE_PRICE + (@order.id % PAYMENT_MODAL_INDEX)					
+				@order.payment_amount = TRAINING_PACKAGE_PRICE + (@order.id % PAYMENT_MODAL_INDEX)									
+				binding.pry
 				@order.save
 				format.html{redirect_to(:controller => "homes", :action => "index")}		
 			else
@@ -40,12 +41,9 @@ class OrdersController < ApplicationController
 
 	def destroy
 		@order = Order.find(params[:id])
-
 		if @order.destroy
 			redirect_to(:controller => "homes", :action => "index")
-		end
-		
-		
+		end				
 	end
 
 	def index

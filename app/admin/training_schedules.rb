@@ -12,6 +12,9 @@ ActiveAdmin.register TrainingSchedule do
 	column :id     
 	column :training_location                
     column :training_date                               
+    column :quota
+    column("Registed Attendee"){|training_schedule| Attendee.eligable_attendee_by_training_schedule(training_schedule).count}
+
     default_actions                   
   end 
 

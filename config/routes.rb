@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 AtlsRails::Application.routes.draw do
   root :to => 'high_voltage/pages#show', :id => 'index'
   devise_for :attendees, :controllers => { 
@@ -35,5 +37,7 @@ AtlsRails::Application.routes.draw do
   match "/payment_term" => "homes#payment_terms"
 
   match "/payment_code" => "orders#payment_code"
+
+  mount Sidekiq::Web => '/sidekiq'
 
 end
