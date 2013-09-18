@@ -4,12 +4,12 @@ ActiveAdmin.register Attendee do
   filter :campus_name, :as => :string    
   filter :office_name, :as => :string    
   filter :email, :as => :string    
-  filter :training_payment_status, :as => :select, :collection => Training::PAYMENT_STATUSES
-  filter :training_pretest_status, :as => :select, :collection => Training::PRETEST_STATUSES
-  filter :training_training_location_name, :as => :select, :collection => TrainingLocation.all.map{|location|[location.name, location.name]}, :label => "Training Location"
-  filter :training_training_schedule_training_date, :as => :select, :collection => TrainingSchedule.all.map{|schedule|[schedule.training_date, schedule.training_date]}, :label => "Training Schedule"
+  # filter :training_payment_status, :as => :select, :collection => Training::PAYMENT_STATUSES
+  # filter :training_pretest_status, :as => :select, :collection => Training::PRETEST_STATUSES
+  # filter :training_training_location_name, :as => :select, :collection => TrainingLocation.all.map{|location|[location.name, location.name]}, :label => "Training Location"
+  # filter :training_training_schedule_training_date, :as => :select, :collection => TrainingSchedule.all.map{|schedule|[schedule.training_date, schedule.training_date]}, :label => "Training Schedule"
 
-  filter :training_book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES, :lable => "Book Status"
+  # filter :training_book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES, :lable => "Book Status"
 
   action_item :only => :index do     
     link_to 'new complete', new_attendee_training_registration_admin_attendees_path, :method => :post      
