@@ -69,6 +69,7 @@ gem 'sinatra'
 gem 'slim'
 
 group :production do
+  gem 'sqlite3'
   gem 'unicorn'
 end
 
