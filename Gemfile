@@ -68,3 +68,10 @@ gem 'sinatra'
 
 gem 'slim'
 
+group :production do
+  gem 'unicorn'
+end
+
+gem 'capistrano'
+gem 'rvm-capistrano'
+
