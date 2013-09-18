@@ -2,7 +2,7 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 require 'sidekiq/capistrano'
 
-server "106.187.49.7", :web, :app, :db, :primary => true
+server "162.243.14.204", :web, :app, :db, :primary => true
 
 set :application, "atls-indo"
 set :user, "aviandri"
