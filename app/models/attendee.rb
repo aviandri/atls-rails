@@ -76,8 +76,6 @@ class Attendee < ActiveRecord::Base
     attendee_attr = attendee_attr.merge(password: DEFAULT_PASSWORD, password_confirmation: DEFAULT_PASSWORD)
     training = Training.new(attendee_attr[:training_attributes])
 
-    binding.pry
-
     attendee = Attendee.new(attendee_attr)
     attendee.training = training
 

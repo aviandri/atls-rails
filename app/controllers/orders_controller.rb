@@ -29,7 +29,6 @@ class OrdersController < ApplicationController
 		respond_to do |format|
 			if @order.save	
 				@order.payment_amount = TRAINING_PACKAGE_PRICE + (@order.id % PAYMENT_MODAL_INDEX)									
-				binding.pry
 				@order.save
 				format.html{redirect_to(:controller => "homes", :action => "index")}		
 			else

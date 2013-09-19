@@ -66,7 +66,6 @@ class Order < ActiveRecord::Base
   def init_order_invalidator
     if self.status_changed?
       if self.status == Order::ORDER_STATUSES[1]
-        binding.pry
         OrderInvalidatorWorker.perform_in(2.minutes, self.id)
       end
     end
