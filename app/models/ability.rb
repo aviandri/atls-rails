@@ -15,7 +15,7 @@ class Ability
 		can :manage, TrainingSchedule
 		can :create, Attendee
 		can :update, Attendee do |attendee|	
-			user.is?("#{attendee.training_location.name}_admin".downcase)			
+			user.authorized_for?(attendee.training_location)
 		end
 
 	end

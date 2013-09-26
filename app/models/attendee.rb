@@ -4,12 +4,13 @@ class Attendee < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number
-  attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order
+  attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id
 
   has_many :orders
+  belongs_to :campus
   has_one :training
   accepts_nested_attributes_for :orders, :training
-  validates :address, :date_of_birth, :gender, :name, :place_of_birth, :campus_name, :presence => true
+  validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
   validates :phone, :presence => true
   validates :email, :presence => true, :email => true
   before_save :create_training

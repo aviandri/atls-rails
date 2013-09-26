@@ -28,6 +28,9 @@ class AdminUser < ActiveRecord::Base
   end
 
   def authorized_for?(training_location)
+    if self.is?(ROLES[0])
+      return true
+    end
     if training_location.nil?
       return false
     end

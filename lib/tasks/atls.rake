@@ -1,0 +1,11 @@
+#encoding: utf-8
+data = ["Universitas Syiah Kuala","Universitas Abulyatama","Universitas Malikussaleh","Universitas Sumatera Utara","Universitas Islam Sumatera Utara","Universitas Muhammadiyah Sumatera Utara","Universitas Methodist Indonesia","Universitas HKBP Nommensen","Universitas Prima Indonesia","Universitas Batam","Universitas Abdurrab","Universitas Riau","Universitas Andalas","Universitas Baiturrahmah","Universitas Jambi","Universitas Bengkulu","Universitas Sriwijaya","Universitas Muhammadiyah Palembang","Universitas Lampung","Universitas Malahayati","Universitas Pelita Harapan","Universitas Katolik Indonesia Atma Jaya","Universitas Indonesia","Universitas Kristen Krida Wacana","Universitas Kristen Indonesia","Universitas Muhammadiyah Jakarta","Universitas Islam Negeri Syarif Hidayatullah","Universitas Pembangunan Nasional Veteran","Universitas Tarumanagara","Universitas Trisakti","Universitas YARSI","Universitas Kristen Maranatha","Universitas Padjajaran","Universitas Jenderal Ahmad Yani","Universitas Islam Bandung","Universitas Swadaya Gunung Jati","Universitas Jenderal Soedirman","Universitas Muhammadiyah Purwokerto","Universitas Diponegoro","Universitas Islam Sultan Agung","Universitas Muhammadiyah Semarang","Universitas Muhammadiyah Surakarta","Universitas Sebelas Maret","Universitas Gadjah Mada","Universitas Kristen Duta Wacana","Universitas Muhammadiyah Yogyakarta","Universitas Islam Indonesia","Universitas Airlangga","Universitas Hang Tuah","Universitas Wijaya Kusuma Surabaya","Universitas Katolik Widya Mandala Surabaya","Universitas Brawijaya","Universitas Muhammadiyah Malang","Universitas Islam Malang","Universitas Jember","Universitas Islam Balitar","Universitas Tanjungpura","Universitas Palangkaraya","Universitas Mulawarman","Universitas Lambung Mangkurat","Universitas Udayana","Universitas Warmadewa","Universitas Mataram","Universitas Islam Al Azhar","Universitas Nusa Cendana","Universitas Sam Ratulangi","Universitas Tadulako","Universitas Al-Khairaat","Universitas Haluoleo","Universitas Hasanuddin","Universitas Muslim Indonesia","Universitas Muhammadiyah Makassar","Universitas Pattimura","Universitas Cendrawasih"]
+namespace :atls do
+  desc "TODO"
+  task :campus_loader => :environment do
+  	data.each do |dat|
+  		Campus.create(:name => dat)
+  	end
+  end
+
+end

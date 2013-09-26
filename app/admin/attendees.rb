@@ -39,7 +39,7 @@ ActiveAdmin.register Attendee do
     column("Training Location") {|attendee| attendee.training_location ? attendee.training_location_name : "-" }           
     column("Training Schedule") {|attendee| attendee.training_schedule ? attendee.training_schedule.training_date : "-" }           
     column("Pre-test") {|attendee| attendee.training.pretest_status }  
-    column("Campus") {|attendee| attendee.campus_name.blank? ?  "-" : attendee.campus_name}           
+    column("Campus") {|attendee| attendee.campus ?  attendee.campus.name : "-" }           
     column("Office") {|attendee| attendee.office_name.blank? ? "-" : attendee.office_name }           
     column("Email") {|attendee|attendee.email.blank? ?  "-" : attendee.email }    
     column("Book Status") {|attendee| attendee.training.book_delivery_status.blank? ? "-" : attendee.training.book_delivery_status }    

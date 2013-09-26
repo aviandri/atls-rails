@@ -128,32 +128,15 @@
         </div>
 
         <legend>Data Kampus</legend>
-
-
-        <div class="control-group <%= has_error('campus_name', @attendee) %>">
-          <label>Nama Kampus</label>            
+         <div class="control-group <%= has_error('campus_name', @attendee) %>">
+          <label>Kampus</label>            
           <div class="control">
-            <%= b.text_field :campus_name, :class => "span4" , :placeholder => "Departemen Kesehatan" %>
-            <span class="help-inline"><%= get_error_message('campus_name', @attendee) %></span>
+            <%= b.collection_select :campus_id, Campus.all, :id, :name %>
+            <span class="help-inline"><%= get_error_message('campus', @attendee) %></span>
           </div>
         </div>
 
-        <div class="control-group <%= has_error('campus_address', @attendee) %>">
-          <label>Alamat Kampus</label>
-          <div class="control">
-            <%= b.text_field :campus_address, :class => "span8" , :placeholder => "Jalan Kesehatan No.11" %>
-            <span class="help-inline"><%= get_error_message('campus_address', @attendee) %></span>
-          </div>
-        </div>
-
-
-        <div class="control-group <%= has_error('campus_phone', @attendee) %>">
-          <label>Telepon Kampus</label>
-          <div class="control">
-            <%= b.text_field :campus_phone, :class => "span4" , :placeholder => "021-200000 atau 0821111111" %>
-            <span class="help-inline"><%= get_error_message('campus_phone', @attendee) %></span>
-          </div>
-        </div>         
+             
       </fieldset>
 
        <div class="pagination-centered" id="submit-button">
