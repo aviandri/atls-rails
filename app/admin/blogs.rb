@@ -15,6 +15,10 @@ index do
     column :created_at
     column :updated_at             
     default_actions                   
-  end  
+ end  
+
+ controller do
+    def max_csv_records; @per_page; end
+  end
 
 end

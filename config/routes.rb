@@ -34,6 +34,14 @@ AtlsRails::Application.routes.draw do
   match "/home/start_test" => "homes#start_test"
   match "/home/finish_test" => "homes#finish_test"
 
+  match "/home/profile/:id" => "homes#edit_profile", via: :get
+  
+  match "/home/profile/:id" => "homes#update_profile", via: :put
+
+  match "/home/profile/:id/change_password" => "homes#change_password", via: :get
+
+  match "/home/profile/:id/change_password" => "homes#update_password", via: :put
+
   match "/payment_term" => "homes#payment_terms"
 
   match "/payment_code" => "orders#payment_code"

@@ -1,0 +1,16 @@
+<ul class="nav nav-list span2 wrapper shadow">
+	<li class="nav-header">Menu</li>
+	<li>
+		<%= link_to "Home", home_path %>
+	</li>
+	<li class="active">
+		<%= link_to "Pretest", home_test_path %>
+	</li>
+	<li>				
+		<%= link_to "Edit Profile", :controller => "homes", :action => "edit_profile", :id => current_attendee.id %>
+	</li>
+
+	<li>				
+		<%= link_to "Change Password", :controller => "homes", :action => "change_password", :id => current_attendee.id%>
+	</li>
+</ul>

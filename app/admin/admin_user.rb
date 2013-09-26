@@ -17,5 +17,10 @@ ActiveAdmin.register AdminUser do
       f.input :roles, :as => :check_boxes, :collection => AdminUser::ROLES       
     end                               
     f.buttons                         
-  end                                 
+  end         
+
+  controller do
+    def max_csv_records; @per_page; end
+  end
+                          
 end                                   

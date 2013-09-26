@@ -23,4 +23,8 @@ ActiveAdmin.register Order do
 	    Order.approve_order(params[:id])
 	    redirect_to admin_orders_path
   	end
+
+	  controller do
+	    def max_csv_records; @per_page; end
+	  end
 end
