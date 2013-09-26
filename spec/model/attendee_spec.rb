@@ -14,7 +14,7 @@ describe Attendee do
 			@training_location = FactoryGirl.create(:training_location)
 		end
 		it "should create attendee, order with complete payment and training with status completed" do
-			attendee_attr = {name: "Aviandri", gender: "Male", email: "aviandri@hotmail.com", address: "address 1", date_of_birth: Time.now, place_of_birth: "Bandung", phone: "2007766", training_attributes: {training_location_id: @training_location.id}}
+			attendee_attr = {name: "Aviandri", gender: "Male", email: "aviandri@hotmail.com", address: "address 1", date_of_birth: Time.now, place_of_birth: "Bandung", phone: "2007766", campus_name: "UNPAD", training_attributes: {training_location_id: @training_location.id}}
 			attendee = Attendee.create_attendee_with_completed_payment(attendee_attr)
 
 			attendee.name.should eq(attendee_attr[:name])
@@ -24,7 +24,7 @@ describe Attendee do
 			attendee.place_of_birth.should eq(attendee_attr[:place_of_birth])
 			attendee.training.training_location_id.should eq(@training_location.id)
 			attendee.training.amount_paid.should eq(@training_location.price)
-			attendee.training.payment_status.should eq("Done")
+			attendee.training.payment_status.should eq("Complete")
 			attendee.training.amount_paid.should eq(@training_location.price)
 
 			att = Attendee.find(attendee.id)

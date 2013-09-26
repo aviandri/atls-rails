@@ -45,6 +45,9 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_completed_payment_order(attendee, training_location)
+    if attendee.nil? || training_location.nil?
+      raise "Attendee and Training Location cannot be nil"
+    end
     order = Order.create(attendee: attendee, payment_amount: training_location.price, status: Order::STATUS_COMPLETED)
   end
 

@@ -101,3 +101,4 @@ en:
       blog: "Blog"
 
     new_attendee_training_registration_model: "New Attendee"
+    en.active_admin.edit_attendee_training_registration_model: "Edit Attendee"

@@ -3,13 +3,13 @@ class Attendee < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [ :email ]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order
 
   has_many :orders
   has_one :training
   accepts_nested_attributes_for :orders, :training
-  validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
+  validates :address, :date_of_birth, :gender, :name, :place_of_birth, :campus_name, :presence => true
   validates :phone, :presence => true
   validates :email, :presence => true, :email => true
   before_save :create_training
@@ -73,15 +73,17 @@ class Attendee < ActiveRecord::Base
   end
 
   def self.create_attendee_with_completed_payment(attendee_attr)
-    attendee_attr = attendee_attr.merge(password: DEFAULT_PASSWORD, password_confirmation: DEFAULT_PASSWORD)
-    training = Training.new(attendee_attr[:training_attributes])
+    transaction do 
+      attendee_attr = attendee_attr.merge(password: DEFAULT_PASSWORD, password_confirmation: DEFAULT_PASSWORD)
+      training = Training.new(attendee_attr[:training_attributes])
 
-    attendee = Attendee.new(attendee_attr)
-    attendee.training = training
+      attendee = Attendee.new(attendee_attr)
+      attendee.training = training
 
-    Order.create_completed_payment_order(attendee, training.training_location)
-    attendee.save
-    attendee
+      Order.create_completed_payment_order(attendee, training.training_location)
+      attendee.save
+      return attendee
+    end    
   end
 
   def self.update_attendee_with_completed_payment(attendee_id, attendee_attr)

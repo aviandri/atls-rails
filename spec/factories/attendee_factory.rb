@@ -9,6 +9,7 @@ FactoryGirl.define do
   		date_of_birth	"01/01/2010"
   		gender 	"male"
   		place_of_birth "bandung"
+  		campus_name "UNPAR"
 
 	end 	
 end

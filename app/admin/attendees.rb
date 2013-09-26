@@ -11,23 +11,20 @@ ActiveAdmin.register Attendee do
 
   filter :training_book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES, :lable => "Book Status"
 
-  action_item :only => :index do     
-    link_to 'new complete', new_attendee_training_registration_admin_attendees_path, :method => :post      
-  end
 
   collection_action :new_attendee_training_registration, :method => :post do
     @attendee = Attendee.create_attendee_with_completed_payment(params[:attendee])
-    unless @attendee.errors.blank?
-      render active_admin_template('new.html.arb'), :layout => false 
-    else
+    if @attendee.valid?
       redirect_to admin_attendees_path      
+    else
+      render active_admin_template('new.html.arb'), layout: false
     end
   end
 
-  member_action :update_attendee_training_registration, :method => :put do
+  member_action :edit_attendee_training_registration, :method => :put do
     @attendee = Attendee.update_attendee_with_completed_payment(params[:id], params[:attendee])
     unless @attendee.errors.blank?
-      render active_admin_template('edit.html.arb'), :layout => false 
+      render active_admin_template('edit.html.arb'), layout: false 
     else
       redirect_to admin_attendees_path      
     end
@@ -51,35 +48,6 @@ ActiveAdmin.register Attendee do
     default_actions                   
   end  
 
-  # form do |f|
-  #   f.inputs "Attendee Details" do
-  #     f.input :name
-  #     f.input :date_of_birth, :as => :date_picker
-  #     f.input :place_of_birth
-  #     f.input :gender, :as => :select, :collection => ["Male", "Female"]
-  #     f.input :religion
-  #     f.input :address
-  #     f.input :phone
-  #     f.input :email
-  #     f.input :password               
-  #     f.input :password_confirmation        
-  #     # name, date_of_birth, place_of_birth, gender, religion, address, phone, email, office_name, job_title, office_address, office_phone, campus_name, campus_address, campus_phone        
-  #   end
-  #   f.inputs "Office Details" do
-  #     f.input :office_name
-  #     f.input :job_title
-  #     f.input :office_address
-  #     f.input :office_phone
-  #   end
-  #   f.inputs "Campus Details" do
-  #     f.input :campus_name
-  #     f.input :campus_address
-  #     f.input :campus_phone
-  #   end
-
-  #   f.actions
-  # end      
-
   show do |attendee|
     panel "attendee detail" do
         attributes_table do
@@ -90,6 +58,7 @@ ActiveAdmin.register Attendee do
         row :religion
         row :address
         row :phone
+        row :cell_number
         row :email
         row :password               
         row :password_confirmation        
@@ -113,4 +82,8 @@ ActiveAdmin.register Attendee do
   end  
 
   form :partial => "form"          
+
+  controller do
+    def max_csv_records; @per_page; end
+  end
 end

@@ -76,3 +76,7 @@ end
 gem 'capistrano'
 gem 'rvm-capistrano'
 
+gem "cancan"
+
+gem 'activeadmin-axlsx'
+

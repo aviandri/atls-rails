@@ -1,4 +1,4 @@
-<% if params[:action] == "new" %>       
+<% if params[:action].start_with?("new") %>  
 	<%= semantic_form_for([:admin, @attendee], url: new_attendee_training_registration_admin_attendees_path) do |f| %>
 	    <%= f.inputs "Attendee Detail" do %>     
 			 <%= f.input :name %>	 
@@ -8,6 +8,7 @@
 			 <%= f.input :religion %>
 			 <%= f.input :address %>
 			 <%= f.input :phone %>
+			 <%= f.input :cell_number %>
 			 <%= f.input :email %>
 			 <%= f.input :password %>
 			 <%= f.input :password_confirmation %>
@@ -28,8 +29,8 @@
 
 	 	<%= f.inputs "Training Details" do %>
 	 		<%= f.semantic_fields_for :training, Training.new do |t| %>
-				<%= t.input :training_location_id, :as => :select, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}] %>	 			
-	 			<%= t.input :training_schedule_id, :as => :select, :collection => [] %>
+				<%= t.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}] %>	 			
+	 			<%= t.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
 	 			<%= t.input :amount_paid %>
 	 			<%= t.input :pretest_status, :as => :select, :collection =>  Training::PRETEST_STATUSES %>
 	 			<%= t.input :book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES %>
@@ -40,8 +41,8 @@
 		<%= f.actions %>
 	<% end %>
 
-<% elsif params[:action] == "edit" %>
-	<%= semantic_form_for([:admin, @attendee], url: update_attendee_training_registration_admin_attendee_path) do |f| %>
+<% elsif params[:action].start_with?("edit") %>
+	<%= semantic_form_for([:admin, @attendee], url: edit_attendee_training_registration_admin_attendee_path) do |f| %>
 	    <%= f.inputs "Attendee Detail" do %>     
 			 <%= f.input :name %>	 
 			 <%= f.input :date_of_birth %>	 
@@ -50,6 +51,7 @@
 			 <%= f.input :religion %>
 			 <%= f.input :address %>
 			 <%= f.input :phone %>
+			 <%= f.input :cell_number %>
 			 <%= f.input :email %>
 	 	<% end %>
 
@@ -69,7 +71,7 @@
 	 		
 		<%= f.inputs "Training Details" do %>
 	 		<%= f.semantic_fields_for :training do |t| %>
-	 			<%= t.input :training_location_id, :as => :select, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
+	 			<%= t.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
 	 			<%= t.input :training_schedule_id, :as => :select, :collection => TrainingSchedule.find_by_training_location_name(t.object.training_location.name).map{|b|[b.training_date, b.id]}  %>
 	 			<%= t.input :amount_paid %>
 	 			<%= t.input :pretest_status, :as => :select, :include_blank => false, :collection =>  Training::PRETEST_STATUSES %>
