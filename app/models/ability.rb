@@ -14,7 +14,7 @@ class Ability
 
 		can :manage, TrainingSchedule
 		can :create, Attendee
-		can :update, Attendee do |attendee|	
+		can [:update, :destroy], Attendee do |attendee|	
 			user.authorized_for?(attendee.training_location)
 		end
 
