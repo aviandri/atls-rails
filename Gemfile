@@ -26,7 +26,7 @@ gem 'jquery-rails'
 
 gem 'high_voltage'
 
-gem 'activeadmin'
+gem 'activeadmin', '~> 0.6.1'
 
 gem 'carrierwave'
 
