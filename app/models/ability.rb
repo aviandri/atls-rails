@@ -11,7 +11,7 @@ class Ability
 		can :manage, Pretest
 		can :manage, Profile
 		can :manage, TrainingLocation
-
+		can :manage, Campus
 		can :manage, TrainingSchedule
 		can :create, Attendee
 		can [:update, :destroy], Attendee do |attendee|	
