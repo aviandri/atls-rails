@@ -9,5 +9,9 @@ class ApplicationController < ActionController::Base
   	end
   end
 
+  def current_user
+  	current_attendee
+  end
+
 
 end

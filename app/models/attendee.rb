@@ -7,18 +7,19 @@ class Attendee < ActiveRecord::Base
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id
 
   has_many :orders
+  has_many :test_results
   belongs_to :campus
-  has_one :training
-  accepts_nested_attributes_for :orders, :training
+  has_many :trainings
+  accepts_nested_attributes_for :orders
   validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
   validates :phone, :presence => true
   validates :email, :presence => true, :email => true
-  before_save :create_training
+  # before_save :create_training
 
   scope :by_training_location, lambda{|location| joins(:training).where('trainings.training_location_id = ?', location.id) }
   scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
   scope :payment_completed, lambda{ joins(:training).where('trainings.payment_status = ?', Training::PAYMENT_STATUSES[0])}
-  scope :pretest_completed, lambda{ joins(:training).where('trainings.pretest_status = ?', Training::PRETEST_STATUSES[0])} 
+  scope :pretest_completed, joins(:test_results).uniq
   
 
   delegate :training_location, :payment_done?, :pretest_status, :training_schedule, to: :training

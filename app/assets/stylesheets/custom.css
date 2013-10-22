@@ -366,6 +366,12 @@ label{
   border-top: 11px solid transparent;
 }
 
+.subnote{
+  display: block;
+  font-size: 14px;
+  color: red;
+  font-weight: normal;
+}
 
 
 

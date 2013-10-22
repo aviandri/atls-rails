@@ -9,7 +9,7 @@
 						<h3>Kursus ATLS</h3>					
 					</div>
 					<div class="span3 text-right">
-						<%= payment_status(current_attendee.training) %>	
+						
 					</div>
 				</div>
 
@@ -19,11 +19,7 @@
 						<span class="label-title">Lokasi Kursus</span>								
 					</div>
 					<div class="span3">
-						<% if current_attendee.training.training_location %>
-							<span><%= current_attendee.training.training_location.name %></span>								
-						<% else %>
-							<span>-</span>		
-						<% end %>
+						
 					</div>
 				</div>	
 
@@ -75,9 +71,7 @@
 
 				<div class="row-fluid">
 					<div class="offset10 span2" style="text-align:right;">
-						<% unless current_attendee.training.payment_done? %>
-							<button type="button" data-toggle="modal" id="register-button" class="m-btn blue">Bayar</button>	
-						<% end %>
+						
 					</div>
 				</div>
 			</div>
@@ -88,7 +82,7 @@
 						<h3>Pre-Test</h3>					
 					</div>
 					<div class="span3 text-right">
-						<%= pretest_status(current_attendee.training) %>	
+						
 					</div>
 				</div>
 
@@ -116,16 +110,12 @@
 						<span class="label-title">Jadwal</span>									
 					</div>
 					<div class="span3">
-						<% if current_attendee.training.training_schedule %>
-							<%= current_attendee.training.training_schedule.training_date %>
-						<% else %>
-							-
-						<% end %>
+						
 					</div>						
 				</div>
 				<div class="row-fluid">
 					<div class="span2 offset10" style="text-align:right;">
-						<button <%= time_location_button(current_attendee.training) %> type="button" data-toggle="modal" class="m-btn blue" id="schedule-button">Pilih</button>
+						
 					</div>		
 				</div>
 			</div>
@@ -238,7 +228,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 				<h3 id="myModalLabel">Jadwal Training</h3>
 			</div>
-			<%= form_for current_attendee.training  :as => :training, :html => {:method => :put} do |training_form| %>
+			
 			<div class="modal-body">
 
 				<div class="row-fluid price-section">
@@ -258,7 +248,7 @@
 				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 				<button class="btn btn-primary">Make Order</button>
 			</div>
-			<% end %>
+			
 		</div>
 
 		<div id="bankAccountModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

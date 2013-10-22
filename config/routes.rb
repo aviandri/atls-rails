@@ -9,7 +9,11 @@ AtlsRails::Application.routes.draw do
     get '/attendees/new' => "attendees#new", :as => "sign_up"
   end
 
-  resources :attendees
+  resources :attendees do
+    member do
+      resources :trainings
+    end
+  end
 
   get "profiles/index"
 

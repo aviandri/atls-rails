@@ -1,10 +1,24 @@
 class TrainingsController < ApplicationController
+	layout "home", :only => [:index, :show, :new]
 
 	def show		
 		@training = Training.find(params[:id])
 		respond_to do |format|
 			format.json { render :json => @training}
+			format.html{
+
+			}
 		end
+	end
+
+	def index
+		# @att = Attendee.find(params[:id])
+		# authorize! :read, @att
+		@trainings = current_attendee.trainings
+	end
+
+	def new
+		@training  = Training.new
 	end
 
 	def update

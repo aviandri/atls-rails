@@ -1,7 +1,11 @@
-<ul class="nav nav-list span2 wrapper shadow">
+<ul class="nav nav-list span2 contained">
 	<li class="nav-header">Menu</li>
 	<li>
 		<%= link_to "Home", home_path %>
+	</li>
+
+	<li>
+		<%= link_to "Trainings", trainings_path(:id => current_attendee.id) %>
 	</li>
 	<li class="active">
 		<%= link_to "Pretest", home_test_path %>
