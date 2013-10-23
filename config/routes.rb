@@ -9,11 +9,6 @@ AtlsRails::Application.routes.draw do
     get '/attendees/new' => "attendees#new", :as => "sign_up"
   end
 
-  resources :attendees do
-    member do
-      resources :trainings
-    end
-  end
 
   get "profiles/index"
 
@@ -29,9 +24,9 @@ AtlsRails::Application.routes.draw do
 
   resources :test_results
 
-  resources :trainings
-
   resources :training_schedules, :only => [:index]
+
+  resources :trainings
 
   match "/home" => "homes#index"
   match "/home/test" => "homes#test"

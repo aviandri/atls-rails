@@ -19,6 +19,6 @@
 //= require jquery.count
 //= require jquery.ui.datepicker
 //= require homes
-
+//= require trainings
 
 

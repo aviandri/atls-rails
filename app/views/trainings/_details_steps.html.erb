@@ -1,0 +1,25 @@
+<div class="heading">				
+	<h1 class="heading-title">Daftar Training</h1>
+	<div class="clearfix"></div>
+</div>
+<div class="border-bottom"></div>
+<div>
+	<div class="control-group row-fluid">                
+		<label class="span3">Tipe training</label>
+		<div class="control span8">  
+			<%= f.select :type, options_for_select(training_types_for_select) %>                			
+			<span class="help-inline"></span>
+		</div>
+	</div>
+	<div class="control-group row-fluid">                
+		<label class="span3">Lokasi training</label>
+		<div class="control span8">                  
+			<%= f.select :training_location_id, options_for_select(training_location_for_select) %>                			
+			<span class="help-inline"></span>
+		</div>
+	</div>	
+</div>
+
+<% content_for :action_button do %>
+  	<button type="submit" class="m-btn blue span3" type="button">Lanjut &gt</button>                   
+<% end %>

@@ -1,0 +1,24 @@
+<div class="heading">				
+	<h1 class="heading-title">Pembayaran</h1>
+	<div class="clearfix"></div>
+</div>
+<div class="border-bottom"></div>
+<div>
+	<div class="control-group row-fluid">                
+		<label class="span3">Metode pembayaran</label>
+		<div class="control span8">   
+			<% PaymentType.all.each do |p| %>
+				<div class="radio">
+	  				<%= f.radio_button :payment_type_id, p.id, style: "width:auto" %>
+	  				<span><%= "Transfer Bank #{p.name}" %></span>
+				</div>				
+			<% end %>
+		</div>
+	</div>
+
+</div>
+
+<% content_for :action_button do %>
+	<button type="submit" name="back_button" class="m-btn red span3" type="button">&lt Kembali</button>                   
+  	<button type="submit" class="m-btn blue span3" type="button">Lanjut &gt</button>                   
+<% end %>

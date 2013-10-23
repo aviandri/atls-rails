@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926194815) do
+ActiveRecord::Schema.define(:version => 20131022171611) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -136,9 +136,13 @@ ActiveRecord::Schema.define(:version => 20130926194815) do
   add_index "payment_terms", ["name"], :name => "index_payment_terms_on_name", :unique => true
 
   create_table "payment_types", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "name"
+    t.string   "type"
+    t.string   "account_number"
+    t.string   "account_holder"
+    t.string   "branch_name"
   end
 
   create_table "pretests", :force => true do |t|
@@ -213,6 +217,9 @@ ActiveRecord::Schema.define(:version => 20130926194815) do
     t.integer  "amount_paid"
     t.integer  "amount_unpaid"
     t.integer  "training_schedule_id"
+    t.string   "type"
+    t.integer  "payment_type_id"
+    t.integer  "payment_code"
   end
 
   create_table "traning_locations", :force => true do |t|

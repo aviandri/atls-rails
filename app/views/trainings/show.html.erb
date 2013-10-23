@@ -1,0 +1,74 @@
+<div class="container-fluid callout">
+	<div class="row-fluid" style="margin-top:30px;">
+		<%= render "homes/side_bar" %>
+		<div class="span9 contained">
+			<div class="heading">				
+				<h1 class="heading-title">Training Detail</h1>
+				<div class="clearfix"></div>
+			</div>
+			<div class="border-bottom"></div>		
+			<div  class="section">			
+				<div>
+					<%= image_tag "magnifier-icon.png"%> <span class="section-heading">Detail<span>
+				</div>
+				
+				<div class="data-item row-fluid">
+		            <dt class="span6">Tipe Training</dt>
+		            <dd class="span6"><%= @training.type%></dd>
+          		</div>
+          		<div class="data-item row-fluid">
+		            <dt class="span6">Tanggal Daftar</dt>
+		            <dd class="span6"><%= readable_date(@training.created_at) %></dd>
+          		</div>          		
+			</div>
+			<div class="section">
+				<div>
+					<%= image_tag "money-bag-icon.png"%> <span class="section-heading">Pembayaran</span>
+				</div>
+				<div class="data-item row-fluid">
+		            <dt class="span6">Status</dt>
+		            <dd class="span6">
+		            	<span class="status-label status-label-warning"><%= @training.status %></span>
+		            </dd>
+          		</div>
+				<div class="data-item row-fluid">
+		            <dt class="span6">Biaya Training</dt>
+		            <dd class="span6">Rp. <%= number_to_currency_rupiah(@training.price) %>,-</dd>
+          		</div>
+          		<div class="data-item row-fluid">
+		            <dt class="span6">Kode Pembayaran</dt>
+		            <dd class="span6">Rp.<%= number_to_currency_rupiah(@training.payment_code) %>,-</dd>
+          		</div>
+          		<div class="data-item row-fluid">
+		            <dt class="span6">Total Biaya</dt>
+		            <dd class="span6 strong">Rp.<%= number_to_currency_rupiah(@training.total_price) %>,-</dd>
+          		</div>
+          		<div class="data-item row-fluid">
+		            <dt class="span6">Metode Pembayaran</dt>
+		            <dd class="span6">
+		            	<p class="strong">Transfer Bank <%= "#{@training.payment_type.name}" %>  </p>
+		            	<p>No Rekening <%= "#{@training.payment_type.account_number}" %></p>
+		            	<p>Atas Nama <%= "#{@training.payment_type.account_holder}" %></p>
+						<p>Cabang <%= "#{@training.payment_type.branch_name}" %></p>
+		            	<span class="subnote">pembayaran harus dilakukan dalam waktu maksimal 2x24 jam dari tanggal daftar. Jika lebih dari waktu yang ditetapkan, pendaftaran akan otomatis dibatalkan</span>
+		            </dd>
+          		</div>
+			</div>
+			<div class="section">			
+				<div>
+					<%= image_tag "calender-icon.png"%>  <span class="section-heading">Jadwal Training<span>
+				</div>
+				
+				<div class="data-item row-fluid">
+		            <dt class="span6">Tanggal Training
+		            	<span class="subnote">pembayaran harus diselesikan terlebih dahulu untuk bisa memilih jadwal</span>
+		            </dt>		            
+		            <dd class="span3">October 20, 2013</dd>
+		            <a href="#" id="select-schedule" class="body-button">Pilih Jadwal</a>
+          		</div>          		
+			</div>
+		</div>
+	</div>
+</div>
+
+<%= render "modal_training_schedule_select" %>

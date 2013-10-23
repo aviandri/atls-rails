@@ -1,0 +1,45 @@
+<div class="container-fluid callout">
+	<div class="row-fluid" style="margin-top:30px;">
+		<%= render "homes/side_bar" %>
+		<div class="span9 contained">
+			<div class="heading">				
+				<h1 class="heading-title">Trainings</h1>
+				<%= link_to "Daftar", new_training_path, :class => "heading-button" %>
+				<div class="clearfix"></div>
+			</div>
+			<div class="border-bottom"></div>
+			<div>			
+				<table class="table">
+				<thead>
+					<tr>								
+						<th>Tanggal Daftar</th>
+						<th>Tipe Training</th>
+						<th>Biaya</th>
+						<th>Total Terbayar</th>
+						<th>Status</th>
+						<th>Tanggal Training</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @trainings.each do |training| %>
+						<tr>
+							<td><%= readable_date(training.created_at)%></td>
+							<td><%= training.type %></td>
+							<td>Rp. <%= number_to_currency_rupiah(training.total_price) %></td>
+							<td>Rp. <%= number_to_currency_rupiah(training.amount_paid) %></td>
+							<td><span class="status-label <%= payment_status_string(training.status)%>"><%= training.status %></span></td>	
+							<form accept-charset="UTF-8" action="/orders/104" class="edit_order" id="edit_order_104" method="post"></form> 
+							<td>-</td>
+							<td>
+								<%= link_to "", training_path(training), {:class => "magnifier-icon"} %>
+							</td>						
+
+						</tr>
+					<% end %>					
+				</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+</div>
