@@ -1,6 +1,5 @@
 class Training < ActiveRecord::Base
 	attr_accessible :book_delivery_status, :payment_status, :pretest_status, :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type
-	attr_writer :type
 	attr_writer :current_step
 
 	belongs_to :training_location
@@ -17,7 +16,7 @@ class Training < ActiveRecord::Base
 
 	BOOK_STATUSES = %w(Delivered Picked\ Up)
 
-	TRAINING_TYPES = %w(Regular)
+	TRAINING_TYPES = %w(RegularTraining)
 
 	PAYMENT_CODE_MOD_WEIGH = 200
 
@@ -36,6 +35,7 @@ class Training < ActiveRecord::Base
 			self.pretest_status = PRETEST_STATUSES[1]
 		end
 	end
+
 	def latest_payment_status
 		if self.attendee.orders.completed.latest
 			self.attendee.orders.completed.latest.first.payment_term.name
@@ -44,6 +44,10 @@ class Training < ActiveRecord::Base
 		end
 	end
 
+	def confirm_payment
+		self.amount_paid = self.total_price
+		self.save
+	end
 
 	def payment_done?
 		unless training_location
@@ -122,7 +126,7 @@ class Training < ActiveRecord::Base
 	end
 
 	def status		
-		if amount_paid > 0 && amount_paid < total_price
+		if amount_paid >= 0 && amount_paid < total_price
 			PAYMENT_STATUSES[1]
 		elsif payment_status == PAYMENT_STATUSES[3]
 			payment_status
@@ -137,6 +141,7 @@ class Training < ActiveRecord::Base
 	def total_price
 		price + (payment_code || 0)
 	end
+
 end
 
 

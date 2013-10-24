@@ -61,4 +61,19 @@ class TrainingsController < ApplicationController
 		@training.save
 		redirect_to :controller => :homes, :action => :index
 	end
+
+	def update_training_schedule
+		if params["training_date"].blank?
+			flash[:error] = "trainig schedule cannot be empty"
+		else
+			@training = Training.find(params[:id])
+			training_date = Date.parse(params["training_date"])
+			training_schedule = TrainingSchedule.find_by_training_location_and_training_date(@training.training_location, training_date.strftime("%F"))
+
+			@training.training_schedule = training_schedule
+			@training.save
+		end
+		
+		redirect_to :action => :show, :id => @training.id
+	end
 end

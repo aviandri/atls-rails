@@ -63,7 +63,7 @@
 		            <dt class="span6">Tanggal Training
 		            	<span class="subnote">pembayaran harus diselesikan terlebih dahulu untuk bisa memilih jadwal</span>
 		            </dt>		            
-		            <dd class="span3">October 20, 2013</dd>
+		            <dd class="span3"><%= @training.training_schedule ? readable_date(@training.training_schedule.training_date) : "Not Selected" %></dd>
 		            <a href="#" id="select-schedule" class="body-button">Pilih Jadwal</a>
           		</div>          		
 			</div>

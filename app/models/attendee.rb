@@ -103,6 +103,10 @@ class Attendee < ActiveRecord::Base
     self.training_location.name
   end
 
+  def is_complete_pretest?
+    !test_results.blank?
+  end
+
   private
   def create_training  
       unless self.training        

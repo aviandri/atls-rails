@@ -12,6 +12,10 @@ ActiveAdmin.register Attendee do
   # filter :training_book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES, :lable => "Book Status"
 
 
+  action_item :only => :show do     
+    link_to 'Create Training', new_admin_training_path(:attendee_id => params[:id])
+  end
+
   collection_action :new_attendee_training_registration, :method => :post do
     @attendee = Attendee.create_attendee_with_completed_payment(params[:attendee])
     if @attendee.valid?
@@ -38,7 +42,6 @@ ActiveAdmin.register Attendee do
     column("Campus") {|attendee| attendee.campus ?  attendee.campus.name : "-" }           
     column("Office") {|attendee| attendee.office_name.blank? ? "-" : attendee.office_name }           
     column("Email") {|attendee|attendee.email.blank? ?  "-" : attendee.email }    
-
 
     default_actions                   
   end  
@@ -80,11 +83,22 @@ ActiveAdmin.register Attendee do
       table_for attendee.trainings do 
         column :type
         column :status
+        column do |training|
+          link_to('Edit', edit_admin_training_path(training)) + "  " + link_to('View', admin_training_path(training))
+        end
       end
     end
   end  
 
-  form :partial => "form"          
+  form :partial => "form"      
+
+  member_action :approve, :method => :put do
+      order = Order.find params[:id]
+      order.complete_order
+      redirect_to admin_orders_path
+  end
+
+
 
   controller do
     def max_csv_records; @per_page; end

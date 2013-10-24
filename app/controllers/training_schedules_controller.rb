@@ -7,6 +7,5 @@ class TrainingSchedulesController < ApplicationController
 		else
 			@training_schedules = TrainingSchedule.all
 		end
-		
 	end
 end

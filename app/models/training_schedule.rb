@@ -14,6 +14,11 @@ class TrainingSchedule < ActiveRecord::Base
   	end
   end
 
+  def self.find_by_training_location_and_training_date(training_location, training_date)
+    training_schedules = TrainingSchedule.where("training_location_id = ? AND training_date = ?", training_location.id, training_date)
+    training_schedules.blank? ? nil : training_schedules.first
+  end
+
 
 
 
