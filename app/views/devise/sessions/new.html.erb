@@ -1,36 +1,36 @@
 
-<div class="row-fluid callout">
+<div class="row-fluid">
   <!-- Start Carousel -->
-  <div class="container-fluid">
-    <div id="register-form" class="span5 offset3">        
+  <div class="container body">
+    <div id="register-form" class="span6 offset3">        
       <fieldset>
         <legend>Login</legend>
         <div id="register-form-input" class="span12">
           <%= form_for(@attendee, :url => attendee_session_path) do |f| %>
           <div class="control-group">
             <div class="control">
-              <%= f.email_field :email, :placeholder=>"Enter your e-mail address", :class => "span12 field" %>                  
+              <%= f.email_field :email, :placeholder=>"Enter your e-mail address", :class => "field" %>                  
             </div>
           </div>
 
           <div class="control-group">
             <div class="control">    
-              <%= f.password_field :password, :placeholder => "Enter your password", :class => "span12 field" %>              
+              <%= f.password_field :password, :placeholder => "Enter your password", :class => "field" %>              
             </div>
           </div>
           <div class="control-group">
             <div class="controls">
-              <label class="checkbox span4 offset7">
+              <label class="checkbox span4">
                 <input type="checkbox"> Remember me
               </label>
-              <button type="submit" class="pull-right m-btn blue">Sign in</button>
+              <button type="submit" class="offset5 m-btn blue">Sign in</button>
             </div>
           </div>    
           <% end %>   
         </div>         
       </fieldset>
       <div class="row">
-        <span class="span9 offset2">Belum punya account? <%= link_to "Sign up", new_attendee_path %>  Sign up</a> terlebih dahulu</span>
+        <span class="span9 offset2">Belum punya account? <%= link_to "Sign up", new_attendee_registration_path %></a> terlebih dahulu</span>
       </div>
       
     </div>

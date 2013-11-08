@@ -1,0 +1,47 @@
+<% if params[:action].start_with?("new") %>  
+	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "create") , :as => "training" do |f| %>
+
+			<%= f.inputs "Training Details" do %>
+					<%= f.input :attendee, :as => :select, :include_blank => false, :collection => params["attendee_id"] ? [[Attendee.find(params["attendee_id"]).name, Attendee.find(params["attendee_id"]).id]] : Attendee.all.map{|a| [a.name, a.id]} %>
+					<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
+		 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
+		 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
+		 			<%= f.input :amount_paid %>
+		 			
+		 	<% end %>
+		 	<%= f.actions %>
+	<% end %>
+
+<% elsif params[:action].start_with?("edit") %>  
+
+	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "update") , :as => "training" do |f| %>
+
+			<%= f.inputs "Training Details" do %>
+					<%= f.input :attendee, :as => :select, :include_blank => false, :collection => params["attendee_id"] ? [[Attendee.find(params["attendee_id"]).name, Attendee.find(params["attendee_id"]).id]] : Attendee.all.map{|a| [a.name, a.id]} %>
+					<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
+		 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
+		 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
+		 			<%= f.input :amount_paid %>
+		 			
+		 	<% end %>
+		 	<%= f.actions %>
+	<% end %>
+
+<% end %>
+
+<script type="text/javascript">
+	$("#training_training_location_id").change(function(){
+		var callback = function(response){
+			var test = $("#training_training_schedule_id").find('option').remove();
+			var training_schedules = response.training_schedules;
+			for(var i = 0; i < training_schedules.length ; i++){
+				$("#training_training_schedule_id")
+				.append($("<option></option>")
+						.attr("value", training_schedules[i].id)
+						.text(training_schedules[i].training_date));				
+			}			
+		}
+		$.get('/training_schedules?training_location_id='+$(this).val(), callback, 'json');
+	});
+	
+</script>

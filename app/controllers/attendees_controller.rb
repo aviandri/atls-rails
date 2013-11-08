@@ -21,7 +21,6 @@ class AttendeesController < Devise::RegistrationsController
 		@attendee.update_attributes(params["attendee"])		
 		@attendee.save
 		redirect_to :controller => :homes, :action => :index
-
 	end
 
 	def home

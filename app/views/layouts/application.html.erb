@@ -18,13 +18,12 @@
 <body>
 
 	<div class="row header">  
-
 	<nav class="navbar navbar-fixed-top">
 	    <div class="navbar-inner">
 	        <div class="container">	         
 
 
-	            <h1 class="brand hidden-phone hidden-tablet">
+	            <h1 class="brand hidden-phone">
 	                <a href="index.html">
 	                    <img src="/assets/logo.png" alt="">
 	                </a>                            
@@ -47,11 +46,13 @@
 	</nav>
 	</div>
 
-  	<div class="pagination-centered mobilelogo hidden-desktop">                  
+  	<div class="pagination-centered mobilelogo hidden-desktop hidden-tablet">                  
             <a href="index.html">
                 <img src="/assets/logo.png" alt="">
             </a>
 	</div>
-	<%= yield %>
+	<div class="content">
+		<%= yield %>
+	</div>
 </body>
 </html>

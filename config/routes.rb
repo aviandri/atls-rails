@@ -28,6 +28,10 @@ AtlsRails::Application.routes.draw do
 
   resources :trainings
 
+  resources :events
+
+  resources :news
+
   match "/trainings/:id/update_training_schedule" => "trainings#update_training_schedule", via: :put
 
   match "/home" => "homes#index"

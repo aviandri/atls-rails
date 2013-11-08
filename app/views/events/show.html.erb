@@ -1,0 +1,28 @@
+
+<!-- Start About -->
+<div class="row-fluid section" id="blog">
+	<div class="container"> 
+
+		<div class="explain">
+
+			<h2>Event</h2>
+
+			<!-- Start Team Members -->
+
+			<div class="row-fluid">
+
+				<div class="span12 blog_entry">
+
+					<h2><%= @event.title %></h2>
+					<div class="article-body">
+						<%= @event.body.html_safe %>		
+					</div>
+					
+				</div> 
+				</div>
+			</div>
+		</div>
+
+		<%= render "pages/footer" %>
+		</div>
+

@@ -24,6 +24,7 @@ class TrainingsController < ApplicationController
 	def create				
 		session[:training_params].deep_merge!(params[:training]) if params[:training]
 		klass = session[:training_params]["type"]
+		binding.pry
 		@training = klass.constantize.new(session[:training_params])
 		@training.current_step = session[:current_step]	
 

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
   	if resource.class.name == "Attendee"
-  		home_path
+  		trainings_path
   	else
   		super
   	end
@@ -12,6 +12,5 @@ class ApplicationController < ActionController::Base
   def current_user
   	current_attendee
   end
-
 
 end

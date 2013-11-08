@@ -1,7 +1,7 @@
 module TrainingsHelper
 
 	def training_types_for_select
-		Training::TRAINING_TYPES.map{|t|[t, "#{t}Training"]}
+		Training::TRAINING_TYPES.map{|t|[t]}
 	end
 
 	def training_location_for_select
