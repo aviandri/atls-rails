@@ -9,9 +9,11 @@ class AdminUser < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :roles
   # attr_accessible :title, :body
 
-  LOCATION_ROLES = TrainingLocation.all.map{|l|"#{l.name.downcase}_admin"}
+  # LOCATION_ROLES = TrainingLocation.all.map{|l|"#{l.name.downcase}_admin"}
 
-  ROLES = ["superadmin"].concat LOCATION_ROLES
+  # ROLES = ["superadmin"].concat LOCATION_ROLES
+
+  ROLES = ["superadmin"]
 
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
