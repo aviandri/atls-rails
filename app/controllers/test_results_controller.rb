@@ -7,7 +7,6 @@ class TestResultsController < ApplicationController
 	  	@test_result.score = calculate_score(params[:answers])
 	  	@test_result.number_of_question = Pretest.all.count
 	  	if @test_result.save
-	  		Training.update_pretest_result(current_attendee)
 	  		render :json => {:status => "ok", 
 	  			:score => @test_result.score, 
 	  			:number_of_question => @test_result.number_of_question}	  	

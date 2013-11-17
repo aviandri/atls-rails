@@ -26,17 +26,7 @@
 	 		<%= f.input :campus_address %>
 	 		<%= f.input :campus_phone %>
 	 	<% end %>
-
-	 	<%= f.inputs "Training Details" do %>
-	 		<%= f.semantic_fields_for :training, Training.new do |t| %>
-				<%= t.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}] %>	 			
-	 			<%= t.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
-	 			<%= t.input :amount_paid %>
-	 			<%= t.input :pretest_status, :as => :select, :collection =>  Training::PRETEST_STATUSES %>
-	 			<%= t.input :book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES %>
-	 		<% end %>
-
-	 	<% end %>		
+	
 
 		<%= f.actions %>
 	<% end %>
@@ -66,17 +56,6 @@
 	 		<%= f.input :campus_name %>
 	 		<%= f.input :campus_address %>
 	 		<%= f.input :campus_phone %>
-	 	<% end %>
-
-	 		
-		<%= f.inputs "Training Details" do %>
-	 		<%= f.semantic_fields_for :training do |t| %>
-	 			<%= t.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
-	 			<%= t.input :training_schedule_id, :as => :select, :collection => TrainingSchedule.find_by_training_location_name(t.object.training_location.name).map{|b|[b.training_date, b.id]}  %>
-	 			<%= t.input :amount_paid %>
-	 			<%= t.input :pretest_status, :as => :select, :include_blank => false, :collection =>  Training::PRETEST_STATUSES %>
-	 			<%= t.input :book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES %>
-	 		<% end %>
 	 	<% end %>
 
 		<%= f.actions %>

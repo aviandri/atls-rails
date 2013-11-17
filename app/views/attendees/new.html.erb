@@ -40,7 +40,7 @@
         <div class="control-group <%= has_error('date_of_birth', @attendee) %>">                
           <label>Tanggal Lahir:</label>
           <div class="control">                  
-            <%= b.text_field :date_of_birth%>
+            <%= b.text_field :date_of_birth, :class => "date-picker" %>
             <span class="help-inline"><%= get_error_message('date_of_birth', @attendee) %></span>
           </div>                                
         </div>

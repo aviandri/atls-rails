@@ -12,7 +12,7 @@ class TrainingsController < ApplicationController
 
 	def index
 		# @att = Attendee.find(params[:id])
-		# authorize! :read, @att
+		# authorize! :read, @att		
 		@trainings = current_attendee.trainings.sort_by_created_at
 	end
 

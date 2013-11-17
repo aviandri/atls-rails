@@ -3,7 +3,7 @@ class Attendee < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [ :email ]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number, :campus
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id
 
   has_many :orders
@@ -13,7 +13,7 @@ class Attendee < ActiveRecord::Base
   accepts_nested_attributes_for :orders
   validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
   validates :phone, :presence => true
-  validates :email, :presence => true, :email => true
+  # validates :email, :presence => true, :email => true
   # before_save :create_training
 
   scope :by_training_location, lambda{|location| joins(:training).where('trainings.training_location_id = ?', location.id) }
@@ -42,34 +42,36 @@ class Attendee < ActiveRecord::Base
   end
 
   def self.import
-    exl = Roo::Excelx.new("/Users/aviandrihidayat/Documents/projects/atls-rails/sample.xlsx")    
+    exl = Roo::Excelx.new("/Users/aviandrihidayat/Documents/projects/atls-rails/atls-sample.xlsx")    
     ((exl.first_row+2)..exl.last_row).each do |i|
       name = exl.cell(i, "B") 
       phone = exl.cell(i, "C")
       campus_name = exl.cell(i, "D")
-      office_name = exl.cell(i, "E")
-      email = exl.cell(i, "F")
-      first_payment = exl.cell(i, "J")
-      second_payment = exl.cell(i, "O")
+      campus = Campus.find_by_name(campus_name)      
+      office_name = exl.cell(i, "F")
+      email = exl.cell(i, "E") || "" + SecureRandom.hex(10) + "@mail.com"
+      password = SecureRandom.hex(10)
+      dob = "11-08-1984"
+      gender = "male"
+      address = "Matraman"
+      place_of_birth = "Jakarta"
+
+
+      first_payment = exl.cell(i, "G") || 0
+      second_payment = exl.cell(i, "K") || 0
+      training_location_name = exl.cell(i, "P")
+      training_location = TrainingLocation.find_by_name(training_location_name)
        
       attendee = Attendee.new(:name => name, :phone => phone, 
-        :campus_name => campus_name, :office_name => office_name,
-        :email => email)          
+        :campus => campus, :office_name => office_name,
+        :email => email, password: password, password_confirmation: password, date_of_birth: dob, gender: gender, address: address, place_of_birth: place_of_birth)          
 
-      training_location = TrainingLocation.find_by_name("Jakarta")
-      training = Training.new(:training_location => training_location)
-      attendee.training = training
-      attendee.save(:validate => false)
+      payment_amount = first_payment + second_payment
 
-      if first_payment
-        attendee.orders << Order.new(:status => "completed", :payment_amount => first_payment)
-      end
+      training = Training.new(:type => "RegularTraining", training_location: training_location, amount_paid: payment_amount)
 
-      if second_payment
-        attendee.orders << Order.new(:status => "completed", :payment_amount => second_payment)
-      end
-
-      attendee.save(:validate => false)
+      attendee.trainings << training
+      a = attendee.save
     end
 
   end

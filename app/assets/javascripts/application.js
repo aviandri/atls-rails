@@ -20,5 +20,6 @@
 //= require jquery.ui.datepicker
 //= require homes
 //= require trainings
+//= require attendees
 
 

@@ -43,7 +43,7 @@ class AttendeesController < Devise::RegistrationsController
 
 	def after_sign_up_path_for(resource)
 		if resource.class.name == "Attendee"
-			home_path
+			trainings_path
 		else
 			super
 		end

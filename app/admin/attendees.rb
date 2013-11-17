@@ -43,6 +43,8 @@ ActiveAdmin.register Attendee do
     column("Office") {|attendee| attendee.office_name.blank? ? "-" : attendee.office_name }           
     column("Email") {|attendee|attendee.email.blank? ?  "-" : attendee.email }    
 
+    column("Show Training"){|attendee| link_to("Show Trainings", admin_trainings_path("q[attendee_id_eq]" => "#{attendee.id}") )}
+
     default_actions                   
   end  
 
