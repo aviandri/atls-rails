@@ -14,7 +14,7 @@ ActiveAdmin.register AdminUser do
       f.input :email                  
       f.input :password               
       f.input :password_confirmation  
-      # f.input :roles, :as => :check_boxes, :collection => AdminUser::ROLES       
+      f.input :roles, :as => :check_boxes, :collection => AdminUser::ROLES       
     end                               
     f.buttons                         
   end         
