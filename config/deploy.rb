@@ -2,7 +2,9 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 require 'sidekiq/capistrano'
 
-server "162.243.14.204", :web, :app, :db, :primary => true
+# server "162.243.14.204", :web, :app, :db, :primary => true
+server "203.174.12.182", :web, :app, :db, :primary => true
+
 
 set :application, "atls-indo"
 set :user, "aviandri"
@@ -10,6 +12,8 @@ set :port, 22
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+
+set :rvm_type :system
 
 set :repository,  "https://aviandri@github.com/aviandri/atls-rails.git"
 set :branch, "master"
