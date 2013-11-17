@@ -13,7 +13,7 @@ set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
-set :rvm_type :system
+set :rvm_type, :system
 
 set :repository,  "https://aviandri@github.com/aviandri/atls-rails.git"
 set :branch, "master"
