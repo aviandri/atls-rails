@@ -14,7 +14,9 @@ ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
 	column :training_location                
     column :training_date                               
     column :quota
-    column("Registed Attendee"){|training_schedule| Attendee.eligable_attendee_by_training_schedule(training_schedule).count}
+    column("Registed Attendee"){|training_schedule| 
+      link_to "#{Attendee.eligable_attendee_by_training_schedule(training_schedule).count}", admin_peserta_path("q[trainings_training_schedule_training_date_eq]" => training_schedule.training_date, "q[trainings_training_location_name_eq]" => training_schedule.training_location.name) 
+    }
 
     default_actions                   
   end 
