@@ -19,9 +19,9 @@ class Ability
 			can :manage, Training
 			can :manage, Event
 			can :manage, News
-			# can [:update, :destroy], Attendee do |attendee|	
-			# 	user.authorized_for?(attendee.training_location)
-			# end
+			can [:update, :destroy], Attendee do |attendee|	
+				user.authorized_for?(attendee.training_location)
+			end
 		elsif user.kind_of? Attendee
 			can :read, Attendee do |a|
 				a.id == user.id
