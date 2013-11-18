@@ -18,7 +18,6 @@ ActiveAdmin.register Attendee, as: "Peserta" do
 
   collection_action :new_attendee_training_registration, :method => :post do
     @attendee = Attendee.create(params[:attendee])
-    binding.pry
     if @attendee.valid?
       redirect_to admin_attendees_path      
     else
