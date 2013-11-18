@@ -202,7 +202,7 @@ $ ->
 
 $ ->
 	$('#back-home').click ->	
-		window.location.replace("/home")
+		window.location.replace("/trainings")
 
 
 $ ->
