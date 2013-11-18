@@ -2,6 +2,8 @@ class Training < ActiveRecord::Base
 	attr_accessible :book_delivery_status, :payment_status, :pretest_status, :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type
 	attr_writer :current_step
 
+	scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
+
 	belongs_to :training_location
 	belongs_to :attendee
 	belongs_to :training_schedule

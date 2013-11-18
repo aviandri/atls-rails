@@ -16,8 +16,8 @@ class Attendee < ActiveRecord::Base
   # validates :email, :presence => true, :email => true
   # before_save :create_training
 
-  scope :by_training_location, lambda{|location| joins(:training).where('trainings.training_location_id = ?', location.id) }
-  scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
+  scope :by_training_location, lambda{|location| joins(:trainings).where('trainings.training_location_id = ?', location.id) }
+  scope :by_training_schedule, lambda{|schedule| joins(:trainings).where('trainings.training_schedule_id = ?', schedule.id) }
   scope :payment_completed, lambda{ joins(:training).where('trainings.payment_status = ?', Training::PAYMENT_STATUSES[0])}
   scope :pretest_completed, joins(:test_results).uniq
   
@@ -27,8 +27,9 @@ class Attendee < ActiveRecord::Base
   DEFAULT_PASSWORD = "password01"
 
   def self.eligable_attendee_by_training_schedule(training_schedule)
-    Attendee.by_training_schedule(training_schedule).payment_completed.pretest_completed
+    Attendee.by_training_schedule(training_schedule).pretest_completed
   end
+
   def available_payment_term
     last_order = self.orders.completed.latest == nil ? nil : self.orders.completed.latest.first
 
