@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 	LIMIT_PER_PAGE = 8
-	
+
 	def show
 		@event = Event.find(params[:id])
 	end
@@ -18,7 +18,7 @@ class EventsController < ApplicationController
 		end
 
 		@events = Event.find(:all, 
-			:order => "created_at", 
+			:order => "created_at DESC", 
 			:limit => LIMIT_PER_PAGE, 
 			:offset => offset)
 

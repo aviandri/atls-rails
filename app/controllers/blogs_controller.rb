@@ -14,7 +14,7 @@ class BlogsController < ApplicationController
 		end
 
 		@blogs = Blog.find(:all, 
-			:order => "created_at", 
+			:order => "created_at DESC", 
 			:limit => LIMIT_PER_PAGE, 
 			:offset => offset)
 

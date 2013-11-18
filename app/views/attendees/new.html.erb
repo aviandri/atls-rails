@@ -132,7 +132,7 @@
         <div class="control-group <%= has_error('campus_name', @attendee) %>">
           <label>Kampus</label>            
           <div class="control">
-            <%= b.collection_select :campus_id, Campus.all, :id, :name %>
+            <%= b.collection_select :campus_id, Campus.all.sort_by_name, :id, :name %>
             <span class="help-inline"><%= get_error_message('campus', @attendee) %></span>
           </div>
         </div>
