@@ -1,4 +1,4 @@
-ActiveAdmin.register Profile do
+ActiveAdmin.register Profile, as: "Profil" do
 	
 form(:html => {:multipart => true}) do |f|
 	f.inputs do

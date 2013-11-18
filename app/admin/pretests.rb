@@ -1,4 +1,4 @@
-ActiveAdmin.register Pretest do
+ActiveAdmin.register Pretest, as: "Soal Pretest" do
 
 	form do |f|
 		f.inputs do 

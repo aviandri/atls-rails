@@ -1,4 +1,4 @@
-ActiveAdmin.register News do
+ActiveAdmin.register Event, as: "Acara" do
 
 	form(:html => {:multipart => true}) do |f|
 		f.inputs do

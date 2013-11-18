@@ -1,3 +1,3 @@
-ActiveAdmin.register TrainingLocation do
+ActiveAdmin.register TrainingLocation, as: "Lokasi Training" do
 
 end

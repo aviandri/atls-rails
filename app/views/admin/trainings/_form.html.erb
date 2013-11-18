@@ -1,4 +1,4 @@
-<% if params[:action].start_with?("new") %>  
+<% if params[:action].start_with?("new") || params[:action].start_with?("create")%>  
 	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "create") , :as => "training" do |f| %>
 
 			<%= f.inputs "Training Details" do %>
@@ -12,7 +12,7 @@
 		 	<%= f.actions %>
 	<% end %>
 
-<% elsif params[:action].start_with?("edit") %>  
+<% elsif params[:action].start_with?("edit") || params[:action].start_with?("update")%>  
 
 	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "update") , :as => "training" do |f| %>
 

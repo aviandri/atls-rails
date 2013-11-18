@@ -1,4 +1,4 @@
-ActiveAdmin.register TrainingSchedule do
+ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
 	
 	form do |f|                         
 	    f.inputs "Admin Details" do       

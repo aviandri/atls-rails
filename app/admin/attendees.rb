@@ -1,4 +1,4 @@
-ActiveAdmin.register Attendee do	
+ActiveAdmin.register Attendee, as: "Peserta" do
 
   filter :name, :as => :string    
   filter :campus_name, :as => :string    
@@ -17,7 +17,8 @@ ActiveAdmin.register Attendee do
   end
 
   collection_action :new_attendee_training_registration, :method => :post do
-    @attendee = Attendee.create_attendee_with_completed_payment(params[:attendee])
+    @attendee = Attendee.create(params[:attendee])
+    binding.pry
     if @attendee.valid?
       redirect_to admin_attendees_path      
     else
@@ -81,7 +82,6 @@ ActiveAdmin.register Attendee do
       end    
     end
     panel "trainings" do
-      link_to "test", admin_attendees_path
       table_for attendee.trainings do 
         column :type
         column :status
@@ -92,7 +92,7 @@ ActiveAdmin.register Attendee do
     end
   end  
 
-  form :partial => "form"      
+  form :partial => "admin/attendees/form"      
 
   member_action :approve, :method => :put do
       order = Order.find params[:id]

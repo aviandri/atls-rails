@@ -1,5 +1,5 @@
-<% if params[:action].start_with?("new") %>  
-	<%= semantic_form_for([:admin, @attendee], url: new_attendee_training_registration_admin_attendees_path) do |f| %>
+<% if params[:action].start_with?("new") ||  params[:action].start_with?("create") %>  
+	<%= semantic_form_for [:admin, @peserta], :url => url_for(:controller => "admin/peserta", :action => "create") do |f| %>
 	    <%= f.inputs "Attendee Detail" do %>     
 			 <%= f.input :name %>	 
 			 <%= f.input :date_of_birth, :as => :date_picker %>	 
@@ -22,17 +22,15 @@
 	 	<% end %>
 
 	 	<%= f.inputs "Campus Details" do %> 
-	 		<%= f.input :campus_name %>
-	 		<%= f.input :campus_address %>
-	 		<%= f.input :campus_phone %>
+	 		<%= f.input :campus, :as => :select, :collection => Campus.all.map{|b|[b.name, b.id]} %>
 	 	<% end %>
 	
 
 		<%= f.actions %>
 	<% end %>
 
-<% elsif params[:action].start_with?("edit") %>
-	<%= semantic_form_for([:admin, @attendee], url: edit_attendee_training_registration_admin_attendee_path) do |f| %>
+<% elsif params[:action].start_with?("edit") || params[:action].start_with?("update")%>
+	<%= semantic_form_for [:admin, @peserta], :url => url_for(:controller => "admin/peserta", :action => "update") do |f| %>
 	    <%= f.inputs "Attendee Detail" do %>     
 			 <%= f.input :name %>	 
 			 <%= f.input :date_of_birth %>	 
@@ -53,9 +51,7 @@
 	 	<% end %>
 
 	 	<%= f.inputs "Campus Details" do %> 
-	 		<%= f.input :campus_name %>
-	 		<%= f.input :campus_address %>
-	 		<%= f.input :campus_phone %>
+	 		<%= f.input :campus, :as => :select, :collection => Campus.all.map{|b|[b.name, b.id]} %>
 	 	<% end %>
 
 		<%= f.actions %>

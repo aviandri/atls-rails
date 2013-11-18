@@ -1,4 +1,4 @@
-ActiveAdmin.register News do
+ActiveAdmin.register News, as: "Berita" do
 
 	form(:html => {:multipart => true}) do |f|
 		f.inputs do
