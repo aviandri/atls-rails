@@ -65,23 +65,6 @@
       <div class="span6">
         <h2 class="sub-heading">Berita</h2>
         <ul class="info-body">
-          <% Event.all.each do |event| %>
-          <li>
-            <h4><%= event.title %></h4>
-            <%= link_to event do %>
-            <span><%= truncate_html event.body, :length => 300 %> </span>
-            <% end %>
-          </li>
-          <% end %>                    
-        </ul>
-        <p class="section-button">
-          <%= link_to "Lihat lainnya", blogs_path, :class=> "m-btn blue"%>
-        </p>              
-      </div>
-
-      <div class="span6">
-        <h2 class="sub-heading">Acara</h2>
-        <ul class="info-body">
           <% News.all.each do |news| %>
           <li>
             <h4><%= news.title %></h4>
@@ -92,10 +75,29 @@
           <% end %>                    
         </ul>
         <p class="section-button">
-          <%= link_to "Lihat lainnya", blogs_path, :class=> "m-btn blue"%>
+          <%= link_to "Lihat lainnya", news_index_path, :class=> "m-btn blue"%>
         </p>              
 
       </div>
+      
+      <div class="span6">
+        <h2 class="sub-heading">Acara</h2>
+        <ul class="info-body">
+          <% Event.all.each do |event| %>
+          <li>
+            <h4><%= event.title %></h4>
+            <%= link_to event do %>
+            <span><%= truncate_html event.body, :length => 300 %> </span>
+            <% end %>
+          </li>
+          <% end %>                    
+        </ul>
+        <p class="section-button">
+          <%= link_to "Lihat lainnya", events_path, :class=> "m-btn blue"%>
+        </p>              
+      </div>
+
+      
 
     </div>
 
