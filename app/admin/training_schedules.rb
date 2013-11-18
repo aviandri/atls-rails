@@ -2,8 +2,9 @@ ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
 	
 	form do |f|                         
 	    f.inputs "Admin Details" do       
-	      f.input :training_location, :as => :select, :collection => TrainingLocation.all
+	      f.input :training_location, :as => :select, :collection => TrainingLocation.all        
 	      f.input :training_date, :as => :date_picker
+        f.input :quota
 	    end                               
     f.buttons                         
   end           
