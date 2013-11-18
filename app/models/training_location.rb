@@ -1,5 +1,5 @@
 class TrainingLocation < ActiveRecord::Base
-  attr_accessible :name, :price
+  attr_accessible :name, :price, :place
   has_many :training_schedules
 
 
