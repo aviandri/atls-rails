@@ -1,0 +1,68 @@
+
+<!-- Start About -->
+<div class="row-fluid section" id="news">
+	<div class="container body"> 
+
+		<div class="explain">
+
+			<h2>Berita</h2>
+
+			<!-- Start Team Members -->
+
+			<div class="row-fluid">
+
+				<div class="span12 blog_entry">
+
+					<% @news.each do |news| %>
+					<h2><%= news.title %></h2>
+					<div class="article-body">					
+						<%= truncate_html news.body, :length => 1000 %>		
+					</div>
+					<%= link_to "Read More", { :action => "show" , :id => news.id} , :class => "m-btn blue" %>
+					<% end %>														
+					<div class="pagination">
+						<ul>
+							<% if @current_page < @page && @current_page >= 1 %>
+							<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+							<% end %>
+							<% @page.times do |p| %>          
+							<li><%= link_to "#{p+1}", :action => "index", :page => "#{p+1}" %></li>
+							<% end %>
+
+							<% if @current_page < @page && @current_page >= 1 %>
+							<li><%= link_to "Prev", :action => "index", :page => "#{@current_page - 1}" %></li>
+							<% end %>
+
+						</ul>
+					</div>     				</div> 
+				</div>
+			</div>
+		</div>
+
+		<!-- FOOTER -->
+		<div class="row-fluid">
+
+			<div class="container footer">
+
+				<!-- Copyright and contact -->
+
+				<div class="span4 address">
+
+					©2013 <a href="http://www.itoz-labs.com">ItoZLabs </a>
+
+				</div>
+
+				<!-- newsletter form -->
+
+				<div class="span5 pull-right footer-newsletter">
+					<h2>Newsletter</h2>
+					<p>Subscribe to our newsletter and get the latest news!</p>
+					<form action="mail.php" id="subscribe-form" method="post">
+						<input type="text" name="email" id="email" placeholder="Your Email Address" class="input-text m-wrap m-ctrl">
+						<button type="submit" class="m-btn blue">Sign Up</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+

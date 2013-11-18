@@ -22,7 +22,7 @@ class Attendee < ActiveRecord::Base
   scope :pretest_completed, joins(:test_results).uniq
   
 
-  # delegate :training_location, :payment_done?, :pretest_status, :training_schedule, to: :training
+  delegate :training_location, to: :training
 
   DEFAULT_PASSWORD = "password01"
 
