@@ -22,7 +22,7 @@
 	 	<% end %>
 
 	 	<%= f.inputs "Campus Details" do %> 
-	 		<%= f.input :campus, :as => :select, :collection => Campus.all.sort_by_name.map{|b|[b.name, b.id]} %>
+	 		<%= f.input :campus, :as => :select, :collection => Campus.sort_by_name.map{|b|[b.name, b.id]} %>
 	 	<% end %>
 	
 
@@ -51,7 +51,7 @@
 	 	<% end %>
 
 	 	<%= f.inputs "Campus Details" do %> 
-	 		<%= f.input :campus, :as => :select, :collection => Campus.all.sort_by_name.map{|b|[b.name, b.id]} %>
+	 		<%= f.input :campus, :as => :select, :collection => Campus.sort_by_name.map{|b|[b.name, b.id]} %>
 	 	<% end %>
 
 		<%= f.actions %>
