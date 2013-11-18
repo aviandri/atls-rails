@@ -98,6 +98,8 @@ class Pretest
 		@testObject.pretest.answer_three
 	getAnswer4 : ->
 		@testObject.pretest.answer_four
+	getAnswer5 : ->
+		@testObject.pretest.answer_five
 	getAnswers : ->
 		@answer
 	getId : ->
@@ -111,6 +113,8 @@ class Pretest
 	getCurrentIndex : ->
 		@currentIndex
 
+pretest = new Pretest
+
 Test = 
 	populateElement : () ->
 		$("#question").html(pretest.getQuestion())
@@ -118,6 +122,7 @@ Test =
 		$("#answer2").html(pretest.getAnswer2())
 		$("#answer3").html(pretest.getAnswer3())
 		$("#answer4").html(pretest.getAnswer4())
+		$("#answer5").html(pretest.getAnswer5())
 		$("#question-section").attr("data-id", pretest.getId())				
 
 	lastPageAction : () ->
@@ -159,7 +164,7 @@ Test =
 
 
   			
-pretest = new Pretest
+
 
 $ ->
 	$('#start-test').click ->		
@@ -211,7 +216,7 @@ $ ->
 				Test.disablePrevButton()
 				false
 			$.get '/pretests.json?random=true', callback, 'json'		
-			false
+			
 
 
 $ ->

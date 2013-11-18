@@ -18,7 +18,7 @@
   			}
       }
   		
-  		$('div#clock').countdown(10000 + currentDate.valueOf(), timerCallback);
+  		$('div#clock').countdown((60 * 60 * 1000) + currentDate.valueOf(), timerCallback);
   		
   	});
  </script>
