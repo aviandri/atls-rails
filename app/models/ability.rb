@@ -20,6 +20,7 @@ class Ability
 			can :manage, Event
 			can :manage, News
 			can :manage, PaymentType
+			can :manage, TestResult
 			# can [:update, :destroy], Attendee do |attendee|	
 			# 	user.authorized_for?(attendee.training_location)
 			# end

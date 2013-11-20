@@ -13,7 +13,6 @@ class TestResultsController < ApplicationController
 	  	else
 	  		render :json => {:status => "failed"}
 	  	end
-
   	end
 
   	def calculate_score(answers)
