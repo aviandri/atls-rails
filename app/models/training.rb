@@ -18,7 +18,7 @@ class Training < ActiveRecord::Base
 
 	BOOK_STATUSES = %w(Delivered Picked\ Up)
 
-	TRAINING_TYPES = %w(RegularTraining)
+	TRAINING_TYPES = %w(RegularTraining RemedialTraining)
 
 	PAYMENT_CODE_MOD_WEIGH = 200
 
@@ -155,4 +155,15 @@ class RegularTraining < Training
 	def description
 		"Training ATLS Regular"
 	end	
+end
+
+
+class RemedialTraining < Training
+	def price
+		0
+	end
+
+	def description
+		"Remedial Training"
+	end
 end
