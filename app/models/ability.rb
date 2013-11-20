@@ -6,7 +6,7 @@ class Ability
 		if user.kind_of? AdminUser
 			can :read, ActiveAdmin::Page, :name => "Dashboard"
 			can :manage, AdminUser
-			can :read, Attendee
+			can :manage, Attendee
 			can :manage, BankAccount
 			can :manage, Blog
 			can :manage, Order
