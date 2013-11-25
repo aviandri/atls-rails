@@ -20,7 +20,7 @@ ActiveAdmin.register Training do
   			row("Tipe Training"){|training| training.type}
   			row("Lokasi Training"){|training| training.training_location.name}
   			row("Jadwal Training"){|training| training.training_schedule.training_date}
-  			row("Keterangan"){|training| training.description.gsub(/\n/, '<br/>').html_safe}
+  			row("Keterangan"){|training| training.description ? training.description.gsub(/\n/, '<br/>').html_safe, training.description}
   		end
   	end
 	index do                   
