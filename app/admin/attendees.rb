@@ -4,13 +4,8 @@ ActiveAdmin.register Attendee, as: "Peserta" do
   filter :campus_name, :as => :string    
   filter :office_name, :as => :string    
   filter :email, :as => :string    
-  # filter :training_schedule, :as => 
-  # filter :training_payment_status, :as => :select, :collection => Training::PAYMENT_STATUSES
-  # filter :training_pretest_status, :as => :select, :collection => Training::PRETEST_STATUSES
   filter :trainings_training_location_name, :as => :select, :collection => TrainingLocation.all.map{|location|[location.name, location.name]}, :label => "Training Location"
   filter :trainings_training_schedule_training_date, :as => :select, :collection => TrainingSchedule.all.map{|schedule|[schedule.training_date, schedule.training_date]}, :label => "Training Schedule"
-
-  # filter :training_book_delivery_status, :as => :select, :collection => Training::BOOK_STATUSES, :lable => "Book Status"
 
 
   action_item :only => :show do     
@@ -43,7 +38,7 @@ ActiveAdmin.register Attendee, as: "Peserta" do
     column("Campus") {|attendee| attendee.campus ?  attendee.campus.name : "-" }           
     column("Office") {|attendee| attendee.office_name.blank? ? "-" : attendee.office_name }           
     column("Email") {|attendee|attendee.email.blank? ?  "-" : attendee.email }    
-
+    column("Status Pretest") {|attendee|attendee.is_complete_pretest? ? "Done" :  "-"}    
     column("Show Training"){|attendee| link_to("Show Trainings", admin_trainings_path("q[attendee_id_eq]" => "#{attendee.id}") )}
 
     default_actions                   
@@ -79,6 +74,12 @@ ActiveAdmin.register Attendee, as: "Peserta" do
           row :campus_name
           row :campus_address
           row :campus_phone         
+      end    
+    end
+    panel "others" do
+        attributes_table do
+          row("Status Pretest"){|attendee| attendee.is_complete_pretest? ? "Done" :  "-"}
+          row("Status Buku"){|attendee| attendee.book_status }
       end    
     end
     panel "trainings" do

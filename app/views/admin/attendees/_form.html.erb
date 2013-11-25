@@ -2,7 +2,7 @@
 	<%= semantic_form_for [:admin, @peserta], :url => url_for(:controller => "admin/peserta", :action => "create") do |f| %>
 	    <%= f.inputs "Attendee Detail" do %>     
 			 <%= f.input :name %>	 
-			 <%= f.input :date_of_birth, :as => :date_picker %>	 
+			 <%= f.input :date_of_birth, :as => :string, :input_html => {:size => 6} %>	 
 			 <%= f.input :place_of_birth %>
 			 <%= f.input :gender, :as => :select, :collection => ["Male", "Female"] %>
 			 <%= f.input :religion %>
@@ -24,8 +24,11 @@
 	 	<%= f.inputs "Campus Details" do %> 
 	 		<%= f.input :campus, :as => :select, :collection => Campus.sort_by_name.map{|b|[b.name, b.id]} %>
 	 	<% end %>
-	
 
+	 	<%= f.inputs "Others" do %> 
+	 		<%= f.input :book_status, :as => :select, :collection =>  Attendee::BOOK_STATUS %>
+	 	<% end %>
+	
 		<%= f.actions %>
 	<% end %>
 
@@ -54,6 +57,10 @@
 	 		<%= f.input :campus, :as => :select, :collection => Campus.sort_by_name.map{|b|[b.name, b.id]} %>
 	 	<% end %>
 
+	 	<%= f.inputs "Others" do %> 
+	 		<%= f.input :book_status, :as => :select, :collection =>  Attendee::BOOK_STATUS %>
+	 	<% end %>
+
 		<%= f.actions %>
 	<% end %>
 <% end %>
@@ -73,7 +80,14 @@
 		}
 		$.get('/training_schedules?training_location_id='+$(this).val(), callback, 'json');
 	});
-	
+		
+
+	$(document).ready(function(){
+		defaultDate = new Date("January 1, 1985");
+		$("#attendee_date_of_birth").datepicker({dateFormat: "dd-mm-yy", defaultDate: defaultDate})
+	});
+		
+		
 </script>
 
 

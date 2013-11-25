@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118095225) do
+ActiveRecord::Schema.define(:version => 20131125071824) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20131118095225) do
     t.string   "last_sign_in_ip"
     t.string   "cell_number"
     t.integer  "campus_id"
+    t.string   "book_status"
   end
 
   add_index "attendees", ["email"], :name => "index_attendees_on_email", :unique => true
@@ -222,9 +223,6 @@ ActiveRecord::Schema.define(:version => 20131118095225) do
 
   create_table "trainings", :force => true do |t|
     t.integer  "attendee_id"
-    t.string   "payment_status"
-    t.string   "book_delivery_status"
-    t.string   "pretest_status"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.integer  "training_location_id"
@@ -234,6 +232,8 @@ ActiveRecord::Schema.define(:version => 20131118095225) do
     t.string   "type"
     t.integer  "payment_type_id"
     t.integer  "payment_code"
+    t.string   "description"
+    t.string   "status"
   end
 
   create_table "traning_locations", :force => true do |t|

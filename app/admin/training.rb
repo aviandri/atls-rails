@@ -12,11 +12,23 @@ ActiveAdmin.register Training do
 	    redirect_to admin_trainings_path
   	end
 
+  	show do |training|
+  		attributes_table do
+  			row("Peserta"){|training| link_to "#{training.attendee.name}", admin_pesertum_path(id: training.attendee.id)}
+  			row("Status Training") {|training| training.status}
+  			row("Status Pembayaran") {|training| training.payment_status}
+  			row("Tipe Training"){|training| training.type}
+  			row("Lokasi Training"){|training| training.training_location.name}
+  			row("Jadwal Training"){|training| training.training_schedule.training_date}
+  			row("Keterangan"){|training| training.description.gsub(/\n/, '<br/>').html_safe}
+  		end
+  	end
 	index do                   
 		column :id         
 	    column :attendee                     
-	    column("Tanggal Daftar"){|training| training.created_at}        
-	    column :status
+	    column("Tanggal Daftar"){|training| training.created_at.strftime("%B %d, %Y")}        
+	    column ("Status"){|training| training.status}
+	    column ("Status Pembayaran"){|training| training.payment_status}
 	    column("Lokasi"){|training| training.training_location ? training.training_location.name : ""}    
 	    column("Jadwal") {|training| training.training_schedule ?  readable_date(training.training_schedule.training_date) : "-" }           
 	    column("Biaya") {|training| training.price || "-" }           

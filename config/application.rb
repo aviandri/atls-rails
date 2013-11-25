@@ -60,6 +60,7 @@ module AtlsRails
     config.assets.version = '1.0'
 
     config.autoload_paths += %w(#{config.root}/lib)
+    config.time_zone = 'Jakarta'
 
 
     require 'iconv'

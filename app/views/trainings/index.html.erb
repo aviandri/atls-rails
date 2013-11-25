@@ -27,7 +27,7 @@
 						<tr>								
 							<th>Tanggal Daftar</th>
 							<th>Tipe Training</th>
-							<th>Status</th>
+							<th>Status Pembayaran</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,7 +35,7 @@
 							<tr>
 								<td><%= readable_date(training.created_at)%></td>
 								<td><%= training.type %></td>
-								<td><span class="status-label <%= payment_status_string(training.status)%>"><%= training.status %></span></td>	
+								<td><span class="status-label <%= payment_status_string(training.status)%>"><%= training.payment_status %></span></td>	
 								<form accept-charset="UTF-8" action="/orders/104" class="edit_order" id="edit_order_104" method="post"></form> 
 								<td>
 									<%= link_to "", training_path(training), {:class => "magnifier-icon"} %>

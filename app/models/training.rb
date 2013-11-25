@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-	attr_accessible :book_delivery_status, :payment_status, :pretest_status, :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type
+	attr_accessible :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type, :status, :description
 	attr_writer :current_step
 
 	scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
@@ -13,10 +13,9 @@ class Training < ActiveRecord::Base
 	after_initialize :init
 	accepts_nested_attributes_for :training_location
 
-	PAYMENT_STATUSES = %w(Lunas Belum\ Lunas Pending Batal)	
-	PRETEST_STATUSES = %w(Complete Not\ Complete)	
+	PAYMENT_STATUSES = %w(Lunas Belum\ Lunas)	
 
-	BOOK_STATUSES = %w(Delivered Picked\ Up)
+	TRAINING_STATUSES = %w(Batal)
 
 	TRAINING_TYPES = %w(RegularTraining RemedialTraining)
 
@@ -24,27 +23,13 @@ class Training < ActiveRecord::Base
 
 	scope :sort_by_created_at, order("created_at desc")
 
-	PAYMENT_STATUSES.each do |status_name|
-		stat_name = status_name.sub(" ", "_").downcase 
-		scope "payment_#{stat_name}", where(:payment_status => status_name)					
-	end
 
 	def init
 		unless self.amount_paid
 			self.amount_paid = 0			
-		end
-		unless self.pretest_status
-			self.pretest_status = PRETEST_STATUSES[1]
-		end
+		end		
 	end
 
-	def latest_payment_status
-		if self.attendee.orders.completed.latest
-			self.attendee.orders.completed.latest.first.payment_term.name
-		else	
-			nil
-		end
-	end
 
 	def confirm_payment
 		self.amount_paid = self.total_price
@@ -62,30 +47,6 @@ class Training < ActiveRecord::Base
 		end
 	end
 
-	def pretest_done?
-		if pretest_status == PRETEST_STATUSES[0]
-			true
-		else
-			false
-		end
-	end
-
-	def self.update_pretest_result(attendee)
-		training = attendee.training
-		training.pretest_status = PRETEST_STATUSES[0]
-		training.save		
-	end
-
-	def update_payment_status
-		unless training_location
-			return nil
-		end
-		if amount_paid >= training_location.price
-			self.payment_status = PAYMENT_STATUSES[0]
-		else
-			self.payment_status = PAYMENT_STATUSES[1]
-		end
-	end
 
 	def steps
 		%w[details payment summary]
@@ -115,28 +76,17 @@ class Training < ActiveRecord::Base
 		Training.last.id % PAYMENT_CODE_MOD_WEIGH
 	end
 
-	PAYMENT_STATUSES.each do |status_name|
-		stat_name = status_name.sub(" ", "_").downcase 
-		define_method "payment_#{stat_name}?" do
-			stat = payment_status.sub(" ", "_").downcase 
-			stat_name == stat
-		end
-	end	
 
 	def price
 		0
 	end
 
-	def status		
+	def payment_status		
 		if amount_paid >= 0 && amount_paid < total_price
 			PAYMENT_STATUSES[1]
-		elsif payment_status == PAYMENT_STATUSES[3]
-			payment_status
-		elsif amount_paid >= total_price
-			PAYMENT_STATUSES[0]					
 		else
-			payment_status
-		end						
+			PAYMENT_STATUSES[0]
+		end
 	end
 
 
@@ -152,7 +102,7 @@ class RegularTraining < Training
 		training_location.nil? ? 0 : training_location.price
 	end
 
-	def description
+	def to_s
 		"Training ATLS Regular"
 	end	
 end
@@ -163,7 +113,7 @@ class RemedialTraining < Training
 		0
 	end
 
-	def description
+	def to_s
 		"Remedial Training"
 	end
 end

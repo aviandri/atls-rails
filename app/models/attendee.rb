@@ -4,7 +4,7 @@ class Attendee < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number, :campus
-  attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id
+  attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id, :book_status
 
   has_many :orders
   has_many :test_results
@@ -13,21 +13,20 @@ class Attendee < ActiveRecord::Base
   accepts_nested_attributes_for :orders
   validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
   validates :phone, :presence => true
-  # validates :email, :presence => true, :email => true
-  # before_save :create_training
 
   scope :by_training_location, lambda{|location| joins(:trainings).where('trainings.training_location_id = ?', location.id) }
   scope :by_training_schedule, lambda{|schedule| joins(:trainings).where('trainings.training_schedule_id = ?', schedule.id) }
   scope :payment_completed, lambda{ joins(:training).where('trainings.payment_status = ?', Training::PAYMENT_STATUSES[0])}
   scope :pretest_completed, joins(:test_results).uniq
   
-
   delegate :training_location, to: :training
+
+  BOOK_STATUS = %w(Dikirim Diambil)
 
   DEFAULT_PASSWORD = "password01"
 
   def self.eligable_attendee_by_training_schedule(training_schedule)
-    Attendee.by_training_schedule(training_schedule).pretest_completed
+    Attendee.by_training_schedule(training_schedule)
   end
 
   def available_payment_term

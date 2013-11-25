@@ -4,14 +4,7 @@ ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
     link_to 'New Jadwal Training', new_admin_jadwal_training_path
   end
 
-	form do |f|                         
-	    f.inputs "Admin Details" do       
-	      f.input :training_location, :as => :select, :collection => TrainingLocation.all        
-	      f.input :training_date, :as => :date_picker
-        f.input :quota
-	    end                               
-    f.buttons                         
-  end           
+	form :partial => "admin/training_schedules/form"      
 
   index do       
 	column :id     
