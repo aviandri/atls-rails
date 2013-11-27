@@ -1,9 +1,13 @@
 class Payment < ActiveRecord::Base
-  attr_accessible :payment_date, :status, :training_id
-  validates_presence_of :status, :payment_date, :amount
+  attr_accessible :payment_date, :status, :training_id, :amount
+  validates_presence_of :status, :amount
 
   PAYMENT_STATUS = %w(Belum\ Terkonfirmasi Terkonfirmasi)
   belongs_to :training
 
   scope :confirmed, where('status = ?', PAYMENT_STATUS[1])
+
+  def self.initial_status
+  	PAYMENT_STATUS[0]
+  end
 end

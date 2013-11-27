@@ -96,7 +96,7 @@ class Training < ActiveRecord::Base
 	end
 
 	def amount_paid
-		payments.empty? ? 0 : payments.sum(:amount)
+		payments.empty? ? 0 : payments.confirmed.sum(:amount)
 	end
 
 	def amount_unpaid

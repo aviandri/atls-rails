@@ -26,19 +26,19 @@ class TrainingsController < ApplicationController
 		klass = session[:training_params]["type"]
 		@training = klass.constantize.new(session[:training_params])
 		@training.current_step = session[:current_step]	
-
-		if(@training.current_step == "payment")
-			session[:training_params].merge!("payment_code" => Training.generate_payment_code)
-		end
 		
 		if params[:back_button]
 			@training.previous_step
 		elsif @training.last_step?
-			@training.payment_status = "Pending"
 			@training.attendee = current_attendee
+			payment = Payment.create(status: Payment.initial_status, amount: @training.price)
+			@training.payments << payment
 			@training.save
 		else
 			@training.next_step
+			if(@training.current_step == "payment")
+				session[:training_params].merge!("payment_code" => Training.generate_payment_code)
+			end
 		end
 
 		session[:current_step] = @training.current_step
@@ -70,6 +70,7 @@ class TrainingsController < ApplicationController
 			training_schedule = TrainingSchedule.find_by_training_location_and_training_date(@training.training_location, training_date.strftime("%F"))
 
 			@training.training_schedule = training_schedule
+			binding.pry
 			@training.save
 		end
 		
