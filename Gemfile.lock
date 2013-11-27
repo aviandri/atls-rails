@@ -58,6 +58,8 @@ GEM
     bourbon (3.1.8)
       sass (>= 3.2.0)
       thor
+    bourne (1.1.2)
+      mocha (= 0.10.5)
     builder (3.0.4)
     cancan (1.6.10)
     capistrano (2.15.5)
@@ -142,8 +144,11 @@ GEM
       activerecord (~> 3.1)
       activesupport (~> 3.1)
       polyamorous (~> 0.5.0)
+    metaclass (0.0.1)
     method_source (0.8.1)
     mime-types (1.25)
+    mocha (0.10.5)
+      metaclass (~> 0.0.1)
     multi_json (1.8.2)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -227,6 +232,9 @@ GEM
       multi_json (~> 1.0)
       rubyzip
       websocket (~> 1.0.4)
+    shoulda-matchers (1.4.2)
+      activesupport (>= 3.0.0)
+      bourne (~> 1.1.2)
     sidekiq (2.13.0)
       celluloid (>= 0.14.1)
       connection_pool (>= 1.0.0)
@@ -302,9 +310,10 @@ DEPENDENCIES
   rails (= 3.2.9)
   rmagick
   roo
-  rspec-rails (~> 2.0)
+  rspec-rails
   rvm-capistrano
   sass-rails (~> 3.2.3)
+  shoulda-matchers
   sidekiq
   sinatra
   slim

@@ -9,6 +9,7 @@ class Training < ActiveRecord::Base
 	belongs_to :training_schedule
 
 	belongs_to :payment_type
+	has_many :payments
 
 	after_initialize :init
 	accepts_nested_attributes_for :training_location
@@ -81,17 +82,25 @@ class Training < ActiveRecord::Base
 		0
 	end
 
-	def payment_status		
-		if amount_paid >= 0 && amount_paid < total_price
-			PAYMENT_STATUSES[1]
-		else
+	def payment_status				
+		if amount_paid >= price
 			PAYMENT_STATUSES[0]
+		else
+			PAYMENT_STATUSES[1]
 		end
 	end
 
 
 	def total_price
 		price + (payment_code || 0)
+	end
+
+	def amount_paid
+		payments.empty? ? 0 : payments.sum(:amount)
+	end
+
+	def amount_unpaid
+		price - amount_paid 
 	end
 
 end

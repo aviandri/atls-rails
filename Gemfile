@@ -49,12 +49,18 @@ gem 'validate_as_email'
 
 gem 'devise'
 
-group :development, :test do
-   gem 'sqlite3'
-   gem 'rspec-rails' , '~> 2.0'
-   gem 'capybara'
-   gem "factory_girl_rails", "~> 4.0"
+
+group :test do
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'    
+  gem 'capybara'
+  gem "factory_girl_rails", "~> 4.0"
 end
+
+group :development, :test do
+  gem 'sqlite3'   
+end
+
 
 gem 'jquery-ui-rails'
 
