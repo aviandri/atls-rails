@@ -21,7 +21,9 @@
 						<div id="payments-container">
 							<div class="payment_input" data-action="<%= params[:action] %>">
 				 				<%= payment.input :payment_date, :input_html => {:class => "datepick"}, :as => "string" %>
-				 				<%= payment.input :status %>
+				 				<br>
+				 				<%= payment.input :status, as: :select, collection: Payment::PAYMENT_STATUS  %>
+				 				<br>
 				 				<%= payment.input :amount %>
 			 					<br>
 			 					<ol>
@@ -33,6 +35,7 @@
 										<% end %>
 									</li>
 								</ol>
+								<br>
 							</div>
 						</div>
 					<% end %>
