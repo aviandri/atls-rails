@@ -1,6 +1,7 @@
 ActiveAdmin.register Training do
 
 	form :partial => "form"       
+	
 
 	action_item :only => :show do     
     	link_to("Confirm Pembayaran", confirm_admin_training_path(:id => training.id), :method => :put)	      	
@@ -18,11 +19,24 @@ ActiveAdmin.register Training do
   			row("Status Training") {|training| training.status}
   			row("Status Pembayaran") {|training| training.payment_status}
   			row("Tipe Training"){|training| training.type}
-  			row("Lokasi Training"){|training| training.training_location.name}
-  			row("Jadwal Training"){|training| training.training_schedule.training_date}
+  			row("Lokasi Training"){|training| training.training_location ? training.training_location.name : "-"}
+  			row("Jadwal Training"){|training| training.training_schedule ? training.training_schedule.training_date : "-"}
   			row("Keterangan"){|training| training.description ? training.description.gsub(/\n/, '<br/>').html_safe : training.description}
   		end
+
+  		panel "Pembayaran" do
+  			table_for training.payments do
+  				column("Jumlah Pembayaran"){|training|training.amount}
+  				column("Status"){|t| t.status}
+  				column("Tanggal Pembayaran"){|t| t.payment_date}
+
+  			end
+  		end
+
+
   	end
+
+
 	index do                   
 		column :id         
 	    column :attendee                     
@@ -41,6 +55,23 @@ ActiveAdmin.register Training do
 
 	    default_actions                   
   	end  
+
+  	controller do
+	    def new
+		      @training = Training.new
+		      @training.payments.build	
+	    end
+
+	    def edit
+	    	@training = Training.find(params[:id])
+	    	@training.payments.build
+	    end
+
+	    def update
+	    	super
+	    end
+
+  	end
 
 
 end

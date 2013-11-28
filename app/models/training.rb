@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-	attr_accessible :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type, :status, :description
+	attr_accessible :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type, :status, :description, :payments_attributes
 	attr_writer :current_step
 
 	scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
@@ -12,7 +12,7 @@ class Training < ActiveRecord::Base
 	has_many :payments
 
 	after_initialize :init
-	accepts_nested_attributes_for :training_location
+	accepts_nested_attributes_for :training_location, :payments
 
 	PAYMENT_STATUSES = %w(Lunas Belum\ Lunas)	
 

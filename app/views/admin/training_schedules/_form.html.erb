@@ -1,10 +1,10 @@
-
 <%= semantic_form_for [:admin, @jadwal_training], :url => url_for(:controller => "admin/jadwal_trainings", :action => params[:action].start_with?("new", "create")  ? "create" : "update") do |f| %>
 	<%= f.inputs "Jadwal Training" do %>     
 			 <%= f.input :training_location, :as => :select, :collecection => TrainingLocation.all %>	 
 			 <%= f.input :training_date, :as => :string %>
              <%= f.input :quota %>			 
 	<% end %>
+	<%= f.actions %>
 <% end %>
 
 <script type="text/javascript">

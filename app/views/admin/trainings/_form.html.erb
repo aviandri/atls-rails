@@ -1,38 +1,48 @@
-<% if params[:action].start_with?("new") || params[:action].start_with?("create")%>  
-	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "create") , :as => "training" do |f| %>
+<%= semantic_form_for [:admin, @training],  :url => url_for(:controller => "admin/trainings", :action => params[:action].start_with?("new", "create")  ? "create" : "update" ) , :as => "training" do |f| %>
+		<%= f.inputs "Training Details" do %>
+				<%= f.input :attendee, :as => :select, :include_blank => false, :collection => params["attendee_id"] ? [[Attendee.find(params["attendee_id"]).name, Attendee.find(params["attendee_id"]).id]] : Attendee.all.map{|a| [a.name, a.id]} %>
+				<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
+	 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
+	 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
+	 			<%= f.input :amount_paid %>
+	 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
+	 			<%= f.input :description, :as => :text %>	 			
+	 	<% end %>
+		<%= f.inputs "Pembayaran" do %>
+			<ol>
+				<li class="action">
+					<input name="add_payment" id="add_payment" type="button" value="Create Payment">
+				</li>
+			</ol>
+			
+				<%= f.inputs do %>
 
-			<%= f.inputs "Training Details" do %>
-					<%= f.input :attendee, :as => :select, :include_blank => false, :collection => params["attendee_id"] ? [[Attendee.find(params["attendee_id"]).name, Attendee.find(params["attendee_id"]).id]] : Attendee.all.map{|a| [a.name, a.id]} %>
-					<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
-		 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
-		 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
-		 			<%= f.input :amount_paid %>
-		 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
-		 			<%= f.input :description, :as => :text %>
-
-		 			
-		 	<% end %>
-		 	<%= f.actions %>
-	<% end %>
-
-<% elsif params[:action].start_with?("edit") || params[:action].start_with?("update")%>  
-
-	<%= semantic_form_for [:admin, @training], :url => url_for(:controller => "admin/trainings", :action => "update") , :as => "training" do |f| %>
-
-			<%= f.inputs "Training Details" do %>
-					<%= f.input :attendee, :as => :select, :include_blank => false, :collection => params["attendee_id"] ? [[Attendee.find(params["attendee_id"]).name, Attendee.find(params["attendee_id"]).id]] : Attendee.all.map{|a| [a.name, a.id]} %>
-					<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
-		 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[current_admin_user.authorized_locations.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
-		 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
-		 			<%= f.input :amount_paid %>
-		 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
-		 			<%= f.input :description, :as => :text %>
-		 			
-		 	<% end %>
-		 	<%= f.actions %>
-	<% end %>
-
+					<%= f.semantic_fields_for :payments do |payment| %>
+						<div id="payments-container">
+							<div class="payment_input" data-action="<%= params[:action] %>">
+				 				<%= payment.input :payment_date, :input_html => {:class => "datepick"}, :as => "string" %>
+				 				<%= payment.input :status %>
+				 				<%= payment.input :amount %>
+			 					<br>
+			 					<ol>
+									<li class="action">
+										<% if payment.object.new_record? %>
+											<%= link_to 'Remove', '', :remote => true, :class => 'destroy_duplicate_nested_form' %>
+										<% else %>
+											<%= link_to 'Remove', admin_payment_path(payment.object), :method => :delete, :remote => true, :class => 'destroy_duplicate_nested_form' %>
+										<% end %>
+									</li>
+								</ol>
+							</div>
+						</div>
+					<% end %>
+				<% end %>
+			
+ 			
+ 		<% end %>
+	 	<%= f.actions %>
 <% end %>
+
 
 <script type="text/javascript">
 	$("#training_training_location_id").change(function(){
@@ -48,5 +58,15 @@
 		}
 		$.get('/training_schedules?training_location_id='+$(this).val(), callback, 'json');
 	});
+
+	$(document).ready(function(){
+		$("body").on("click", ".datepick",  function(){
+	    	 $(".datepick").datepicker({ 
+	    	 	dateFormat: "dd-mm-yy"
+    		});
+		});
+	});
+
+	
 	
 </script>
