@@ -5,7 +5,6 @@ ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
   end
 
 	form :partial => "admin/training_schedules/form"      
-
   index do       
 	column :id     
 	column :training_location                

@@ -3,10 +3,6 @@ ActiveAdmin.register Training do
 	form :partial => "form"       
 	
 
-	action_item :only => :show do     
-    	link_to("Confirm Pembayaran", confirm_admin_training_path(:id => training.id), :method => :put)	      	
-  	end   
-
 	member_action :confirm, :method => :put do
 	    training = Training.find params[:id]
 	    training.confirm_payment
@@ -29,7 +25,16 @@ ActiveAdmin.register Training do
   				column("Jumlah Pembayaran"){|training|training.amount}
   				column("Status"){|t| t.status}
   				column("Tanggal Pembayaran"){|t| t.payment_date}
-
+  				column("Action"){|t|
+  					links = []
+  					if t.status != Payment::PAYMENT_STATUS[1]  						
+  						links << link_to("Konfirmasi", confirm_admin_payment_path(:id => t.id, :training_id => training.id), :method => :put) 
+  					else
+  						"-"
+  					end
+  					links << link_to("Delete", admin_payment_path(:id => t.id), :method => :delete)
+  					safe_join links, "," 
+  				}
   			end
   		end
 

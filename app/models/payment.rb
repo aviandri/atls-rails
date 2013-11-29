@@ -10,4 +10,9 @@ class Payment < ActiveRecord::Base
   def self.initial_status
   	PAYMENT_STATUS[0]
   end
+
+  def confirm_payment
+  	self.status = PAYMENT_STATUS[1]
+  	self.save
+  end
 end

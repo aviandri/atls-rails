@@ -3,7 +3,8 @@ ActiveAdmin.register Attendee, as: "Peserta" do
   filter :name, :as => :string    
   filter :campus_name, :as => :string    
   filter :office_name, :as => :string    
-  filter :email, :as => :string    
+  filter :email, :as => :string
+  filter :gender, :as => :select, :collection => [["male"],["female"]]    
   filter :trainings_training_location_name, :as => :select, :collection => TrainingLocation.all.map{|location|[location.name, location.name]}, :label => "Training Location"
   filter :trainings_training_schedule_training_date, :as => :select, :collection => TrainingSchedule.all.map{|schedule|[schedule.training_date, schedule.training_date]}, :label => "Training Schedule"
 

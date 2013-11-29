@@ -4,7 +4,6 @@
 				<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
 	 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
 	 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
-	 			<%= f.input :amount_paid %>
 	 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
 	 			<%= f.input :description, :as => :text %>	 			
 	 	<% end %>
