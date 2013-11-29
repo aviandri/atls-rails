@@ -70,7 +70,6 @@ class TrainingsController < ApplicationController
 			training_schedule = TrainingSchedule.find_by_training_location_and_training_date(@training.training_location, training_date.strftime("%F"))
 
 			@training.training_schedule = training_schedule
-			binding.pry
 			@training.save
 		end
 		
