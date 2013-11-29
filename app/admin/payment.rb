@@ -6,7 +6,6 @@ ActiveAdmin.register Payment do
 	member_action :confirm, :method => :put do
 	    payment = Payment.find params[:id]
 	    payment.confirm_payment
-	    binding.pry
 	    redirect_to admin_training_path(:id => params[:training_id])
   	end	
 end
