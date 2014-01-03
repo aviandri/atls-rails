@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127173944) do
+ActiveRecord::Schema.define(:version => 20131129070619) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20131127173944) do
     t.string   "cell_number"
     t.integer  "campus_id"
     t.string   "book_status"
+    t.string   "nick_name"
   end
 
   add_index "attendees", ["email"], :name => "index_attendees_on_email", :unique => true

@@ -1,3 +1,14 @@
+AdminTraining = 
+	processIdName : (obj, inputCount) ->
+		oldId = obj.attr 'id'
+		newId = oldId.replace(new RegExp(/_[0-9]+_/), "_#{inputCount}_")
+		obj.attr 'id', newId
+
+		oldName = obj.attr 'name'
+		console.log("-----")
+		console.log(oldName)
+		newName = oldName.replace(new RegExp(/\[[0-9]+\]/), "[#{inputCount}]")
+		obj.attr 'name', newName
 $ ->
 	$(document).ready ->
 		if('.payment_input').length
@@ -11,7 +22,7 @@ $ ->
 			console.log("payment input" +$(".payment_input").length)
 			newNestedForm = $(formClone).last().clone()
 
-			inputCount = $(".payment_input").length	
+			inputCount = $(".payment_input").length
 
 			$(newNestedForm).find('label').each ->
 				oldLabel = $(this).attr 'for'
@@ -19,18 +30,11 @@ $ ->
 				$(this).attr 'for', newLabel
 
 			newNestedForm.find('input').each ->			
-				oldId = $(this).attr 'id'
-				console.log(oldId)
-				newId = oldId.replace(new RegExp(/_[0-9]+_/), "_#{inputCount}_")
-				console.log(newId)
-				$(this).attr 'id', newId
-
-
-				oldName = $(this).attr 'name'
-				newName = oldName.replace(new RegExp(/\[[0-9]+\]/), "[#{inputCount}]")
-				$(this).attr 'name', newName
-
+				AdminTraining.processIdName($(this), inputCount)
 			
+			newNestedForm.find('select').each ->			
+				AdminTraining.processIdName($(this), inputCount)
+
 			if $(".payment_input").length > 0
 				newNestedForm.insertAfter($(".payment_input").last())
 			else
