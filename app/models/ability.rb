@@ -22,6 +22,7 @@ class Ability
 			can :manage, PaymentType
 			can :manage, TestResult
 			can :manage, Payment
+			can :manage, PostTest
 			# can [:update, :destroy], Attendee do |attendee|	
 			# 	user.authorized_for?(attendee.training_location)
 			# end
