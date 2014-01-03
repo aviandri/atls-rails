@@ -2,7 +2,8 @@
 	<%= f.inputs "Jadwal Training" do %>     
 			 <%= f.input :training_location, :as => :select, :collecection => TrainingLocation.all %>	 
 			 <%= f.input :training_date, :as => :string %>
-             <%= f.input :quota %>			 
+             <%= f.input :quota %>		
+             <%= f.input :number_of_group %>	 
 	<% end %>
 	<%= f.actions %>
 <% end %>

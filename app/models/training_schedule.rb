@@ -1,5 +1,5 @@
 class TrainingSchedule < ActiveRecord::Base
-  attr_accessible :training_date, :training_location_id, :quota
+  attr_accessible :training_date, :training_location_id, :quota, :number_of_group
   belongs_to :training_location
   has_one :training
 

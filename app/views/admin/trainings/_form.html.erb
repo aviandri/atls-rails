@@ -4,8 +4,11 @@
 				<%= f.input :type, :as => :select, :include_blank => false, :collection => Training::TRAINING_TYPES , :include_blank => false %>
 	 			<%= f.input :training_location_id, :as => :select, :include_blank => false, :collection => Hash[TrainingLocation.all.map{|b|["#{b.name}/Rp.#{b.price}",b.id]}], :include_blank => false %>
 	 			<%= f.input :training_schedule_id, :as => :select, :include_blank=> false, :collection => TrainingLocation.first ?  TrainingLocation.first.training_schedules.map{|b|[b.training_date, b.id]} : []  %>
+	 			<%= f.input :group_number, :as => :select, :collection => f.object.group_number ?  [f.object.group_number] : [] %>
 	 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
-	 			<%= f.input :description, :as => :text %>	 			
+	 			<%= f.input :description, :as => :text %>	 
+
+
 	 	<% end %>
 		<%= f.inputs "Pembayaran" do %>
 			<ol>
@@ -51,6 +54,8 @@
 		var callback = function(response){
 			var test = $("#training_training_schedule_id").find('option').remove();
 			var training_schedules = response.training_schedules;
+			$("#training_training_schedule_id").append($("<option></option>"));
+
 			for(var i = 0; i < training_schedules.length ; i++){
 				$("#training_training_schedule_id")
 				.append($("<option></option>")
@@ -59,6 +64,19 @@
 			}			
 		}
 		$.get('/training_schedules?training_location_id='+$(this).val(), callback, 'json');
+	});
+
+	$("#training_training_schedule_id").change(function(){
+		var callback = function(response){
+			$("#training_group_number").find('option').remove();
+			for(var i = 0; i < response.number_of_group ; i++){
+				$("#training_group_number")
+				.append($("<option></option>")
+						.attr("value", i + 1)
+						.text(i+1));				
+			}	
+		}
+		$.get('/training_schedules/'+$(this).val(), callback, 'json');
 	});
 
 	$(document).ready(function(){

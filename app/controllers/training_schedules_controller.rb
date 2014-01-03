@@ -1,5 +1,5 @@
 class TrainingSchedulesController < ApplicationController
-	respond_to :json, :only => [:index]
+	respond_to :json, :only => [:index, :show]
 
 	def index
 		if params["training_location_id"]
@@ -7,5 +7,9 @@ class TrainingSchedulesController < ApplicationController
 		else
 			@training_schedules = TrainingSchedule.all
 		end
+	end
+
+	def show
+		@training_schedule = TrainingSchedule.find(params[:id])
 	end
 end

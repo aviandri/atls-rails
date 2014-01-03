@@ -17,6 +17,7 @@ ActiveAdmin.register Training do
   			row("Tipe Training"){|training| training.type}
   			row("Lokasi Training"){|training| training.training_location ? training.training_location.name : "-"}
   			row("Jadwal Training"){|training| training.training_schedule ? training.training_schedule.training_date : "-"}
+        row("Group"){|training| training.group_number ? training.group_number : "-"}
   			row("Keterangan"){|training| training.description ? training.description.gsub(/\n/, '<br/>').html_safe : training.description}
   		end
 
@@ -45,11 +46,13 @@ ActiveAdmin.register Training do
 	index do                   
 		column :id         
 	    column :attendee                     
+      column("Tipe Training"){|training| training.type}
 	    column("Tanggal Daftar"){|training| training.created_at.strftime("%B %d, %Y")}        
 	    column ("Status"){|training| training.status}
 	    column ("Status Pembayaran"){|training| training.payment_status}
 	    column("Lokasi"){|training| training.training_location ? training.training_location.name : ""}    
-	    column("Jadwal") {|training| training.training_schedule ?  readable_date(training.training_schedule.training_date) : "-" }           
+	    column("Jadwal") {|training| training.training_schedule ?  readable_date(training.training_schedule.training_date) : "-" } 
+      column("Group"){|training| training.group_number ? training.group_number : "-"}          
 	    column("Biaya") {|training| training.price || "-" }           
 	    column("Kode Pembayaran") {|training| training.payment_code || "-" }    
 	    column("Terbayar") {|training| training.amount_paid || "-" }    

@@ -24,7 +24,7 @@ AtlsRails::Application.routes.draw do
 
   resources :test_results
 
-  resources :training_schedules, :only => [:index]
+  resources :training_schedules, :only => [:index, :show]
 
   resources :trainings
 
