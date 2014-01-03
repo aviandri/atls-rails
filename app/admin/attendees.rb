@@ -33,7 +33,8 @@ ActiveAdmin.register Attendee, as: "Peserta" do
 
 
 	index do                            
-    column :name                     
+    column :id         
+    column :name
     column :created_at        
     column :phone    
     column("Campus") {|attendee| attendee.campus ?  attendee.campus.name : "-" }           

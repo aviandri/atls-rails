@@ -44,7 +44,7 @@ ActiveAdmin.register Training do
 
 
 	index do                   
-		column :id         
+		  column :id         
 	    column :attendee                     
       column("Tipe Training"){|training| training.type}
 	    column("Tanggal Daftar"){|training| training.created_at.strftime("%B %d, %Y")}        
