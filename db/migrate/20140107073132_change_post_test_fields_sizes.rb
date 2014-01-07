@@ -9,5 +9,6 @@ class ChangePostTestFieldsSizes < ActiveRecord::Migration
   end
 
   def down
+  	
   end
 end

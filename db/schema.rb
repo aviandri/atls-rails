@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140107073132) do
+ActiveRecord::Schema.define(:version => 20140107074759) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -172,12 +172,12 @@ ActiveRecord::Schema.define(:version => 20140107073132) do
   end
 
   create_table "post_tests", :force => true do |t|
-    t.string   "question"
-    t.string   "answer_one"
-    t.string   "answer_two"
-    t.string   "answer_three"
-    t.string   "answer_four"
-    t.string   "answer_five"
+    t.text     "question"
+    t.text     "answer_one"
+    t.text     "answer_two"
+    t.text     "answer_three"
+    t.text     "answer_four"
+    t.text     "answer_five"
     t.integer  "correct_answer"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
