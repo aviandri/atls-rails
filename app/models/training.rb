@@ -38,7 +38,6 @@ class Training < ActiveRecord::Base
 
 
 	# def self.create_initial_training(attributes)
-	# 	binding.pry
 	# 	training = Training.new(attributes.select{|s,value|value.nil? == false})
 	# 	training.status = Training::TRAINING_STATUSES[1]
 	# 	training.save
@@ -140,9 +139,7 @@ class Training < ActiveRecord::Base
 		if PostTestResult.passed_test?(self.id)
 			self.status = Training::TRAINING_STATUSES[3]
 			self.save
-			binding.pry
 		end
-		binding.pry
 	end
 
 end

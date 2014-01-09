@@ -1,0 +1,19 @@
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :id, "id" %></th>
+      <th><%= sort_link @search, :attendee, "Attendee" %></th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @trainings.each do |page| %>
+      <tr>
+        <td><%= training.id %></td>
+        <td><%= training.attendee.name %></td>
+        <!-- <td><%= link_to("Update",edit_admin_page_path(page)) %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>

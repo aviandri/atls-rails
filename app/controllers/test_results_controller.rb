@@ -22,7 +22,6 @@ class TestResultsController < ApplicationController
 	  	else
 	  		render :json => {:status => "failed"}
 	  	end
-      binding.pry
   	end
 
   	def calculate_score(answers, type)
