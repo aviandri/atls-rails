@@ -128,7 +128,8 @@ class Attendee < ActiveRecord::Base
 
   def send_devise_notification(notification, *args)
       # devise_mailer.send(notification, self, *args).deliver
-      AtlsMailer.send_forget_password(self.id, args[0]).deliver!
+
+      SendResetPasswordWorker.perform_async(self.id, args[0])
   end
 
 

@@ -2,7 +2,7 @@
 	<div class="timer">
 		<div class="row-fluid" style="margin-top:30px;">
 			<div class="center-align">
-				<h2>Pre-Test Result</h2>			
+				<h2>Test Result</h2>			
 			</div>
 		</div>
 	</div>
@@ -10,11 +10,22 @@
 	<div class="main-section wrapper shadow">
 		<div class="row-fluid">
 			<div class="score text-left">
+				<div>
+					<span class="text-success text-left big-font">Nilai Anda : <%= (@test_result.score * 100 / @test_result.number_of_question)  %></span>
+				</div>
 				<p>
+
 					<span class="text-success text-left big-font"><%= @test_result.score %></span>
 					<span class="big-font">/ <%= @test_result.number_of_question%></span>
 				</p>
-				<p class="big-font">Terima Kasih Telah Mengikuti PreTest <p>
+				<p class="big-font">Terima Kasih Telah Mengikuti Test <p>
+				<div>
+					<% if @test_result.is_test_passed? %>
+						<p>Anda telah <strong>berhasil</strong> menyelesaikan post test. Sertifikat anda dapat diambil di sekertariat Komisi Trauma terdekat dari tempat anda</p>
+					<% else %>
+						<p>Anda masih <strong>belum berhasil</strong> menyelesaikan post test. Anda dapat mengulangi lagi test ini.</p>
+					<% end %>
+				</div>
 			</div>						
 		</div>
 

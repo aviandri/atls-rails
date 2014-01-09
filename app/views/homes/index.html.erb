@@ -27,7 +27,7 @@
 								<p class="notifiation message">Anda memiliki Post Test yang masih pending</p>
 							</div>
 							<div class="notification-action span2">
-								<%= link_to "Mulai Pretest", home_post_tests_path, :class=> "m-btn blue"%>
+								<%= link_to "Mulai Post Test", home_post_tests_path, :class=> "m-btn blue"%>
 							</div>					
 						<% else %>
 							<div class="notification-message span10">
@@ -52,6 +52,7 @@
 						<tr>								
 							<th>Tanggal Daftar</th>
 							<th>Tipe Training</th>
+							<th>Status</th>
 							<th>Status Pembayaran</th>
 						</tr>
 					</thead>
@@ -60,6 +61,7 @@
 							<tr>
 								<td><%= readable_date(training.created_at)%></td>
 								<td><%= training.type %></td>
+								<td><span class="status-label %>"><%= training.status %></span></td>	
 								<td><span class="status-label <%= payment_status_string(training.payment_status)%>"><%= training.payment_status %></span></td>	
 								<form accept-charset="UTF-8" action="/orders/104" class="edit_order" id="edit_order_104" method="post"></form> 
 								<td>

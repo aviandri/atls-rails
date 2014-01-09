@@ -14,6 +14,10 @@ class PostTestResult < TestResult
 		!result.empty?
 	end
 
+	def is_test_passed?
+		(self.score * 100 / self.number_of_question) >= 70
+	end
+
 end
 
 class PreTestResult < TestResult
