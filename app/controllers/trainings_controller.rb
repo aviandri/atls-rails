@@ -1,5 +1,6 @@
 class TrainingsController < ApplicationController
 	layout "home", :only => [:index, :show, :new, :create]
+	before_filter :authenticate_attendee!
 
 
 	def show		
@@ -33,6 +34,7 @@ class TrainingsController < ApplicationController
 			@training.attendee = current_attendee
 			payment = Payment.create(status: Payment.initial_status, amount: @training.price)
 			@training.payments << payment
+			@training.status = Training::TRAINING_STATUSES[1]
 			@training.save
 		else
 			@training.next_step

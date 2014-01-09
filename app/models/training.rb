@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-	attr_accessible :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type, :status, :description, :payments_attributes, :group_number
+	attr_accessible :training_location, :attendee_id, :amount_paid, :amount_unpaid, :training_location_id, :training_schedule_id, :payment_type_id, :payment_code, :type, :status, :description, :payments_attributes, :group_number, :score
 	attr_writer :current_step
 
 	scope :by_training_schedule, lambda{|schedule| joins(:training).where('trainings.training_schedule_id = ?', schedule.id) }
@@ -11,18 +11,23 @@ class Training < ActiveRecord::Base
 	belongs_to :payment_type
 	has_many :payments
 
+	has_many :post_test_results
+
 	after_initialize :init
 	accepts_nested_attributes_for :training_location, :payments
 
 	PAYMENT_STATUSES = %w(Lunas Belum\ Lunas)	
 
-	TRAINING_STATUSES = %w(Batal)
+	TRAINING_STATUSES = %w(Batal Aktif PostTest Lulus)
 
 	TRAINING_TYPES = %w(RegularTraining RemedialTraining)
 
 	PAYMENT_CODE_MOD_WEIGH = 200
 
 	scope :sort_by_created_at, order("created_at desc")
+	scope :post_test_trainings, where(status: Training::TRAINING_STATUSES[2])
+
+	before_save :finish_training
 
 
 	def init
@@ -31,6 +36,13 @@ class Training < ActiveRecord::Base
 		end		
 	end
 
+
+	# def self.create_initial_training(attributes)
+	# 	binding.pry
+	# 	training = Training.new(attributes.select{|s,value|value.nil? == false})
+	# 	training.status = Training::TRAINING_STATUSES[1]
+	# 	training.save
+	# end
 
 	def confirm_payment
 		self.amount_paid = self.total_price
@@ -101,6 +113,36 @@ class Training < ActiveRecord::Base
 
 	def amount_unpaid
 		price - amount_paid 
+	end
+
+	def finish_training
+		if score_changed?
+			unless is_pass_test?
+				initiate_post_test
+			end
+		end
+	end
+
+	def is_pass_test?
+		score >= 70
+	end
+
+	def initiate_post_test
+		self.status = Training::TRAINING_STATUSES[2]		
+		self.attendee.send_post_test_invitation
+	end
+
+	def is_need_post_test?
+		status == Training::TRAINING_STATUSES[2]
+	end
+
+	def check_status_after_post_test
+		if PostTestResult.passed_test?(self.id)
+			self.status = Training::TRAINING_STATUSES[3]
+			self.save
+			binding.pry
+		end
+		binding.pry
 	end
 
 end

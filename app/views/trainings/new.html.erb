@@ -1,6 +1,6 @@
 <div class="container-fluid callout">
 	<div class="row-fluid" style="margin-top:30px;">		
-		<%= render "homes/side_bar" %>
+		<%= render "/shared/side_bar" %>
 		<div class="span9 contained">
 			<%= form_for @training, :url => trainings_path, :as => "training" do |f| %>
 				<%= render "#{@training.current_step}_steps", :f => f%>			 			 

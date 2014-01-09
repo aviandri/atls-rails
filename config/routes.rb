@@ -51,6 +51,15 @@ AtlsRails::Application.routes.draw do
 
   match "/payment_code" => "orders#payment_code"
 
+  namespace :home do
+    resources :post_tests do
+      collection do 
+        get :start_test
+      end      
+    end
+  end
+
+
   mount Sidekiq::Web => '/sidekiq'
 
 end

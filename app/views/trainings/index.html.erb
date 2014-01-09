@@ -1,7 +1,7 @@
 <% content_for :training_side_bar, "active" %>
 <div class="container-fluid callout">
 	<div class="row-fluid">
-		<%= render "homes/side_bar" %>
+		<%= render "shared/side_bar" %>
 		<% unless current_attendee.is_complete_pretest? %>
 			<div class="span9 status-container">
 				<div class="infobar">
@@ -15,7 +15,7 @@
 		
 		<div class="span9 contained">			
 			<div class="heading">				
-				<h1 class="heading-title">Trainings</h1>
+				<h2 class="heading-title">Trainings</h2>
 				<%= link_to "Daftar", new_training_path, :class => "heading-button" %>
 				<div class="clearfix"></div>
 			</div>

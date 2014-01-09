@@ -70,6 +70,7 @@ class HomesController < ApplicationController
 	end
 
 
+
 	private
 
 	def is_pass_test(test_result)

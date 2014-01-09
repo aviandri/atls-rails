@@ -7,8 +7,9 @@
 	 			<%= f.input :group_number, :as => :select, :collection => f.object.group_number ?  [f.object.group_number] : [] %>
 	 			<%= f.input :status, :as => :select, :collection => Training::TRAINING_STATUSES %>
 	 			<%= f.input :description, :as => :text %>	 
-
-
+	 	<% end %>
+	 	<%= f.inputs "Test Detail" do %>
+	 			<%= f.input :score %>
 	 	<% end %>
 		<%= f.inputs "Pembayaran" do %>
 			<ol>
@@ -41,15 +42,16 @@
 							</div>
 						</div>
 					<% end %>
-				<% end %>
-			
- 			
+				<% end %>			 			
  		<% end %>
 	 	<%= f.actions %>
 <% end %>
 
 
+<a href="img/image-1.jpg" data-lightbox="image-1" title="My caption">image #1</a>
+
 <script type="text/javascript">
+	window.prompt("sometext","defaultText");
 	$("#training_training_location_id").change(function(){
 		var callback = function(response){
 			var test = $("#training_training_schedule_id").find('option').remove();
@@ -86,6 +88,7 @@
     		});
 		});
 	});
+
 
 	
 	

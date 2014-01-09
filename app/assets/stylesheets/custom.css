@@ -457,6 +457,8 @@ label{
   width: 90%;
 }
 
+
+
 @media (min-width: 768px) and (max-width: 979px) {
   .navbar .brand {
     margin: 0 0 0 20px;

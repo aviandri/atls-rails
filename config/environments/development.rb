@@ -37,4 +37,7 @@ AtlsRails::Application.configure do
 
   config.gem "nokogiri"
   config.gem "htmlentities"
+
+  config.action_mailer.default_url_options = { :host => "dev.atls-indo.com", :port => 3000 }
+
 end

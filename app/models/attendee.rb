@@ -6,6 +6,9 @@ class Attendee < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number, :campus
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id, :book_status, :graduation_year
 
+  attr_reader :state
+  
+
   has_many :orders
   has_many :test_results
   belongs_to :campus
@@ -108,6 +111,22 @@ class Attendee < ActiveRecord::Base
   def is_complete_pretest?
     !test_results.blank?
   end
+
+  def generate_new_password_email
+    self.send_reset_password_instruction
+  end
+
+
+  def send_post_test_invitation
+      self.send_reset_password_instructions
+      @state = "PostTestInvite"
+  end
+
+  def find_latest_post_test_training
+      trainings.post_test_trainings ? trainings.post_test_trainings.last : nil
+  end
+
+
 
   private
   def create_training  

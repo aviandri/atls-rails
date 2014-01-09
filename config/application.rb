@@ -62,6 +62,8 @@ module AtlsRails
     config.autoload_paths += %w(#{config.root}/lib)
     config.time_zone = 'Jakarta'
 
+    # config.register_stylesheet 'application_active_admin'
+
 
     require 'iconv'
   end

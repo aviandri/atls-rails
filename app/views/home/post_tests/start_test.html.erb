@@ -1,0 +1,96 @@
+<script type="text/javascript">
+	 $(function() {
+      var currentDate = new Date()      
+      function timerCallback(event) {
+  		  $this = $(this);
+  			switch(event.type) {
+  				case "seconds":
+  				case "minutes":
+  				case "hours":
+  				case "days":
+  				case "weeks":
+  				case "daysLeft":
+  				  	$this.find('span#'+event.type).html(event.value);  				  
+  					break;
+  				case "finished":
+  					$("#submit").trigger('click');
+  					break;
+  			}
+      }
+  		
+  		$('div#clock').countdown((60 * 60 * 1000) + currentDate.valueOf(), timerCallback);
+  		
+  	});
+ </script>
+
+<div id="posttest-section" class="container-fluid callout">
+	<div class="timer">
+		<div class="row-fluid" style="margin-top:30px;">
+			<div id="clock" class="span5 offset5">
+	             <span id="minutes"></span> 
+	             <span>:<span>       
+	        	<span id="seconds"></span>
+	    	</div>
+
+			<div class="span2">
+				<span id="indexCount">1</span>
+				<span>/</span>
+				<span>20</span>			
+			</div>
+		</div>
+	</div>
+
+	<div class="test-section wrapper shadow">
+		<div class="row-fluid">
+			<div id="question-section" class="span10 offset1" data-id="1">
+				<h2>Q:</h2>
+				<span id="question">A 22-year-old man sustains a shotgun wound to the left shoulder. His blood pressure is initially 80/40 mm Hg. After 2 liters of Ringer's lactate solutions his blood pressure increases to 122/84, Hg. His heart rate is now 100 beats per minute and his resporatory rate is 28 breath per minute. Hos breath sounds are decreased in the left hemixthorax, and a closed tube thoracostomy is performed with the return of a small amount of blood and no air leak. The most appropriate next step is to</span>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span10 offset1">
+				<h2>A:</h2>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" checked>
+				  <span id="answer1">reexamine the chest</span>
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="2">
+				  <span id="answer2">perform an aortogram</span>
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="3">
+				  <span id="answer3">obtain a CT scan of the chest</span>
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="4">
+				  <span id="answer4">obtain arterial blood gas analyses</span>
+				</label>
+				<label class="radio">
+				  <input type="radio" name="optionsRadios" id="optionsRadios2" value="5">
+				  <span id="answer5">perform transesphgeal echocardiography<span>
+				</label>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span2 offset6">
+				<button type="button" id="prev" data-toggle="modal" data-target="#myModal" class="btn btn-success">Prev</button>	
+			</div>
+			<div class="span2">
+				<button type="button" id="next" data-toggle="modal" data-target="#myModal" class="btn btn-success">Next</button>	
+			</div>
+
+			<div class="span2">
+				<button type="button" id="submit" data-toggle="modal" data-target="#myModal" class="btn btn-success" style="display:none">Submit</button>	
+			</div>
+
+
+		</div>
+	</div>
+	
+</div>
+
+
+

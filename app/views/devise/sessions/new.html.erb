@@ -25,13 +25,19 @@
               </label>
               <button type="submit" class="offset5 m-btn blue">Sign in</button>
             </div>
+            <div>
+              <span class="span4">
+                  <%= render "devise/shared/links" %>
+              <span>
+            </div>
           </div>    
           <% end %>   
         </div>         
       </fieldset>
       <div class="row">
-        <span class="span9 offset2">Belum punya account? <%= link_to "Sign up", new_attendee_registration_path %></a> terlebih dahulu</span>
+          <span class="span9 offset2">Belum punya account? <%= link_to "Sign up", new_attendee_registration_path %></a> terlebih dahulu</span>
       </div>
+
       
     </div>
 

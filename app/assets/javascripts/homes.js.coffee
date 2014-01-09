@@ -67,12 +67,14 @@ $ ->
 					.text(payterm.name))
 		
 		$.get '/payment_term.json?training_location_id='+$("#training_location").val(), callback, 'json'
+
 class Pretest
-	constructor : ->
+	constructor : (type) ->
 		test = ''
 		@currentIndex = 0
 		testObject = ''
 		@answer = []
+		@testType = type
 
 	setObjects : (resource) ->
 		@tests = resource
@@ -89,31 +91,40 @@ class Pretest
 		@testObject = @tests[@currentIndex]		
 	getQuestion : ->
 		console.log @testObject
-		@testObject.pretest.question
+		@testObject.question
 	getAnswer1 : ->
-		@testObject.pretest.answer_one	
+		@testObject.answer_one	
 	getAnswer2 : ->
-		@testObject.pretest.answer_two
+		@testObject.answer_two
 	getAnswer3 : ->
-		@testObject.pretest.answer_three
+		@testObject.answer_three
 	getAnswer4 : ->
-		@testObject.pretest.answer_four
+		@testObject.answer_four
 	getAnswer5 : ->
-		@testObject.pretest.answer_five
+		@testObject.answer_five
 	getAnswers : ->
 		@answer
 	getId : ->
-		@testObject.pretest.id
+		@testObject.id
 	setAnswer : (id, ans) ->
 		@answer[id] = ans
+
 	isLast : ->		
+		console.log "index"
+		console.log @currentIndex
+		console.log @tests
 		true if @currentIndex == @tests.length - 1
 	isFirst : ->		
 		true if @currentIndex == 0
 	getCurrentIndex : ->
 		@currentIndex
 
-pretest = new Pretest
+	getType : ->
+		@testType
+
+
+pretest = null
+
 
 Test = 
 	populateElement : () ->
@@ -157,13 +168,15 @@ Test =
 		$("#indexCount").html(pretest.getCurrentIndex() + 1)
 
 	submitAnswer : () ->
-		json = Test.createAnswerJson()		
+		json = Test.createAnswerJson()	
+		console.log(pretest.getType())		
+		json.type = pretest.getType()
+		console.log(json)	
+
 		callback = (response) ->
 			window.location.replace("/home/finish_test")
-		$.ajax '/test_results.json', type: 'POST', data: JSON.stringify(json), success: callback, contentType: "application/json", dataType: "json"		
+		$.ajax '/test_results.json', type: 'POST', data: JSON.stringify(json), success: callback, contentType: "application/json", dataType: "json"	
 
-
-  			
 
 
 $ ->
@@ -171,7 +184,11 @@ $ ->
 		window.location.replace("/home/start_test")
 
 $ ->
-	$('#next').click ->			
+	$('#start-posttest').click ->		
+		window.location.replace("/home/post_tests/start_test")
+
+$ ->
+	$('#next').click ->		
 		Test.showPrevButton()
 		answerValue = $('input[type=radio]:checked').val()
 		questionId = $('#question-section').attr('data-id')
@@ -196,6 +213,7 @@ $ ->
 
 $ ->
 	$('#submit').click ->
+		alert("submit")
 		Test.submitAnswer()		
 		
 
@@ -208,14 +226,26 @@ $ ->
 $ ->
 	$("#pretest-section").ready ->
 			callback = (response) ->
-				console.log('response')
-				console.log(response.length)
 				pretest.setObjects(response)
 				pretest.getObject()
 				Test.populateElement()
 				Test.disablePrevButton()
 				false
-			$.get '/pretests.json?random=true', callback, 'json'		
+			if $("#pretest-section").length > 0
+				pretest = new Pretest('PreTestResult')
+				$.get '/pretests.json?random=true', callback, 'json'		
+
+
+	$("posttest-section").ready ->
+			callback = (response) ->
+				pretest.setObjects(response)
+				pretest.getObject()
+				Test.populateElement()
+				Test.disablePrevButton()
+				false
+			if $("#posttest-section").length > 0
+				pretest = new Pretest('PostTestResult')
+				$.get '/home/post_tests.json?random=true', callback, 'json'		
 			
 
 

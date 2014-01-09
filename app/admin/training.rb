@@ -1,7 +1,12 @@
 ActiveAdmin.register Training do
-
 	form :partial => "form"       
-	
+
+
+  xlsx do
+      delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number
+      column("Peserta") { |resource| resource.attendee ? resource.attendee.name : "" }
+  end
+  
 
 	member_action :confirm, :method => :put do
 	    training = Training.find params[:id]
@@ -18,8 +23,16 @@ ActiveAdmin.register Training do
   			row("Lokasi Training"){|training| training.training_location ? training.training_location.name : "-"}
   			row("Jadwal Training"){|training| training.training_schedule ? training.training_schedule.training_date : "-"}
         row("Group"){|training| training.group_number ? training.group_number : "-"}
-  			row("Keterangan"){|training| training.description ? training.description.gsub(/\n/, '<br/>').html_safe : training.description}
+  			row("Keterangan"){|training| training.description ? training.description.gsub(/\n/, '<br/>').html_safe : training.description}        
   		end
+
+      panel "Test Detail" do
+        attributes_table do
+          row("Score"){|training| training.score }
+        end
+      end
+      
+
 
   		panel "Pembayaran" do
   			table_for training.payments do
@@ -38,8 +51,6 @@ ActiveAdmin.register Training do
   				}
   			end
   		end
-
-
   	end
 
 
@@ -55,7 +66,9 @@ ActiveAdmin.register Training do
       column("Group"){|training| training.group_number ? training.group_number : "-"}          
 	    column("Biaya") {|training| training.price || "-" }           
 	    column("Kode Pembayaran") {|training| training.payment_code || "-" }    
-	    column("Terbayar") {|training| training.amount_paid || "-" }    
+	    column("Terbayar") {|training| training.amount_paid || "-" }   
+      column("Nilai Test") {|training| training.score || "-" }   
+
 
 	    column("Confirm") do |training|
 	      link_to("Confirm Pembayaran", confirm_admin_training_path(:id => training.id), :method => :put)	      	
@@ -63,6 +76,31 @@ ActiveAdmin.register Training do
 
 	    default_actions                   
   	end  
+
+    action_item :only => :index do
+      link_to 'Upload CSV', :action => 'upload_csv'
+    end
+
+    collection_action :upload_csv do
+      render "admin/trainings/upload_xls"
+    end
+
+    collection_action :import_csv, :method => :post do
+        tmp = params[:dump][:file].tempfile
+        file = File.join("public", params[:dump][:file].original_filename)
+        FileUtils.cp tmp.path, file
+
+        exl = Roo::Excelx.new(file)    
+        ((exl.first_row + 1)..exl.last_row).each do |i|
+            id = exl.cell(i, "A") 
+            score = exl.cell(i, "C") 
+          
+            t = Training.find(id)
+            t.score = score
+            t.save
+        end
+
+    end
 
   	controller do
 	    def new
@@ -78,6 +116,8 @@ ActiveAdmin.register Training do
 	    def update
 	    	super
 	    end
+
+      def max_csv_records; @per_page; end
 
   	end
 

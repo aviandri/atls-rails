@@ -1,6 +1,6 @@
 <div class="container-fluid callout">
 	<div class="row-fluid" style="margin-top:30px;">
-		<%= render "homes/side_bar" %>
+		<%= render "/shared/side_bar" %>
 		<div class="span9 contained">
 			<div class="heading">				
 				<h1 class="heading-title">Training Detail</h1>
@@ -46,11 +46,13 @@
           		<div class="data-item row-fluid">
 		            <dt class="span6">Metode Pembayaran</dt>
 		            <dd class="span6">
-		            	<p class="strong">Transfer Bank <%= "#{@training.payment_type.name}" %>  </p>
-		            	<p>No Rekening <%= "#{@training.payment_type.account_number}" %></p>
-		            	<p>Atas Nama <%= "#{@training.payment_type.account_holder}" %></p>
-						<p>Cabang <%= "#{@training.payment_type.branch_name}" %></p>
-		            	<span class="subnote">pembayaran harus dilakukan dalam waktu maksimal 2x24 jam dari tanggal daftar. Jika lebih dari waktu yang ditetapkan, pendaftaran akan otomatis dibatalkan</span>
+		            	<% if @training.payment_type %>
+			            	<p class="strong">Transfer Bank <%= "#{@training.payment_type.name}" %>  </p>
+			            	<p>No Rekening <%= "#{@training.payment_type.account_number}" %></p>
+			            	<p>Atas Nama <%= "#{@training.payment_type.account_holder}" %></p>
+							<p>Cabang <%= "#{@training.payment_type.branch_name}" %></p>
+			            	<span class="subnote">pembayaran harus dilakukan dalam waktu maksimal 2x24 jam dari tanggal daftar. Jika lebih dari waktu yang ditetapkan, pendaftaran akan otomatis dibatalkan</span>
+			            <% end %>
 		            </dd>
           		</div>
 			</div>
@@ -65,6 +67,23 @@
 		            </dt>		            
 		            <dd class="span3"><%= @training.training_schedule ? readable_date(@training.training_schedule.training_date) : "Not Selected" %></dd>
 		            <a href="#" id="select-schedule" class="body-button">Pilih Jadwal</a>
+          		</div>          		
+			</div>
+
+			<div class="section">			
+				<div>
+					<span class="section-heading">Hasil Training<span>
+				</div>
+				
+				<div class="data-item row-fluid">
+		            <dt class="span6">Nilai Test		            	
+		            </dt>		            
+		            <dd class="span3"><%= @training.score ? @training.score : "-" %> </dd>
+          		</div>          		
+          		<div class="data-item row-fluid">
+		            <dt class="span6">Status Training		            	
+		            </dt>		            
+		            <dd class="span3"><%= @training.status ? @training.status : "-" %> </dd>
           		</div>          		
 			</div>
 		</div>
