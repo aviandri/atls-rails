@@ -20,10 +20,12 @@
 				</p>
 				<p class="big-font">Terima Kasih Telah Mengikuti Test <p>
 				<div>
-					<% if @test_result.is_test_passed? %>
-						<p>Anda telah <strong>berhasil</strong> menyelesaikan post test. Sertifikat anda dapat diambil di sekertariat Komisi Trauma terdekat dari tempat anda</p>
-					<% else %>
-						<p>Anda masih <strong>belum berhasil</strong> menyelesaikan post test. Anda dapat mengulangi lagi test ini.</p>
+					<% if @test_result.type == "PostTestResult" %>
+						<% if @test_result.is_test_passed? %>
+							<p>Anda telah <strong>berhasil</strong> menyelesaikan post test. Sertifikat anda dapat diambil di sekertariat Komisi Trauma terdekat dari tempat anda</p>
+						<% else %>
+							<p>Anda masih <strong>belum berhasil</strong> menyelesaikan post test. Anda dapat mengulangi lagi test ini.</p>
+						<% end %>
 					<% end %>
 				</div>
 			</div>						
@@ -31,7 +33,7 @@
 
 		<div class="row-fluid">
 			<div class="span2 submit-button offset9">
-				<button id="back-home" type="submit" class="m-btn blue">Back to Home</button>
+				<%= link_to "Kembali ke Home", home_path, :class => "m-btn blue" %>
 			</div>
 		</div>
 	</div>

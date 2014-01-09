@@ -4,10 +4,20 @@
 		<%= render "shared/side_bar" %>
 		<% unless current_attendee.is_complete_pretest? %>
 			<div class="span9 status-container">
-				<div class="infobar">
+				<div class="infobar info">
 			          <div class="content">
 			              <span>Anda belum melakukan pretest</span>
 			              <%= link_to "Pretest", home_test_path, :class => "m-btn green info-btn" %>
+			          </div>
+				</div>
+			</div>	
+		<% end %>
+
+		<% if flash[:error] %>
+		<div class="span9 status-container">
+				<div class="infobar error">
+			          <div class="content">
+			              <span><%= flash[:error] %></span>			              
 			          </div>
 				</div>
 			</div>	
@@ -61,7 +71,7 @@
 							<tr>
 								<td><%= readable_date(training.created_at)%></td>
 								<td><%= training.type %></td>
-								<td><span class="status-label %>"><%= training.status %></span></td>	
+								<td><span><%= training.status %></span></td>	
 								<td><span class="status-label <%= payment_status_string(training.payment_status)%>"><%= training.payment_status %></span></td>	
 								<form accept-charset="UTF-8" action="/orders/104" class="edit_order" id="edit_order_104" method="post"></form> 
 								<td>

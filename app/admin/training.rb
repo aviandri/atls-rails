@@ -99,7 +99,7 @@ ActiveAdmin.register Training do
             t.score = score
             t.save
         end
-
+        redirect_to admin_trainings_path
     end
 
   	controller do

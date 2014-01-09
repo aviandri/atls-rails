@@ -26,6 +26,7 @@ class Training < ActiveRecord::Base
 
 	scope :sort_by_created_at, order("created_at desc")
 	scope :post_test_trainings, where(status: Training::TRAINING_STATUSES[2])
+	scope :active_trainings, where("status = ? OR status = ?", Training::TRAINING_STATUSES[1], Training::TRAINING_STATUSES[2])
 
 	before_save :finish_training
 
@@ -136,9 +137,11 @@ class Training < ActiveRecord::Base
 	end
 
 	def check_status_after_post_test
+		binding.pry
 		if PostTestResult.passed_test?(self.id)
 			self.status = Training::TRAINING_STATUSES[3]
 			self.save
+			binding.pry
 		end
 	end
 

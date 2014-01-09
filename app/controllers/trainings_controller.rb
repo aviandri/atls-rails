@@ -18,6 +18,10 @@ class TrainingsController < ApplicationController
 	end
 
 	def new
+		unless current_attendee.trainings.active_trainings.empty?
+			flash[:error] = "Anda tidak dapat mendaftar training baru jika masih memiliki training yg aktif"
+			redirect_to controller: :homes, action: :index
+		end
 		session[:training_params] ||= {}
 		@training  = Training.new(session[:training_param])
 	end

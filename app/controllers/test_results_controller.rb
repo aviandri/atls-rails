@@ -39,7 +39,7 @@ class TestResultsController < ApplicationController
   		if type == "PostTestResult"
   			PostTest.all.count
   		else type == "PreTestResult"
-  			PreTest.all.count
+  			Pretest.all.count
   		end
   	end
 

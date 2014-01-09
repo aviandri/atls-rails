@@ -213,7 +213,6 @@ $ ->
 
 $ ->
 	$('#submit').click ->
-		alert("submit")
 		Test.submitAnswer()		
 		
 
