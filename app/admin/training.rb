@@ -29,6 +29,13 @@ ActiveAdmin.register Training do
       panel "Test Detail" do
         attributes_table do
           row("Score"){|training| training.score }
+          panel "Post Test" do
+            table_for training.post_test_results do
+              column("tanggal test"){|result| result.created_at}
+              column("score"){|result| result.score * 100 / result.number_of_question}
+
+            end
+          end
         end
       end
       

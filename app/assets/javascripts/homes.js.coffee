@@ -87,7 +87,7 @@ class Pretest
 		console.log(@currentIndex)
 		@testObject = @tests[@currentIndex]		
 	getPrevObject :  ->
-		currentIndex--
+		@currentIndex--
 		@testObject = @tests[@currentIndex]		
 	getQuestion : ->
 		console.log @testObject
