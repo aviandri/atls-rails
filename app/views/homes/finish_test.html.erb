@@ -11,7 +11,7 @@
 		<div class="row-fluid">
 			<div class="score text-left">
 				<div>
-					<span class="text-success text-left big-font">Nilai Anda : <%= (@test_result.score * 100 / @test_result.number_of_question)  %></span>
+					<span class="text-success text-left big-font">Nilai Anda : <%= number_with_precision((@test_result.score * 100 / @test_result.number_of_question), precision: 2)  %></span>
 				</div>
 				<p>
 

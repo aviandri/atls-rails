@@ -32,7 +32,7 @@ ActiveAdmin.register Training do
           panel "Post Test" do
             table_for training.post_test_results do
               column("tanggal test"){|result| result.created_at}
-              column("score"){|result| result.score * 100 / result.number_of_question}
+              column("score"){|result| number_with_precision((result.score * 100 / result.number_of_question), precision: 2)}
 
             end
           end
