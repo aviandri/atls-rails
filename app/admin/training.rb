@@ -99,7 +99,7 @@ ActiveAdmin.register Training do
 
         exl = Roo::Excelx.new(file)    
         ((exl.first_row + 1)..exl.last_row).each do |i|
-            id = exl.cell(i, "A") 
+            id = exl.cell(i, "A").to_i 
             score = exl.cell(i, "C").to_f 
           
             t = Training.find(id)
