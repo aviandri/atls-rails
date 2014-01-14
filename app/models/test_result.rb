@@ -10,7 +10,7 @@ class PostTestResult < TestResult
 
 	def self.passed_test?(training_id)
 		training = Training.find training_id		
-		result = training.post_test_results.map.reject{|t|t.score / t.number_of_question * 100 < 70 }
+		result = training.post_test_results.map.reject{|t| ((t.score * 100) / t.number_of_question)  < 70 }
 		!result.empty?
 	end
 
