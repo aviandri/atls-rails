@@ -13,6 +13,30 @@ ActiveAdmin.register Attendee, as: "Peserta" do
     link_to 'Create Training', new_admin_training_path(:attendee_id => params[:id])
   end
 
+  action_item :only => :show do
+      link_to 'Change Password', :action => "change_password"
+  end
+
+  member_action :change_password do
+      @attendee = Attendee.find(params[:id])
+      render "admin/attendees/change_password"
+  end
+
+
+  member_action :update_password, :method => :put do
+    attendee = Attendee.find(params[:id])
+    attendee.update_attributes(params["attendee"])
+
+    if attendee.save
+      flash[:info] = "Password Changed"
+      redirect_to admin_pesertum_path(:id => attendee.id)
+    else
+      flash[:errors] = attendee.errors.full_messages.to_sentence
+      redirect_to change_password_admin_pesertum_path(:id => attendee.id)
+    end
+
+  end
+
   collection_action :new_attendee_training_registration, :method => :post do
     @attendee = Attendee.create(params[:attendee])
     if @attendee.valid?

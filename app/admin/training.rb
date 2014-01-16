@@ -8,11 +8,22 @@ ActiveAdmin.register Training do
   end
   
 
-	member_action :confirm, :method => :put do
+	 member_action :confirm, :method => :put do
 	    training = Training.find params[:id]
 	    training.confirm_payment
 	    redirect_to admin_trainings_path
   	end
+
+  action_item :only => :show do         
+    link_to 'Email Post Test', post_test_email_admin_training_path(training.id), :method => :put      
+  end
+
+    member_action :post_test_email, :method => :put do
+      training = Training.find params[:id]
+      training.attendee.send_post_test_invitation
+      flash[:info] = "Post Test Invitation Sent"
+      redirect_to admin_training_path(:id => training.id)
+    end
 
   	show do |training|
   		attributes_table do

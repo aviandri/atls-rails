@@ -44,3 +44,6 @@ $ ->
 
 		$('body').on 'click', ".destroy_duplicate_nested_form", (e) ->
     		$(this).closest('.payment_input').slideUp().remove()
+
+
+
