@@ -75,6 +75,7 @@ ActiveAdmin.register Training do
 	    column("Kode Pembayaran") {|training| training.payment_code || "-" }    
 	    column("Terbayar") {|training| training.amount_paid || "-" }   
       column("Nilai Test") {|training| training.score || "-" }   
+      column("Post Test Terbaik") {|training| training.post_test_results.map{|t|t.score * 100  / t.number_of_question}.max}
 
 
 	    column("Confirm") do |training|
