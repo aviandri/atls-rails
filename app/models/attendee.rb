@@ -55,11 +55,9 @@ class Attendee < ActiveRecord::Base
   def self.create_multiple_attendees(attendees_array)
     transaction do
         attendees_array.each do |a|
-            binding.pry
             a.merge! password: "password01", password_confirmation: "password01"
             attendee = Attendee.new(a)
             attendee.save!
-            binding.pry
         end
     end
   end
