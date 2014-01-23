@@ -112,11 +112,14 @@ ActiveAdmin.register Training do
         exl = Roo::Excelx.new(file)    
         ((exl.first_row + 1)..exl.last_row).each do |i|
             id = exl.cell(i, "A").to_i 
-            score = exl.cell(i, "C").to_f 
+            score_val = exl.cell(i, "C").to_f 
+            score = score_val > 0 ? exl.cell(i, "C").to_f : nil
           
             t = Training.find(id)
-            t.score = score
-            t.save
+            unless t.score.to_f.round(2) == score 
+              t.score = score
+              t.save
+            end
         end
         redirect_to admin_trainings_path
     end
@@ -136,7 +139,7 @@ ActiveAdmin.register Training do
 	    	super
 	    end
 
-      def max_csv_records; @per_page; end
+      def max_csv_records; 1000 ; end
 
   	end
 
