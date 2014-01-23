@@ -6,7 +6,7 @@ gem 'rack', '1.4.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
-group :production do
+group :production, :development do
   gem 'pg'
 end
 
