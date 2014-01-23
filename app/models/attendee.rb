@@ -44,6 +44,12 @@ class Attendee < ActiveRecord::Base
     end
   end
 
+  def self.create_default_attendee(attributes)  
+    attributes.merge password: "password01", password_confirmation: "password01"
+    attendee = Attendee.new(attributes)
+    attendee.save!
+  end
+
   def self.import
     exl = Roo::Excelx.new("/Users/aviandrihidayat/Documents/projects/atls-rails/atls-sample.xlsx")    
     ((exl.first_row+2)..exl.last_row).each do |i|

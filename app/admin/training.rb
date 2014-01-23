@@ -109,7 +109,7 @@ ActiveAdmin.register Training do
         file = File.join("public", params[:dump][:file].original_filename)
         FileUtils.cp tmp.path, file
 
-        exl = Roo::Excelx.new(file)    
+        exl = Roo::Excel.new(file)    
         ((exl.first_row + 1)..exl.last_row).each do |i|
             id = exl.cell(i, "A").to_i 
             score_val = exl.cell(i, "C").to_f 
