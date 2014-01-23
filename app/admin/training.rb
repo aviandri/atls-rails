@@ -1,7 +1,6 @@
 ActiveAdmin.register Training do
 	form :partial => "form"       
 
-
   xlsx do
       delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number
       column("Peserta") { |resource| resource.attendee ? resource.attendee.name : "" }

@@ -14,8 +14,10 @@ class Attendee < ActiveRecord::Base
   belongs_to :campus
   has_many :trainings
   accepts_nested_attributes_for :orders
-  validates :address, :date_of_birth, :gender, :name, :place_of_birth, :presence => true
-  validates :phone, :presence => true
+  validates_presence_of :address, :date_of_birth, :gender, :name, :place_of_birth, :message => '%{value} need to be set'
+  validates_presence_of :phone, :message => '%{value} need to be set'
+
+  validates_uniqueness_of :email, :message => '%{value}'
 
   scope :by_training_location, lambda{|location| joins(:trainings).where('trainings.training_location_id = ?', location.id) }
   scope :by_training_schedule, lambda{|schedule| joins(:trainings).where('trainings.training_schedule_id = ?', schedule.id) }
@@ -45,9 +47,21 @@ class Attendee < ActiveRecord::Base
   end
 
   def self.create_default_attendee(attributes)  
-    attributes.merge password: "password01", password_confirmation: "password01"
+    attributes.merge! password: "password01", password_confirmation: "password01"
     attendee = Attendee.new(attributes)
     attendee.save!
+  end
+
+  def self.create_multiple_attendees(attendees_array)
+    transaction do
+        attendees_array.each do |a|
+            binding.pry
+            a.merge! password: "password01", password_confirmation: "password01"
+            attendee = Attendee.new(a)
+            attendee.save!
+            binding.pry
+        end
+    end
   end
 
   def self.import

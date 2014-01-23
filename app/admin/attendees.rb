@@ -9,6 +9,10 @@ ActiveAdmin.register Attendee, as: "Peserta" do
   filter :trainings_training_schedule_training_date, :as => :select, :collection => TrainingSchedule.all.map{|schedule|[schedule.training_date, schedule.training_date]}, :label => "Training Schedule"
 
 
+  xlsx do
+      delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number, :password, :password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :book_status, :nick_name, :religion, :campus_name, :campus_address, :campus_phone, :id
+  end
+
   action_item :only => :show do     
     link_to 'Create Training', new_admin_training_path(:attendee_id => params[:id])
   end
@@ -127,6 +131,52 @@ ActiveAdmin.register Attendee, as: "Peserta" do
       redirect_to admin_orders_path
   end
 
+  action_item :only => :index do
+      link_to 'Upload CSV', :action => 'upload_csv'
+    end
+
+    collection_action :upload_csv do
+      render "admin/attendees/upload_xls"
+    end
+
+    collection_action :import_csv, :method => :post do
+        tmp = params[:dump][:file].tempfile
+        file = File.join("public", params[:dump][:file].original_filename)
+        FileUtils.cp tmp.path, file
+        attendee_attributes_arrray = []
+
+        exl = Roo::Excel.new(file)    
+        ((exl.first_row + 1)..exl.last_row).each do |i|
+            name = exl.cell(i, "A")
+            dob = exl.cell(i, "B")
+            gender = exl.cell(i, "C")   
+            address  = exl.cell(i, "D")   
+            phone = exl.cell(i, "E")   
+            email = exl.cell(i, "F")   
+            office_name = exl.cell(i, "G")    
+            office_address = exl.cell(i, "H")     
+            office_phone = exl.cell(i, "I")     
+            job_title = exl.cell(i, "J")    
+            pob = exl.cell(i, "K")     
+            cell_number = exl.cell(i, "L")    
+            graduation_year = exl.cell(i, "M")    
+            campus_name = exl.cell(i, "N")               
+            
+            campus = Campus.find_by_name(campus_name)
+            attendee_attributes = {name: name, date_of_birth: dob, gender: gender, address: address, phone: phone, 
+              email: email, office_name: office_name, office_address: office_address, office_phone: office_phone, job_title: job_title, place_of_birth: pob, cell_number: cell_number,
+              graduation_year: graduation_year, campus_id: campus.id}
+
+            attendee_attributes_arrray << attendee_attributes            
+        end                
+
+        begin
+            Attendee.create_multiple_attendees(attendee_attributes_arrray)            
+            redirect_to admin_peserta_path
+        rescue ActiveRecord::RecordInvalid => invalid
+            flash[:errors] = invalid.record.errors.full_messages
+        end
+    end
 
 
   controller do
