@@ -128,7 +128,7 @@ class Training < ActiveRecord::Base
 	end
 
 	def initiate_post_test
-		if self.score >= 30
+		if self.score >= 32.5
 			self.status = Training::TRAINING_STATUSES[2]		
 			self.attendee.send_post_test_invitation
 		end
