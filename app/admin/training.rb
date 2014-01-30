@@ -4,6 +4,9 @@ ActiveAdmin.register Training do
   xlsx do
       delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number
       column("Peserta") { |resource| resource.attendee ? resource.attendee.name : "" }
+      column("Post Test Terbaik") {|training| training.post_test_results.map{|t|t.score * 100  / t.number_of_question}.max}
+      column("Lokasi Training"){|training| training.training_location.name}
+      column("Tanggal Training"){|training| training.training_schedule.training_date}
   end
   
 
