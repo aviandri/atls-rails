@@ -14,7 +14,7 @@ class Attendee < ActiveRecord::Base
   belongs_to :campus
   has_many :trainings
   accepts_nested_attributes_for :orders
-  validates_presence_of :address, :date_of_birth, :gender, :name, :place_of_birth, :message => '%{value} need to be set'
+  validates_presence_of :address, :gender, :name, :message => '%{value} need to be set'
   validates_presence_of :phone, :message => '%{value} need to be set'
 
   validates_uniqueness_of :email, :message => '%{value}'
