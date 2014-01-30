@@ -165,7 +165,7 @@ ActiveAdmin.register Attendee, as: "Peserta" do
             campus = Campus.find_by_name(campus_name)
 
             attendee_attributes = {name: name, date_of_birth: dob, gender: gender, address: address, phone: phone, 
-              email: email, office_name: office_name, office_address: office_address, office_phone: office_phone, job_title: job_title, place_of_birth: pob, cell_number: cell_number,
+              email: email, office_name: office_name, office_address: office_address,  office_phone: office_phone, job_title: job_title, place_of_birth: pob, cell_number: cell_number,
               graduation_year: graduation_year, campus_id: campus ? campus.id : nil}
 
             attendee_attributes_arrray << attendee_attributes            
