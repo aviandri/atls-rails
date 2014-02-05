@@ -59,7 +59,8 @@ module AtlsRails
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.autoload_paths += %w(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib)
+    
     config.time_zone = 'Jakarta'
 
     # config.register_stylesheet 'application_active_admin'

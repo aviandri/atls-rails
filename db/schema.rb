@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140113035149) do
+ActiveRecord::Schema.define(:version => 20140205084922) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "place_of_birth"
-    t.string   "training_location"
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -80,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
     t.string   "book_status"
     t.string   "nick_name"
     t.integer  "graduation_year"
+    t.string   "plain_password"
   end
 
   add_index "attendees", ["email"], :name => "index_attendees_on_email", :unique => true
@@ -153,9 +153,10 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
   add_index "payment_terms", ["name"], :name => "index_payment_terms_on_name", :unique => true
 
   create_table "payment_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "amount"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.string   "name"
     t.string   "type"
     t.string   "account_number"
     t.string   "account_holder"
@@ -213,17 +214,6 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
     t.integer  "training_id"
   end
 
-  create_table "tests", :force => true do |t|
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "question"
-    t.string   "answer_one"
-    t.string   "answer_two"
-    t.string   "answer_three"
-    t.string   "answer_four"
-    t.integer  "correct_answer"
-  end
-
   create_table "training_locations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -249,8 +239,8 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
 
   create_table "trainings", :force => true do |t|
     t.integer  "attendee_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
     t.integer  "training_location_id"
     t.integer  "amount_paid"
     t.integer  "amount_unpaid"
@@ -262,13 +252,7 @@ ActiveRecord::Schema.define(:version => 20140113035149) do
     t.string   "status"
     t.integer  "group_number"
     t.decimal  "test_score"
-    t.decimal  "score"
-  end
-
-  create_table "traning_locations", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.decimal  "score",                :precision => 10, :scale => 2
   end
 
 end

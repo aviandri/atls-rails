@@ -7,6 +7,7 @@ class AttendeesController < Devise::RegistrationsController
 	end
 
 	def create
+		binding.pry
 		resource.update_attributes(params["attendee"])
 		super
 	end

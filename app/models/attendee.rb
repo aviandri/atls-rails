@@ -1,9 +1,13 @@
 class Attendee < ActiveRecord::Base
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [ :email ]
 
+  #overide for password= method in database_authenticable devise module
+  include PasswordUnhash
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number, :campus
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :orders, :orders_attributes, :training_attributes, :cell_number, :campus, :plain_password
   attr_accessible :address, :campus_address, :campus_name, :campus_phone, :date_of_birth, :email, :gender, :job_title, :name, :office_address, :office_name, :office_phone, :phone, :religion, :place_of_birth, :order, :campus_id, :book_status, :graduation_year
 
   attr_reader :state
@@ -150,6 +154,13 @@ class Attendee < ActiveRecord::Base
       SendResetPasswordWorker.perform_async(self.id, args[0])
   end
 
+
+  # protected
+  # def password=(new_password)
+  #     binding.pry
+  #     @password = new_password
+  #     self.encrypted_password = password_digest(@password) if @password.present?
+  # end
 
   private
   def create_training  
