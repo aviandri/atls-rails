@@ -28,6 +28,10 @@ class AdminUser < ActiveRecord::Base
     roles.include?(role.to_s)
   end
 
+  def is_super_admin?
+    roles.include?"superadmin"
+  end
+
   def authorized_for?(training_location)
     if self.is?(ROLES[0])
       return true

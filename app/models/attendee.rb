@@ -24,6 +24,7 @@ class Attendee < ActiveRecord::Base
   validates_uniqueness_of :email, :message => '%{value}'
 
   scope :by_training_location, lambda{|location| joins(:trainings).where('trainings.training_location_id = ?', location.id) }
+  scope :by_training_locations, lambda{|locations| joins(:trainings).where('trainings.training_location_id in (?)', locations) }
   scope :by_training_schedule, lambda{|schedule| joins(:trainings).where('trainings.training_schedule_id = ?', schedule.id) }
   scope :payment_completed, lambda{ joins(:training).where('trainings.payment_status = ?', Training::PAYMENT_STATUSES[0])}
   scope :pretest_completed, joins(:test_results).uniq
