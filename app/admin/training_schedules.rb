@@ -20,7 +20,7 @@ ActiveAdmin.register TrainingSchedule, as: "Jadwal Training" do
 
 
   controller do
-    def max_csv_records; @per_page; end
+    def max_csv_records; 100; end
   end
 
 end
