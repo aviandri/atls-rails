@@ -181,6 +181,6 @@ ActiveAdmin.register Attendee, as: "Peserta" do
 
 
   controller do
-    def max_csv_records; @per_page; end
+    def max_csv_records; 1000; end
   end
 end
