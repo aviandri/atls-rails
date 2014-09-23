@@ -10,7 +10,7 @@ ActiveAdmin.register Attendee, as: "Peserta" do
 
 
   xlsx do
-      delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number, :password, :password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :book_status, :nick_name, :religion, :campus_name, :campus_address, :campus_phone, :id
+      delete_columns :created_at, :updated_at, :amount_paid, :amount_unpaid, :payment_code, :test_score, :description, :group_number, :password, :password_confirmation, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :book_status, :nick_name, :religion, :plain_password
   end
 
   action_item :only => :show do     
